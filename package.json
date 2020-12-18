@@ -1,18 +1,33 @@
 {
   "name": "keep-in-touch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "homepage": "https://keep-in-touch.vercel.app/",
+  "repository": "https://github.com/konantian/Keep-In-Touch",
+  "person": {
+    "name": "Yuan Wang",
+    "email": "wang17@ualberta.ca"
+  },
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/client": "^2.13.1",
     "antd": "^4.9.4",
     "axios": "^0.21.0",
     "koa": "^2.13.0",
     "next": "10.0.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "swr": "^0.3.9",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.13.1",
+    "@types/node": "^14.14.14",
+    "@types/react": "^17.0.0",
+    "typescript": "^4.1.3"
   }
 }

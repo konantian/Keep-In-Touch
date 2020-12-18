@@ -1,5 +1,5 @@
-import Koa from 'koa';
-import next from 'next';
+const Koa = require('koa');
+const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -10,7 +10,7 @@ app.prepare().then(() => {
     server.use(async (ctx, next) => {
       await handle(ctx.req, ctx.res);
       ctx.response = false;
-    })
+    });
     
     server.listen(3000);
 })
