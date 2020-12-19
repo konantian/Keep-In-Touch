@@ -11,14 +11,33 @@ generator client {
 }
 
 model User {
-  id         String   @id
+  id         Int        @id @default(autoincrement())
   bio        String?
   name       String
-  email      String   @unique
-  username   String   @unique
+  email      String     @unique
+  username   String     @unique
   password   String
-  followers  User[]
+  lastLogin  DateTime
+  isAdmin    Boolean    @default(false)
+  followers  Follow[]   @relation("user")
+  following  Follow[]   @relation("follower")
   posts      Post[]
+}
+
+model Follow{
+  @@id([ followerId, userId ])
+  userId     Int
+  followerId Int
+  user       User     @relation("user",     fields: [userId],     references: [id])
+  follower   User     @relation("follower", fields: [followerId], references: [id])
+  followedAt DateTime @default(now())
+}
+
+enum VISIBILITY {
+  PUBLIC
+  PRIVATE
+  FOLLOWERS
+  FRIENDS
 }
 
 model Post {
@@ -26,19 +45,29 @@ model Post {
   title       String
   content     String
   contentType String
-  visibility  String
-  authorId    String
+  visibility  VISIBILITY   @default(PUBLIC)
+  authorId    Int
+  likes       Int      @default(0)
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  tags        Tag[]
   comments    Comment[]
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Tag {
+  @@id([ id, name ])
+  id     Int     @default(autoincrement())
+  name   String
 }
 
 model Comment {
   id        Int      @id @default(autoincrement())
   postId    Int
-  authorId  String
+  authorId  Int
   content   String
   createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
+  updatedAt DateTime @default(now())
+  post      Post     @relation(fields: [postId],   references: [id])
   author    User     @relation(fields: [authorId], references: [id])
 }
