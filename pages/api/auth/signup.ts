@@ -11,14 +11,14 @@ export default async function signup(req : NextApiRequest, res : NextApiResponse
 
     const {username, email, name,  password} = req.body;
 
-    const existUsername = await check_username(prisma, username)
-    if(existUsername){
+    const validUsername = await check_username(prisma, username)
+    if(!validUsername){
         await prisma.$disconnect();
         return res.status(400).json({error : "This username has been occupied, please select another username"});
     }
 
-    const existEmail = await check_email(prisma, email)
-    if(existEmail){
+    const validEmail = await check_email(prisma, email)
+    if(!validEmail){
         await prisma.$disconnect();
         return res.status(400).json({error : "This email has been occupied, please use another email"});
     }

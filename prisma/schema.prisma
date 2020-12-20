@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("LOCAL_URL")
 }
 
 generator client {
@@ -17,7 +17,7 @@ model User {
   email      String     @unique
   username   String     @unique
   password   String
-  lastLogin  DateTime?
+  lastLogin  String?
   isAdmin    Boolean    @default(false)
   followers  Follow[]   @relation("user")
   following  Follow[]   @relation("follower")
@@ -30,7 +30,7 @@ model Follow{
   followerId Int
   user       User     @relation("user",     fields: [userId],     references: [id])
   follower   User     @relation("follower", fields: [followerId], references: [id])
-  followedAt DateTime @default(now())
+  followedAt String
 }
 
 enum VISIBILITY {
@@ -48,8 +48,8 @@ model Post {
   visibility  VISIBILITY   @default(PUBLIC)
   authorId    Int
   likes       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
+  createdAt   String 
+  updatedAt   String
   tags        Tag[]
   comments    Comment[]
   author      User     @relation(fields: [authorId], references: [id])
@@ -66,8 +66,8 @@ model Comment {
   postId    Int
   authorId  Int
   content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt String
+  updatedAt String
   post      Post     @relation(fields: [postId],   references: [id])
   author    User     @relation(fields: [authorId], references: [id])
 }

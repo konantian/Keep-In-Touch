@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import prisma from '../../../lib/prisma';
+import { currentTime } from '../../../utils/currentTime';
 
 export default async function addFollow(req : NextApiRequest, res : NextApiResponse){
 
@@ -12,7 +13,8 @@ export default async function addFollow(req : NextApiRequest, res : NextApiRespo
     const addFollow = await prisma.follow.create({
         data : {
             user : {connect : {id : userId}},
-            follower : {connect : {id : followerId}}
+            follower : {connect : {id : followerId}},
+            followedAt : currentTime
         }
     });
     if(!addFollow){

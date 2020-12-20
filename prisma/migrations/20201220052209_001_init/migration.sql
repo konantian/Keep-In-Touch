@@ -9,7 +9,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "lastLogin" TIMESTAMP(3) NOT NULL,
+    "lastLogin" TEXT,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY ("id")
@@ -19,7 +19,7 @@ CREATE TABLE "User" (
 CREATE TABLE "Follow" (
     "userId" INTEGER NOT NULL,
     "followerId" INTEGER NOT NULL,
-    "followedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "followedAt" TEXT NOT NULL,
 
     PRIMARY KEY ("followerId","userId")
 );
@@ -33,8 +33,8 @@ CREATE TABLE "Post" (
     "visibility" "VISIBILITY" NOT NULL DEFAULT E'PUBLIC',
     "authorId" INTEGER NOT NULL,
     "likes" INTEGER NOT NULL DEFAULT 0,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TEXT NOT NULL,
+    "updatedAt" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
@@ -45,7 +45,7 @@ CREATE TABLE "Tag" (
     "name" TEXT NOT NULL,
     "postId" INTEGER,
 
-    PRIMARY KEY ("id")
+    PRIMARY KEY ("id","name")
 );
 
 -- CreateTable
@@ -54,8 +54,8 @@ CREATE TABLE "Comment" (
     "postId" INTEGER NOT NULL,
     "authorId" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TEXT NOT NULL,
+    "updatedAt" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );
