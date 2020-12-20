@@ -23,3 +23,24 @@ export const if_follow = async (prisma, data) => {
     else if(follower) return 'follow';
     else if(!follow && !follower) return 'none';
 }
+
+export const get_followers_by_user = async (prisma, username) => {
+
+    const followers = await prisma.follow.findMany({
+        where : {user : {username : username}},
+        select : {followerId : true}
+    });
+    
+    return followers.map(item => item.followerId);
+}
+
+export const get_following_by_user = async (prisma, username) => {
+
+    const following = await prisma.follow.findMany({
+        where : {follower : {username : username}},
+        select : {userId : true}
+    });
+    
+    return following.map(item => item.userId);
+
+}

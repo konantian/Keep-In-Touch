@@ -13,3 +13,12 @@ export const get_post_by_id = async (prisma, id) => {
 
     return post;
 }
+
+export const get_posts_by_user = async (prisma, username) => {
+
+    const posts = await prisma.post.findMany({
+        where : {author : {username : username}}
+    });
+
+    return posts;
+}

@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import prisma from '../../../lib/prisma';
-import {get_post_by_id} from '../../../utils/postUtil';
+import prisma from '../../../../lib/prisma';
+import {get_post_by_id} from '../../../../utils/postUtil';
 
 export default async function getPostById(req : NextApiRequest, res : NextApiResponse ){
 

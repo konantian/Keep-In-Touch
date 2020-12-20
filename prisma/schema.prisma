@@ -56,9 +56,8 @@ model Post {
 }
 
 model Tag {
-  @@id([ id, name ])
-  id     Int     @default(autoincrement())
-  name   String
+  name   String  @id
+  posts  Post[]
 }
 
 model Comment {
