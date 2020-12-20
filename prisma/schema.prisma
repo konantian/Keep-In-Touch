@@ -17,7 +17,7 @@ model User {
   email      String     @unique
   username   String     @unique
   password   String
-  lastLogin  DateTime
+  lastLogin  DateTime?
   isAdmin    Boolean    @default(false)
   followers  Follow[]   @relation("user")
   following  Follow[]   @relation("follower")

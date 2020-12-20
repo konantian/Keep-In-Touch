@@ -1,0 +1,44 @@
+const bcrypt = require('bcrypt');
+import {NextApiRequest, NextApiResponse} from 'next';
+import {check_username, check_email } from '../../../utils/authUtil';
+import prisma from '../../../lib/prisma';
+
+export default async function signup(req : NextApiRequest, res : NextApiResponse ){
+
+    if(req.method !== 'POST'){
+        return res.status(405).json({error : "Method not allowed, please use POST"});
+    }
+
+    const {username, email, name,  password} = req.body;
+
+    const existUsername = await check_username(prisma, username)
+    if(existUsername){
+        await prisma.$disconnect();
+        return res.status(400).json({error : "This username has been occupied, please select another username"});
+    }
+
+    const existEmail = await check_email(prisma, email)
+    if(existEmail){
+        await prisma.$disconnect();
+        return res.status(400).json({error : "This email has been occupied, please use another email"});
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    const addUser = await prisma.user.create({
+        data: {
+            username : username,
+            password : hash,
+            name : name,
+            email : email
+        }
+    });
+
+    if(!addUser){
+        await prisma.$disconnect();
+        return res.status(400).json({error : "User register failed, please check your data"});
+    }
+    await prisma.$disconnect();
+    return res.status(201).json({success : "You are ready to log in"});
+}
