@@ -44,3 +44,13 @@ export const get_following_by_user = async (prisma, username) => {
     return following.map(item => item.userId);
 
 }
+
+export const get_friends_by_user = async (prisma, username) => {
+
+    const followers = await get_followers_by_user(prisma, username);
+    const following = await get_following_by_user(prisma, username);
+
+    const friends = followers.filter(value => following.includes(value));
+
+    return friends;
+}
