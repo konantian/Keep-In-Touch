@@ -42,32 +42,32 @@ const SignUp = () =>{
                     name="username"
                     rules={[{required: true,message: 'Please input your username!',}]}
                 >
-                    <Input placeholder="Enter your username"/>
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Email"
                     name="email"
                     rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
                 >
-                    <Input placeholder="Enter your email address"/>
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Name"
                     name="name"
                     rules={[{required: true,message: 'Please input your name!',}]}
                 >
-                    <Input placeholder="Enter your name"/>
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{required: true,message: 'Please input your password!',}]}
                 >
-                    <Input.Password placeholder="Enter your password"/>
+                    <Input.Password />
                 </Form.Item>
                 <Form.Item
                     name="confirm"
-                    label="Confirm Password"
+                    label="Confirm"
                     dependencies={['password']}
                     hasFeedback
                     rules={[{required: true,message: 'Please confirm your password!',},
@@ -80,7 +80,7 @@ const SignUp = () =>{
                         },
                     }),]}
                 >
-                    <Input.Password placeholder="Enter your password again" />
+                    <Input.Password  />
                 </Form.Item>
                 <div className="loginButtons">
                     <Form.Item >
