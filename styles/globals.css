@@ -14,3 +14,24 @@ a {
 * {
   box-sizing: border-box;
 }
+.authContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top : 15%;
+}
+
+.loginButton{
+  width: 120px;
+}
+
+.signButton{
+  width: 120px;
+}
+
+.loginButtons{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+}

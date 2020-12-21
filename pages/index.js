@@ -1,65 +1,69 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useEffect, useState, useRef } from 'react';
+import { Form, Input, Button,message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { LOGIN_API } from '../constants/api';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Login = () => {
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    const formRef = useRef(null);
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+    const onFinish = values => {
+        axios.post(LOGIN_API,
+            {
+                "username" : values.username,
+                "password" : values.password
+            }).then((res) => {
+                setLoading(false);
+                message.success(res.data['success']);
+            }).catch((err) => {
+                setLoading(false);
+                let msg = JSON.parse(err.response.request.response);
+                message.error(msg['error']);
+            })
+      };
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+    return (
+        <div className="authContainer">
+            <Head>
+                <title>Login</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <Form className="form" onFinish={onFinish} ref={formRef} >
+                <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[{required: true,message: 'Please input your username!',}]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} />
+                </Form.Item>
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[{required: true,message: 'Please input your password!',}]}
+                >
+                    <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} />
+                </Form.Item>
+                <div className="loginButtons">
+                    <Form.Item >
+                        <Button className="loginButton" loading={loading} onClick={() => setLoading(true)} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
+                    </Form.Item>
+                    <Form.Item >
+                        <Link href="/signup">
+                            <Button className="loginButton" type="primary" shape="round" size="large" >Sign Up</Button>
+                        </Link>
+                    </Form.Item>
+                </div>
+            </Form>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        
+    )
 }
+
+export default Login;
