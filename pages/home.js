@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { message } from 'antd';
+import Logout from '../components/logout';
 
 const Home = () => {
 
@@ -25,6 +26,7 @@ const Home = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
+            <Logout />
         </div>
     )
 

@@ -35,3 +35,14 @@ a {
   justify-content: space-evenly;
   flex-direction: row;
 }
+
+.logoutButton{
+  width : 100px
+}
+
+.logoutContainer{
+  display : flex;
+  justify-content: flex-end;
+  margin-top: 1%;
+  margin-right: 2%;
+}
