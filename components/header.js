@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu,message } from 'antd';
+import { Menu, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/actions';
 import { useRouter } from 'next/router';
@@ -7,14 +7,15 @@ import Link from 'next/link';
 import {
     HomeOutlined,
     UserOutlined,
-    BulbOutlined,
+    EditOutlined,
     SearchOutlined,
     LogoutOutlined,
 } from "@ant-design/icons";
 
-const Header = () => {
+const Header = ({selectedKey}) => {
 
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
         dispatch(logout());
@@ -24,21 +25,19 @@ const Header = () => {
         router.push('/')
     }
 
-    const dispatch = useDispatch();
-
     return (
-        <Menu className="headerMenu" theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+        <Menu className="headerMenu" theme="dark" mode="horizontal" selectedKeys={selectedKey}>
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<BulbOutlined  />}>
-                <Link href="/home">Post</Link>
+            <Menu.Item key="2" icon={<EditOutlined  />}>
+                <Link href="/post">Post</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<SearchOutlined />}>
-                <Link href="/home">Search</Link>
+                <Link href="/search">Search</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<UserOutlined />}>
-                <Link href="/home">Profile</Link>
+                <Link href="/profile">Profile</Link>
             </Menu.Item>
             <Menu.Item key="5" icon={<LogoutOutlined />} >
                 <a onClick={() => handleLogout()}>Logout</a>
