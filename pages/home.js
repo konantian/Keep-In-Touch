@@ -2,8 +2,10 @@ import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { message } from 'antd';
-import Logout from '../components/logout';
+import { message, Layout } from 'antd';
+import Header from '../components/header';
+
+const { Footer } = Layout;
 
 const Home = () => {
 
@@ -26,7 +28,12 @@ const Home = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <Logout />
+            {isLogged ? (
+                <div>
+                    <Header />
+                    <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
+                </div>
+            ) : null}
         </div>
     )
 

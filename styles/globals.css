@@ -46,3 +46,18 @@ a {
   margin-top: 1%;
   margin-right: 2%;
 }
+
+.headerMenu{
+  display : flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height : 50px;
+}
+
+.pageFooter{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
