@@ -1,15 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import { Form, Input, Button,message } from 'antd';
 import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
+import { Form, Input, Button,message } from 'antd';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux'; 
 import { SIGNUP_API } from '../constants/api';
 
 const SignUp = () =>{
 
     const router = useRouter();
+    const isLogged = useSelector(state => state.isLogged);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if(isLogged) {
+            message.success("Welcome come back!");
+            router.push('/home');
+        }
+    },[])
 
     const onFinish = values => {
         axios.post(SIGNUP_API,
