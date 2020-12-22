@@ -9,6 +9,7 @@ export const get_posts = async (prisma) => {
 
     const posts = result.map(post => {
         post.tags = post.tags.map(tag => tag.name);
+        post.comments = post.comments.length;
         return post;
     })
 
@@ -23,6 +24,7 @@ export const get_post_by_id = async (prisma, id) => {
     });
 
     post.tags = post.tags.map(item => item.name);
+    post.comments = post.comments.length;
 
     return post;
 }
@@ -36,6 +38,7 @@ export const get_posts_by_user = async (prisma, username) => {
 
     const posts = result.map(post => {
         post.tags = post.tags.map(tag => tag.name);
+        post.comments = post.comments.length;
         return post;
     });
 
@@ -79,6 +82,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
 
     const posts = visiblePosts.map(post => {
         post.tags = post.tags.map(tag => tag.name);
+        post.comments = post.comments.length;
         return post;
     })
 
