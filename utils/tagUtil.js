@@ -18,14 +18,14 @@ export const get_tags = async (prisma) => {
 
 export const get_posts_by_tag = async (prisma, tag) => {
 
-    const result = await prisma.tag.findFirst({
+    const result = await prisma.tag.findMany({
         where : {name : tag},
-        include : {posts : {
-            include : {tags : true}
+        include : {post : {
+            include : {tags : true, author : true}
         }}
     });
 
-    const allPosts = result.posts;
+    const allPosts = result.map(tag => tag.post);
 
     const posts = allPosts.map(post => {
         post.tags = post.tags.map(tag => tag.name);

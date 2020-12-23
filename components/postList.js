@@ -38,7 +38,7 @@ const PostList = ({ posts }) => {
                     <List.Item.Meta
                         avatar={<Avatar size={50} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
                         title={
-                            <a>{item.author.username}</a> 
+                            <a href={`/profile/${item.author.username}`}>{item.author.username}</a> 
                         }
                         key={item.id}
                         description={
@@ -46,8 +46,8 @@ const PostList = ({ posts }) => {
                                 {`Created At : ${item.createdAt}       `}
                                 {`Updated At : ${item.updatedAt}`}
                                 <br />
-                                {item.tags.map((cat, idx) => (
-                                    <a key={idx}><Tag key={idx} color={randomColor()}>{cat}</Tag></a>
+                                {item.tags.map((tag, idx) => (
+                                    <a href={`/tag/${tag}`} key={idx} ><Tag key={idx} color={randomColor()}>{tag}</Tag></a>
                                 ))}
                             </div>
                         }

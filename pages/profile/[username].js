@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
-import useSwr from 'swr';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { message, Layout, PageHeader, Divider, Descriptions, Spin, Button } from 'antd';
-import Header from '../components/header';
-import PostList from '../components/postList';
-import { USER_BY_USERNAME  } from '../constants/api';
+import Header from '../../components/header';
+import PostList from '../../components/postList';
+import { USER_BY_USERNAME  } from '../../constants/api';
 
 const { Footer } = Layout;
 
 const Profile = () => {
 
     const router = useRouter();
+    const [username, setUsername] = useState(null);
+    const [profile, setProfile] = useState(null);
     const isLogged = useSelector((state) => state.isLogged);
-    const username = useSelector((state) => state.username);
-
+    const currentUser = useSelector((state) => state.username);
+    
     useEffect(() => {
         if (!isLogged) {
             message.error('Please login first');
@@ -24,12 +25,17 @@ const Profile = () => {
         };
     }, []);
 
-    const getProfile = async () => {
-        const response = await axios.get(USER_BY_USERNAME(username));
-        return response.data;
-    }
+    useEffect(() => {
+        if (router.asPath !== router.route) {
+            setUsername(router.query.username);
+            getProfile(router.query.username);
+        }
+    }, [router])
 
-    const {data : profile, error } = useSwr(USER_BY_USERNAME, getProfile);
+    const getProfile = async (username) => {
+        const response = await axios.get(USER_BY_USERNAME(username));
+        setProfile(response.data);
+    }
 
     return (
         <div>
@@ -50,8 +56,8 @@ const Profile = () => {
                                 ghost={false}
                                 title={profile.name}
                                 subTitle={username}
-                                extra={[
-                                    <Button className="followButton" size="large" shape="round" type="primary" key="3">Follow</Button>,
+                                extra={[currentUser !== username ?
+                                    <Button className="followButton" size="large" shape="round" type="primary" key="3">Follow</Button> : null,
                                 ]}
                                 avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
                             >
@@ -64,7 +70,7 @@ const Profile = () => {
                                 </Descriptions>
                             </PageHeader>
                             <Divider />
-                            <PostList className="profilePosts" posts={profile.posts} />
+                            <PostList posts={profile.posts} />
                          </div>
                     }
                     </div>
