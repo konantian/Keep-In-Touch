@@ -65,8 +65,15 @@ a {
 .postList{
   margin-top : 10px;
   margin-left: 25%;
+  margin-right: 25%;
 }
 
 .postDescription{
   margin-top: -15px;;
+}
+
+.feedbackButton{
+  color: #08c;
+  margin-right: 5px;
+  font-size: 15px;
 }
