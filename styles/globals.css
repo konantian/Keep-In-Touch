@@ -77,3 +77,17 @@ a {
   margin-right: 5px;
   font-size: 15px;
 }
+
+.profileHeader{
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.followButton{
+  width : 100px;
+  text-align: center;
+}
+
+.profilePosts{
+  margin-top: -20px;
+}

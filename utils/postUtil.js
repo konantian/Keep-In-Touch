@@ -80,7 +80,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
 
     const visiblePosts = [...publicPosts, ...followerPosts, ...friendPosts, ...selfPosts];
 
-    const posts = visiblePosts.map(post => {
+    const posts = visiblePosts.map((post,idx) => {
         post.tags = post.tags.map(tag => tag.name);
         post.comments = post.comments.length;
         return post;
