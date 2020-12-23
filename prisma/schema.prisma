@@ -56,8 +56,10 @@ model Post {
 }
 
 model Tag {
-  name   String  @id
-  posts  Post[]
+  @@id([ name, postId ])
+  name   String
+  postId Int
+  post   Post   @relation(fields: [postId], references: [id])
 }
 
 model Comment {

@@ -42,8 +42,9 @@ CREATE TABLE "Post" (
 -- CreateTable
 CREATE TABLE "Tag" (
     "name" TEXT NOT NULL,
+    "postId" INTEGER NOT NULL,
 
-    PRIMARY KEY ("name")
+    PRIMARY KEY ("name","postId")
 );
 
 -- CreateTable
@@ -58,23 +59,11 @@ CREATE TABLE "Comment" (
     PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "_PostToTag" (
-    "A" INTEGER NOT NULL,
-    "B" TEXT NOT NULL
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.username_unique" ON "User"("username");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_PostToTag_AB_unique" ON "_PostToTag"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_PostToTag_B_index" ON "_PostToTag"("B");
 
 -- AddForeignKey
 ALTER TABLE "Follow" ADD FOREIGN KEY("userId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -86,13 +75,10 @@ ALTER TABLE "Follow" ADD FOREIGN KEY("followerId")REFERENCES "User"("id") ON DEL
 ALTER TABLE "Post" ADD FOREIGN KEY("authorId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Tag" ADD FOREIGN KEY("postId")REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Comment" ADD FOREIGN KEY("postId")REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD FOREIGN KEY("authorId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_PostToTag" ADD FOREIGN KEY("A")REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_PostToTag" ADD FOREIGN KEY("B")REFERENCES "Tag"("name") ON DELETE CASCADE ON UPDATE CASCADE;

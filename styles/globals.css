@@ -61,3 +61,12 @@ a {
   width: 100%;
   text-align: center;
 }
+
+.postList{
+  margin-top : 10px;
+  margin-left: 25%;
+}
+
+.postDescription{
+  margin-top: -15px;;
+}

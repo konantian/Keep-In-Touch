@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { message, Layout } from 'antd';
@@ -20,6 +21,13 @@ const Post = () => {
 
     return (
         <div>
+            <Head>
+                <title>New Post</title>
+                <meta
+                    name="viewport"
+                    content="initial-scale=1.0, width=device-width"
+                />
+            </Head>
             {isLogged ? (
                 <div>
                     <Header selectedKey={["2"]}/>
