@@ -87,3 +87,9 @@ a {
   width : 100px;
   text-align: center;
 }
+
+.searchBar{
+  margin-top : 10px;
+  margin-left: 25%;
+  margin-right: 25%;
+}

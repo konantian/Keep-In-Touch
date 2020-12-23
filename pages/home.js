@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -44,9 +44,7 @@ const Home = () => {
                 <div>
                     <Header selectedKey={["1"]} />
                     <div className="postList" >
-                        {!visiblePosts ? <Spin tip="Loading posts ... " /> :
-                            <PostList posts={visiblePosts} />
-                        }
+                        {!visiblePosts ? <Spin tip="Loading posts ... " /> : <PostList posts={visiblePosts} />}
                     </div>
                     <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
                 </div>

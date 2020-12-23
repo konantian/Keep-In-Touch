@@ -21,7 +21,7 @@ export const get_posts_by_tag = async (prisma, tag) => {
     const result = await prisma.tag.findMany({
         where : {name : tag},
         include : {post : {
-            include : {tags : true, author : true}
+            include : {tags : true, author : true, comments : true}
         }}
     });
 
@@ -29,6 +29,7 @@ export const get_posts_by_tag = async (prisma, tag) => {
 
     const posts = allPosts.map(post => {
         post.tags = post.tags.map(tag => tag.name);
+        post.comments = post.comments.length;
         return post;
     })
 

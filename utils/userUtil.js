@@ -34,16 +34,11 @@ export const get_user_by_id = async (prisma, id) => {
 
 export const get_users = async (prisma) => {
 
-    const users = await prisma.user.findMany({
-        select : {
-            id : true,
-            bio : true,
-            name : true,
-            email : true,
-            lastLogin : true,
-            isAdmin : true
-        }
+    const result = await prisma.user.findMany({
+        select : {username : true}
     });
+
+    const users = result.map(user => user.username);
 
     return users;
 }
