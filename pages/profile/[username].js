@@ -49,7 +49,7 @@ const Profile = () => {
             </Head>
             {isLogged ? (
                 <div className="main" >
-                    <DynamicHeader selectedKey={["4"]}/>
+                    <DynamicHeader selectedKey={["5"]}/>
                     <div className="profileHeader">
                     {!profile ? <div className="loader" ><Spin size="large" tip="Loading user's profile ... "/></div>: 
                         <div>

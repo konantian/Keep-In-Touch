@@ -84,7 +84,7 @@ a {
   margin-top : 10px;
   margin-left: 25%;
   margin-right: 25%;
-  min-height: 87vh;
+  min-height: 88vh;
   display: flex;
   flex-direction: column;
 }
@@ -102,7 +102,7 @@ a {
 .profileHeader{
   margin-left: 25%;
   margin-right: 25%;
-  min-height: 87vh;
+  min-height: 88vh;
   display: flex;
   flex-direction: column;
 }
@@ -130,4 +130,13 @@ a {
 .commentButton{
   display : flex;
   justify-content : center;
+}
+
+.chatPage{
+  margin-top : 10px;
+  margin-left: 25%;
+  margin-right: 25%;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
 }

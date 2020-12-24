@@ -31,7 +31,7 @@ const Search = () => {
                 />
             </Head>
             {isLogged ? (
-                <div className="searchContent" >
+                <div>
                     <DynamicHeader selectedKey={["3"]}/>
                     <DynamicSearchBar />
                     <DynamicFooter />

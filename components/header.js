@@ -12,6 +12,7 @@ import {
     EditOutlined,
     SearchOutlined,
     LogoutOutlined,
+    MessageOutlined
 } from "@ant-design/icons";
 
 const Header = ({ selectedKey }) => {
@@ -39,10 +40,13 @@ const Header = ({ selectedKey }) => {
             <Menu.Item key="3" icon={<SearchOutlined />}>
                 <Link href="/search">Search</Link>
             </Menu.Item>
-            <Menu.Item key="4" icon={<UserOutlined />}>
+            <Menu.Item key="4" icon={<MessageOutlined />}>
+                <Link href="/chat">Chat</Link>
+            </Menu.Item>
+            <Menu.Item key="5" icon={<UserOutlined />}>
                 <Link href={`/profile/${username}`}>Profile</Link>
             </Menu.Item>
-            <Menu.Item key="5" icon={<LogoutOutlined />} >
+            <Menu.Item key="6" icon={<LogoutOutlined />} >
                 <a onClick={() => handleLogout()}>Logout</a>
             </Menu.Item>
       </Menu>
