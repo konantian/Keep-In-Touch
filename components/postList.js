@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Tag, Drawer} from 'antd';
+import { List, Avatar, Tag } from 'antd';
 import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
+
+const DynamicCommentList= dynamic(() => import('./commentList'))
 
 const PostList = ({ posts }) => {
 
     const [visible, setVisible] = useState(false);
+    const [postId, setPostId] = useState(null);
 
     const randomColor = () => {
         const colors = ["magenta", "red", "volcano", "orange", "gold","lime","cyan","green",
@@ -30,7 +34,10 @@ const PostList = ({ posts }) => {
                             {item.likes}
                         </a >,
                         <a  key="comment" className="feedbackButton"
-                            onClick={() => setVisible(true)} 
+                            onClick={() => {
+                                setPostId(item.id);
+                                setVisible(true);
+                            }} 
                         >
                             <MessageOutlined className="feedbackButton" />
                             {item.comments}
@@ -45,8 +52,9 @@ const PostList = ({ posts }) => {
                         key={item.id}
                         description={
                             <div className="postDescription" >
-                                {`Created At : ${item.createdAt}       `}
-                                {`Updated At : ${item.updatedAt}`}
+                                {`Created At : ${item.createdAt}`}
+                                <br />
+                                {`Updated At: ${item.updatedAt}`}
                                 <br />
                                 {item.tags.map((tag, idx) => (
                                     <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>
@@ -64,17 +72,7 @@ const PostList = ({ posts }) => {
                 </List.Item>
                 )}
             />
-            <Drawer
-                title="Comments"
-                placement="right"
-                closable={true}
-                onClose={() => setVisible(false)}
-                visible={visible}
-            >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Drawer>
+            <DynamicCommentList postId={postId} visible={visible} onClose={() => setVisible(false)} />
         </div>
     )
 }

@@ -32,6 +32,7 @@ const Post = () => {
             {isLogged ? (
                 <div>
                     <DynamicHeader selectedKey={["2"]}/>
+                    <div className="newPost"></div>
                     <DynamicFooter />
                 </div>
             ) : null}

@@ -17,7 +17,8 @@ export const get_comment_by_id = async (prisma, id) => {
 export const get_comments_by_post = async (prisma, id) => {
 
     const comments = await prisma.comment.findMany({
-        where : {post : {id : parseInt(id)}}
+        where : {post : {id : parseInt(id)}},
+        include : {author : true}
     });
 
     return comments;

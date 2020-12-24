@@ -48,7 +48,7 @@ const Profile = () => {
                 />
             </Head>
             {isLogged ? (
-                <div>
+                <div className="main" >
                     <DynamicHeader selectedKey={["4"]}/>
                     <div className="profileHeader">
                     {!profile ? <div className="loader" ><Spin size="large" tip="Loading user's profile ... "/></div>: 

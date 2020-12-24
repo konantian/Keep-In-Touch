@@ -42,7 +42,7 @@ const Home = () => {
                 />
             </Head>
             {isLogged ? (
-                <div>
+                <div className="main" >
                     <DynamicHeader selectedKey={["1"]} />
                     <div className="postList" >
                         {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 

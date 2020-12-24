@@ -54,18 +54,34 @@ a {
   height : 50px;
 }
 
+.main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .pageFooter{
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+  text-align : center;
+  margin-top: auto;
 }
 
 .postList{
   margin-top : 10px;
   margin-left: 25%;
   margin-right: 25%;
+  min-height: 87vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.newPost{
+  margin-top : 10px;
+  margin-left: 25%;
+  margin-right: 25%;
+  min-height: 87vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .postDescription{
@@ -81,6 +97,9 @@ a {
 .profileHeader{
   margin-left: 25%;
   margin-right: 25%;
+  min-height: 87vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .followButton{
@@ -92,10 +111,18 @@ a {
   margin-top : 10px;
   margin-left: 25%;
   margin-right: 25%;
+  min-height: 87vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .loader {
   margin-top: 15px;
   display : flex;
   justify-content: center;
+}
+
+.commentButton{
+  display : flex;
+  justify-content : center;
 }
