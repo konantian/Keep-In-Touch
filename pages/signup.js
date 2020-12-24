@@ -17,7 +17,6 @@ const SignUp = () =>{
 
     useEffect(() => {
         if(isLogged) {
-            message.success("Welcome come back!");
             router.push('/home');
         }
     },[])

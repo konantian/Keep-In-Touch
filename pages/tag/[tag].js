@@ -3,14 +3,14 @@ import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
-import { message, Layout, Spin} from 'antd';
+import { message, Spin} from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { POSTS_BY_TAG } from '../../constants/api';
 
-const { Footer } = Layout;
 const DynamicPostList= dynamic(() => import('../../components/postList'))
-const DynamicHeader= dynamic(() => import('../../components/Header'))
+const DynamicHeader= dynamic(() => import('../../components/header'))
+const DynamicFooter = dynamic(() => import('../../components/footer'))
 
 const PostByTag = () => {
 
@@ -47,7 +47,7 @@ const PostByTag = () => {
                     <DynamicPostList posts={posts} />
                 }
             </div>
-            <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
+            <DynamicFooter />
         </div>
     )
 }

@@ -4,13 +4,12 @@ import axios from 'axios';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { message, Layout, Divider, Spin} from 'antd';
+import { message, Divider, Spin} from 'antd';
 import { USER_BY_USERNAME  } from '../../constants/api';
 
-const { Footer } = Layout;
-
-const DynamicPostList= dynamic(() => import('../../components/postList'))
-const DynamicHeader= dynamic(() => import('../../components/Header'))
+const DynamicPostList = dynamic(() => import('../../components/postList'))
+const DynamicHeader = dynamic(() => import('../../components/header'))
+const DynamicFooter = dynamic(() => import('../../components/footer'))
 const DynamicProfileHeader = dynamic(() => import('../../components/profileHeader'))
 
 const Profile = () => {
@@ -60,7 +59,7 @@ const Profile = () => {
                          </div>
                     }
                     </div>
-                    <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
+                    <DynamicFooter />
                 </div>
             ) : null}
         </div>

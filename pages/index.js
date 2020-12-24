@@ -53,7 +53,14 @@ const Login = () => {
                 <title>Login</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <DynamicLoginForm loading={loading} setLoading={setLoading} formRef={formRef} onFinish={onFinish} />
+            {isLogged ? null :
+                <DynamicLoginForm 
+                    loading={loading} 
+                    setLoading={setLoading} 
+                    formRef={formRef} 
+                    onFinish={onFinish}
+                />
+            }
         </div>
         
     )

@@ -3,10 +3,10 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { message, Layout } from 'antd';
+import { message } from 'antd';
 
-const { Footer } = Layout;
-const DynamicHeader= dynamic(() => import('../components/Header'))
+const DynamicHeader= dynamic(() => import('../components/header'))
+const DynamicFooter = dynamic(() => import('../components/footer'))
 const DynamicSearchBar= dynamic(() => import('../components/searchBar'))
 
 const Search = () => {
@@ -34,7 +34,7 @@ const Search = () => {
                 <div>
                     <DynamicHeader selectedKey={["3"]}/>
                     <DynamicSearchBar />
-                    <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
+                    <DynamicFooter />
                 </div>
             ) : null}
         </div>
