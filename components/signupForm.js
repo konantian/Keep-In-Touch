@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 
 const SignUpForm = ({ onFinish, loading, setLoading }) => {
@@ -64,5 +65,12 @@ const SignUpForm = ({ onFinish, loading, setLoading }) => {
         </Form>
     )
 }
+
+
+SignUpForm.propTypes = {
+    onFinish: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    login: PropTypes.bool.isRequired,
+};
 
 export default SignUpForm;

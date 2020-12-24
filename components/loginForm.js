@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -35,5 +36,12 @@ const LoginForm = ({ onFinish, formRef, loading, setLoading}) => {
         </Form>
     )
 }
+
+LoginForm.propTypes = {
+    onFinish: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    formRef : PropTypes.object.isRequired,
+    login: PropTypes.bool.isRequired,
+};
 
 export default LoginForm;

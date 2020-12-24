@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Tag, Drawer} from 'antd';
 import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
@@ -77,5 +78,9 @@ const PostList = ({ posts }) => {
         </div>
     )
 }
+
+PostList.propTypes = {
+    posts : PropTypes.array.isRequired
+};
 
 export default PostList;

@@ -5,6 +5,7 @@ import { logout } from '../redux/actions';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import {
     HomeOutlined,
     UserOutlined,
@@ -13,7 +14,7 @@ import {
     LogoutOutlined,
 } from "@ant-design/icons";
 
-const Header = ({selectedKey}) => {
+const Header = ({ selectedKey }) => {
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -47,5 +48,9 @@ const Header = ({selectedKey}) => {
       </Menu>
     )
 }
+
+Header.propTypes = {
+    selectedKey: PropTypes.array.isRequired
+};
 
 export default Header;

@@ -1,4 +1,5 @@
 import React  from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { PageHeader,  Descriptions, Button } from 'antd';
 
@@ -26,5 +27,10 @@ const ProfileHeader = ({ profile, username }) => {
         </PageHeader>
     )
 }
+
+ProfileHeader.propTypes = {
+    profile: PropTypes.object.isRequired,
+    username: PropTypes.string.isRequired,
+};
 
 export default ProfileHeader;
