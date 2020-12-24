@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Tag, Drawer} from 'antd';
 import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
@@ -38,7 +39,7 @@ const PostList = ({ posts }) => {
                     <List.Item.Meta
                         avatar={<Avatar size={50} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
                         title={
-                            <a href={`/profile/${item.author.username}`}>{item.author.username}</a> 
+                            <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
                         }
                         key={item.id}
                         description={
@@ -47,7 +48,7 @@ const PostList = ({ posts }) => {
                                 {`Updated At : ${item.updatedAt}`}
                                 <br />
                                 {item.tags.map((tag, idx) => (
-                                    <a href={`/tag/${tag}`} key={idx} ><Tag key={idx} color={randomColor()}>{tag}</Tag></a>
+                                    <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>
                                 ))}
                             </div>
                         }

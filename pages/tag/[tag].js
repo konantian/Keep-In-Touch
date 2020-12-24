@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 import { message, Layout, Spin} from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Header from '../../components/header';
-import PostList from '../../components/postList';
 import { POSTS_BY_TAG } from '../../constants/api';
 
 const { Footer } = Layout;
+const DynamicPostList= dynamic(() => import('../../components/postList'))
+const DynamicHeader= dynamic(() => import('../../components/Header'))
 
 const PostByTag = () => {
 
@@ -40,10 +41,10 @@ const PostByTag = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <Header selectedKey={["1"]} />
+            <DynamicHeader selectedKey={["1"]} />
             <div className="postList">
-                {!posts ? <Spin tip="Loading posts ..." /> :
-                    <PostList posts={posts} />
+                {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
+                    <DynamicPostList posts={posts} />
                 }
             </div>
             <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>

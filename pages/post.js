@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { message, Layout } from 'antd';
-import Header from '../components/header';
 
 const { Footer } = Layout;
+const DynamicHeader= dynamic(() => import('../components/Header'))
 
 const Post = () => {
 
@@ -30,7 +31,7 @@ const Post = () => {
             </Head>
             {isLogged ? (
                 <div>
-                    <Header selectedKey={["2"]}/>
+                    <DynamicHeader selectedKey={["2"]}/>
                     <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
                 </div>
             ) : null}

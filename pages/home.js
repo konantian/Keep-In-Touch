@@ -2,14 +2,15 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 import { message, Layout, Spin} from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Header from '../components/header';
-import PostList from '../components/postList';
 import { VISIBLE_POSTS_API }from '../constants/api';
 
 const { Footer } = Layout;
+const DynamicPostList= dynamic(() => import('../components/postList'))
+const DynamicHeader= dynamic(() => import('../components/Header'))
 
 const Home = () => {
 
@@ -42,9 +43,10 @@ const Home = () => {
             </Head>
             {isLogged ? (
                 <div>
-                    <Header selectedKey={["1"]} />
+                    <DynamicHeader selectedKey={["1"]} />
                     <div className="postList" >
-                        {!visiblePosts ? <Spin tip="Loading posts ... " /> : <PostList posts={visiblePosts} />}
+                        {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
+                            : <DynamicPostList posts={visiblePosts} />}
                     </div>
                     <Footer className="pageFooter">Keep In Touch ©2020 Created by Yuan Wang</Footer>
                 </div>
