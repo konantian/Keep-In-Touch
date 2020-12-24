@@ -8,7 +8,7 @@ const LoginForm = ({ onFinish, formRef, loading, setLoading}) => {
 
 
     return (
-        <Form className="form" onFinish={onFinish} ref={formRef} >
+        <Form onFinish={onFinish} ref={formRef} >
             <Form.Item
                 label="Username"
                 name="username"
@@ -41,7 +41,7 @@ LoginForm.propTypes = {
     onFinish: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
     formRef : PropTypes.object.isRequired,
-    login: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 export default LoginForm;

@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/globals.css';
 import 'antd/dist/antd.css';
-import {wrapper} from '../redux/store';
-import {useStore} from 'react-redux';
+import { wrapper } from '../redux/store';
+import { useStore } from 'react-redux';
 import { Spin } from 'antd';
-import {PersistGate} from 'redux-persist/integration/react';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const MyApp = ({Component, pageProps}) => {
     const store = useStore((state) => state);

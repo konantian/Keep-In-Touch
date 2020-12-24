@@ -70,7 +70,7 @@ const SignUpForm = ({ onFinish, loading, setLoading }) => {
 SignUpForm.propTypes = {
     onFinish: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
-    login: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 export default SignUpForm;
