@@ -27,6 +27,9 @@ const PostByTag = () => {
 
     const fetchPosts =  async () => {
         const response = await axios.get(POSTS_BY_TAG(tag));
+        response.data.posts.sort((a,b) => {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        })
         return response.data.posts;
     }
 

@@ -27,6 +27,9 @@ const Home = () => {
 
     const fetchVisiblePosts =  async () => {
         const response = await axios.get(VISIBLE_POSTS_API(username));
+        response.data.posts.sort((a,b) => {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        })
         return response.data.posts;
     }
 

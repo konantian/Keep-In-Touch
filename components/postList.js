@@ -3,7 +3,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Tag } from 'antd';
+import { List, Avatar, Tag, BackTop } from 'antd';
 import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
@@ -21,6 +21,7 @@ const PostList = ({ posts }) => {
 
     return (
         <div>
+            <BackTop />
             <List
                 itemLayout="vertical"
                 dataSource={posts}

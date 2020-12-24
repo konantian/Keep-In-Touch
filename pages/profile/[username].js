@@ -35,6 +35,9 @@ const Profile = () => {
 
     const getProfile = async (username) => {
         const response = await axios.get(USER_BY_USERNAME(username));
+        response.data.posts.sort((a,b) => {
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        })
         setProfile(response.data);
     }
 
