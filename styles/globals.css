@@ -140,3 +140,13 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+.commentAuthor{
+  color :#1890ff;
+  font-weight: bold;
+}
+
+.commentDate{
+  color : #8c8c8c;
+  font-weight: bold;
+}

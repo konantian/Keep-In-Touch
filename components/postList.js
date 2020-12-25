@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Tag, BackTop } from 'antd';
+import { List, Avatar, Tag, BackTop, Tooltip } from 'antd';
 import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
+import { randomColor } from '../utils/randomColor';
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
+dayjs.extend(relativeTime)
 
 const PostList = ({ posts }) => {
 
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
-
-    const randomColor = () => {
-        const colors = ["magenta", "red", "volcano", "orange", "gold","lime","cyan","green",
-                        "blue","geekblue", "purple"];
-        return colors[Math.floor(Math.random() * colors.length)];
-    };
 
     return (
         <div>
@@ -53,9 +51,10 @@ const PostList = ({ posts }) => {
                         key={item.id}
                         description={
                             <div className="postDescription" >
-                                {`Created At : ${item.createdAt}`}
-                                <br />
-                                {`Updated At: ${item.updatedAt}`}
+                                <Tooltip title={dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}>
+                                    <span>{dayjs(item.updatedAt).fromNow()}</span>
+                                </Tooltip>
+                                {item.updatedAt !== item.createdAt ? '  Edited' : ''}
                                 <br />
                                 {item.tags.map((tag, idx) => (
                                     <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>

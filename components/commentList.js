@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
+import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { List, Avatar, Button, message, Input, Drawer, Divider, Form } from 'antd';
-import { DeleteOutlined } from "@ant-design/icons";
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { List, Avatar, Button, message, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
+import { DeleteOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api';
 
 const { TextArea } = Input;
+dayjs.extend(relativeTime)
 
 const CommentList = ({ postId, visible, onClose }) => {
 
@@ -17,7 +19,7 @@ const CommentList = ({ postId, visible, onClose }) => {
     
     useEffect(() => {
         if(postId) getComments();
-    },[postId])
+    },[postId, visible])
 
     const getComments = async() => {
         const response = await axios.get(COMMENTS_BY_POST(postId));
@@ -60,31 +62,29 @@ const CommentList = ({ postId, visible, onClose }) => {
             onClose={onClose}
             visible={visible}
             width={450}
+            closeIcon={<CloseCircleOutlined />}
         >
             <List
                 itemLayout="vertical"
                 dataSource={comments}
                 renderItem={item => (
-                <List.Item 
-                    key={item.id}
-                    actions={[
-                        <a  key="delete" onClick={() => deleteComment(item.id)} className="feedbackButton" >
-                            <DeleteOutlined className="feedbackButton" />
-                        </a >,
-                    ]}
-                >
-                    <List.Item.Meta
+                    <Comment
+                        author={<a href={`/profile/${item.author.username}`} 
+                                    key={item.author.username} 
+                                >
+                                    <span className="commentAuthor" >{item.author.username}</span>
+                                </a>}
                         avatar={<Avatar size={40} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
-                        title={
-                            <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
-                        }
-                        key={item.id}
-                        description={
-                            <div className="postDescription" >{`Created At : ${item.createdAt}`}</div>
-                        }
+                        content={item.content}
+                        datetime={<Tooltip title={dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+                                    <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
+                                </Tooltip>}
+                        actions={[
+                            <a  key="delete" onClick={() => deleteComment(item.id)} className="feedbackButton" >
+                                <DeleteOutlined className="feedbackButton" />{"Delete"}
+                            </a >,
+                        ]}
                     />
-                    <div style={{ overflow: "auto" }}>{item.content}</div>
-                </List.Item>
                 )}
             />
             <Divider />
