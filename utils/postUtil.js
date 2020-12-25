@@ -1,5 +1,6 @@
 import { get_following_by_user,
          get_friends_by_user } from './followUtil';
+import { currentTime } from './currentTime';
 
 export const get_posts = async (prisma) => {
 
@@ -14,6 +15,43 @@ export const get_posts = async (prisma) => {
     })
 
     return posts;
+}
+
+export const create_post = async (prisma, data) => {
+
+    const { title, contentType, content, visibility, tags, username } = data;
+
+    const result = await prisma.post.create({
+        data : {
+            title : title,
+            contentType : contentType,
+            content : content,
+            visibility : visibility,
+            createdAt : currentTime,
+            updatedAt : currentTime,
+            tags: {create: tags},
+            author : {connect : {username : username}}
+        }
+    });
+
+    return result;
+}
+
+export const update_post = async (prisma, id, data) => {
+    const result = await prisma.post.update({
+        where : {id : parseInt(id)},
+        data : data
+    });
+
+    return result;
+}
+
+export const delete_post = async (prisma, id) => {
+    const result = await prisma.post.delete({
+        where : {id : parseInt(id)}
+    });
+
+    return result;
 }
 
 export const get_post_by_id = async (prisma, id) => {

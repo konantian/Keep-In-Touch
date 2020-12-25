@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-import {NextApiRequest, NextApiResponse} from 'next';
-import {check_username, get_password} from '../../../utils/authUtil';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { check_username, get_password } from '../../../utils/authUtil';
 import prisma from '../../../lib/prisma';
 import { currentTime } from '../../../utils/currentTime';
 

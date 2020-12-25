@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-import {NextApiRequest, NextApiResponse} from 'next';
-import {check_username, check_email } from '../../../utils/authUtil';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { check_username, check_email } from '../../../utils/authUtil';
 import prisma from '../../../lib/prisma';
 
 export default async function signup(req : NextApiRequest, res : NextApiResponse ){
