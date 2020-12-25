@@ -1,9 +1,4 @@
-export const get_comments = async (prisma) => {
-
-    const comments = await prisma.comment.findMany();
-
-    return comments;
-}
+import { currentTime } from './currentTime';
 
 export const get_comment_by_id = async (prisma, id) => {
 
@@ -12,6 +7,30 @@ export const get_comment_by_id = async (prisma, id) => {
     });
 
     return comment;
+}
+
+export const create_comment = async (prisma, data) => {
+    const { content, username, postId } = data;
+
+    const result = await prisma.comment.create({
+        data : { 
+            content : content,
+            createdAt : currentTime,
+            updatedAt : currentTime,
+            post : {connect : {id : parseInt(postId)}},
+            author : {connect : {username : username}}
+        }
+    });
+
+    return result;
+}
+
+export const delete_comment = async (prisma, id) => {
+    const result = await prisma.comment.delete({
+        where : {id : parseInt(id)}
+    });
+
+    return result;
 }
 
 export const get_comments_by_post = async (prisma, id) => {

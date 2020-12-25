@@ -17,7 +17,9 @@ const CommentList = ({ postId, visible, onClose }) => {
 
     const getComments = async() => {
         const response = await axios.get(COMMENTS_BY_POST(postId));
-        console.log(response.data.comments);
+        response.data.comments.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        })
         setComments(response.data.comments);
     }
 
@@ -54,7 +56,8 @@ const CommentList = ({ postId, visible, onClose }) => {
                 showCount
                 maxLength={140} 
                 placeholder="Add your comment here"
-                autoSize={{ minRows: 3, maxRows: 5 }}
+                allowClear={true}
+                autoSize={{ minRows: 5, maxRows: 7 }}
             />
             <div className="commentButton" ><Button shape="round" size="large" type="primary">Comment</Button></div>
         </Drawer>

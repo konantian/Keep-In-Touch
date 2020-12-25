@@ -1,15 +1,18 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../lib/prisma';
-import {get_comments} from '../../utils/commentUtil';
+import { create_comment } from '../../utils/commentUtil';
 
 export default async function getAllComments(req : NextApiRequest, res : NextApiResponse ){
 
-    if(req.method !== 'GET'){
-        return res.status(405).json({error : "Method not allowed, please use GET"});
+    if(req.method !== 'POST'){
+        return res.status(405).json({error : "Method not allowed, please use POST"});
     }
 
-    const comments = await get_comments(prisma);
+    const addComment = await create_comment(prisma, req.body);
+    if(!addComment){
+        return res.status(400).json({error : "New comment cannot be created, please try again."});
+    }
 
     await prisma.$disconnect();
-    return res.status(200).json({comments : comments});
+    return res.status(201).json({success : "New comment has been created"});
 }

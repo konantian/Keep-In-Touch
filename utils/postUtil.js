@@ -2,21 +2,6 @@ import { get_following_by_user,
          get_friends_by_user } from './followUtil';
 import { currentTime } from './currentTime';
 
-export const get_posts = async (prisma) => {
-
-    const result = await prisma.post.findMany({
-        include : {comments : true, tags : true}
-    });
-
-    const posts = result.map(post => {
-        post.tags = post.tags.map(tag => tag.name);
-        post.comments = post.comments.length;
-        return post;
-    })
-
-    return posts;
-}
-
 export const create_post = async (prisma, data) => {
 
     const { title, contentType, content, visibility, tags, username } = data;
