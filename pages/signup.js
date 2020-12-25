@@ -30,7 +30,7 @@ const SignUp = () =>{
                 "password" : values.password
             }).then((res) => {
                 setLoading(false);
-                message.success(res.data['success']);
+                message.success(res.data['success'],[1]);
                 localStorage.setItem('username', values.username);
                 router.push('/');
             }).catch((err) => {
