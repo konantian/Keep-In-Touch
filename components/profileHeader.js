@@ -2,6 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import useSWR, { mutate } from 'swr';
 import { useSelector } from 'react-redux';
 import { MenuOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message } from 'antd';
@@ -12,21 +13,21 @@ const ProfileHeader = ({ profile, username }) => {
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
     const [followers, setFollowers] = useState(0);
-    const [status, setStatus] = useState(null);
 
     useEffect(() => {
         setFollowers(profile.followers);
-        getFollow(username);
     },[])
 
-    const getFollow = async (username) => {
+    const getFollow = async () => {
         const response = await axios.get(IF_FOLLOW_API,
             { params: {
                 user : currentUser,
                 follower : username
             }});
-        setStatus(response.data.status);
+        return response.data.status;
     }
+
+    const {data : status, error}  = useSWR(IF_FOLLOW_API, getFollow);
 
     const handleMenuClick = (e) => {
         if(e.key === '1'){
@@ -36,7 +37,7 @@ const ProfileHeader = ({ profile, username }) => {
             }).then((res) => {
                 message.success(res.data['success'],[0.5]);
                 setFollowers(followers - 1);
-                getFollow(username);
+                mutate(IF_FOLLOW_API);
             }).catch((err) => {
                 console.log(err);
             })
@@ -50,7 +51,7 @@ const ProfileHeader = ({ profile, username }) => {
         }).then((res) => {
             message.success(res.data['success'],[0.5]);
             setFollowers(followers + 1);
-            getFollow(username);
+            mutate(IF_FOLLOW_API);
         }).catch((err) => {
             console.log(err);
         })
@@ -72,9 +73,9 @@ const ProfileHeader = ({ profile, username }) => {
             extra={[currentUser !== username ? 
                 (status !== 'Follow' ? 
                     <Dropdown key="status" overlay={menu}>
-                        <Button size="large" shape="round">{status} <MenuOutlined /></Button>
+                        <Button size="large" key="statusButton" shape="round">{status} <MenuOutlined /></Button>
                     </Dropdown> : 
-                    <Button onClick={() => follow()} size="large" type="primary" shape="round">{status} <PlusOutlined /></Button>
+                    <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <PlusOutlined /></Button>
                 ) : null
             ]}
             avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}

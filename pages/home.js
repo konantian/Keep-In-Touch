@@ -33,7 +33,7 @@ const Home = () => {
         return response.data.posts;
     }
 
-    const {data : visiblePosts, error} = useSWR(username, fetchVisiblePosts);
+    const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API, fetchVisiblePosts);
 
     return (
         <div>
@@ -49,7 +49,7 @@ const Home = () => {
                     <DynamicHeader selectedKey={["1"]} />
                     <div className="postList" >
                         {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
-                            : <DynamicPostList posts={visiblePosts} />}
+                            : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API} />}
                     </div>
                     <DynamicFooter />
                 </div>

@@ -14,9 +14,9 @@ const DynamicFooter = dynamic(() => import('../../components/footer'))
 
 const PostByTag = () => {
 
-    const isLogged = useSelector((state) => state.isLogged);
     const router = useRouter();
     const { tag } = router.query;
+    const isLogged = useSelector((state) => state.isLogged);
 
     useEffect(() => {
         if (!isLogged) {
@@ -33,7 +33,7 @@ const PostByTag = () => {
         return response.data.posts;
     }
 
-    const {data : posts, error} = useSWR(tag, fetchPosts);
+    const {data : posts, error} = useSWR(tag !== undefined ? POSTS_BY_TAG : null, fetchPosts);
 
     return (
         <div>
@@ -47,7 +47,7 @@ const PostByTag = () => {
             <DynamicHeader selectedKey={["1"]} />
             <div className="postList">
                 {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
-                    <DynamicPostList posts={posts} />
+                    <DynamicPostList posts={posts} api={POSTS_BY_TAG} />
                 }
             </div>
             <DynamicFooter />

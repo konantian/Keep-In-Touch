@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import useSWR, { mutate } from 'swr';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -15,24 +16,21 @@ const CommentList = ({ postId, visible, onClose }) => {
 
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
-    const [comments, setComments] = useState(null);
-    
-    useEffect(() => {
-        if(postId) getComments();
-    },[postId, visible])
 
     const getComments = async() => {
         const response = await axios.get(COMMENTS_BY_POST(postId));
         response.data.comments.sort((a, b) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         })
-        setComments(response.data.comments);
+        return response.data.comments;
     }
+
+    const { data : comments, error} = useSWR(visible === true ? COMMENT_BY_ID : null, getComments);
 
     const deleteComment = (commentId) => {
         axios.delete(COMMENT_BY_ID(commentId)).then(res =>{
             message.success(res.data['success'],[0.5]);
-            getComments();
+            mutate(COMMENT_BY_ID);
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);
@@ -47,7 +45,7 @@ const CommentList = ({ postId, visible, onClose }) => {
         }).then((res) => {
             message.success(res.data['success'],[0.5]);
             formRef.current.resetFields();
-            getComments();
+            mutate(COMMENT_BY_ID);
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);

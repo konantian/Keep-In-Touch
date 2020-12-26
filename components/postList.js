@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { mutate } from 'swr';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
@@ -15,7 +16,7 @@ import { POST_BY_ID } from '../constants/api';
 const DynamicCommentList= dynamic(() => import('./commentList'))
 dayjs.extend(relativeTime)
 
-const PostList = ({ posts }) => {
+const PostList = ({ posts, api }) => {
 
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
@@ -44,7 +45,8 @@ const PostList = ({ posts }) => {
                         icon={<DeleteOutlined />}
                         onClick={() => {
                             axios.delete(POST_BY_ID(postId)).then(res => {
-                                message.success(res.data['success']);
+                                message.success(res.data['success'],[0.5]);
+                                mutate(api);
                             })
                         }}
                     >

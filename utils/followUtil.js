@@ -30,7 +30,7 @@ export const if_follow = async (prisma, data) => {
 
     if(ifFollow && ifFollower) return 'Friend';
     else if(ifFollower) return 'Following';
-    else if(!ifFollow && !ifFollower) return 'Follow';
+    else return 'Follow';
 }
 
 export const get_followers_by_user = async (prisma, username) => {

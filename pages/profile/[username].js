@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
+import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -15,8 +16,7 @@ const DynamicProfileHeader = dynamic(() => import('../../components/profileHeade
 const Profile = () => {
 
     const router = useRouter();
-    const [username, setUsername] = useState(null);
-    const [profile, setProfile] = useState(null);
+    const { username } = router.query;
     const isLogged = useSelector((state) => state.isLogged);
     
     useEffect(() => {
@@ -26,20 +26,15 @@ const Profile = () => {
         };
     }, []);
 
-    useEffect(() => {
-        if (router.asPath !== router.route) {
-            setUsername(router.query.username);
-            getProfile(router.query.username);
-        }
-    }, [router])
-
-    const getProfile = async (username) => {
+    const getProfile = async () => {
         const response = await axios.get(USER_BY_USERNAME(username));
         response.data.posts.sort((a,b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })
-        setProfile(response.data);
+        return response.data;
     }
+
+    const {data : profile, error } = useSWR(username !== undefined ? USER_BY_USERNAME : null,getProfile);
 
     return (
         <div>
@@ -60,7 +55,7 @@ const Profile = () => {
                         <div>
                             <DynamicProfileHeader username={username} profile={profile} />
                             <Divider />
-                            <DynamicPostList posts={profile.posts} />
+                            <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME} />
                          </div>
                     }
                     </div>
