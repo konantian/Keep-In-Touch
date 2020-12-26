@@ -2,26 +2,35 @@ export const remove_follow = async (prisma, data) => {
     const {userId, followerId} = data;
 
     const result = await prisma.follow.delete({
-        where : {userId : userId, followerId: followerId}
+        where : {followerId_userId : {
+                followerId : followerId,
+                userId : userId
+        }}
     });
 
     return result;
 }
 
 export const if_follow = async (prisma, data) => {
-    const {userId, followerId} = data;
+    const {user, follower} = data;
 
-    const follow = await prisma.follow.findFirst({
-        where : {userId : userId, followerId: followerId}
+    const ifFollow = await prisma.follow.findFirst({
+        where : {
+            user : {username : user}, 
+            follower: {username : follower}
+        }
     });
 
-    const follower = await prisma.follow.findFirst({
-        where : {userId : followerId, followerId: userId}
+    const ifFollower = await prisma.follow.findFirst({
+        where : {
+            user : {username : follower}, 
+            follower: {username : user}
+        }
     });
 
-    if(follow && follower) return 'friend';
-    else if(follower) return 'follow';
-    else if(!follow && !follower) return 'none';
+    if(ifFollow && ifFollower) return 'Friend';
+    else if(ifFollower) return 'Following';
+    else if(!ifFollow && !ifFollower) return 'Follow';
 }
 
 export const get_followers_by_user = async (prisma, username) => {

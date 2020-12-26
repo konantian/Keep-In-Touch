@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../lib/prisma';
-import {if_follow} from '../../../utils/followUtil';
+import { if_follow } from '../../../utils/followUtil';
 
 export default async function ifFollow(req : NextApiRequest, res : NextApiResponse){
 
@@ -8,7 +8,7 @@ export default async function ifFollow(req : NextApiRequest, res : NextApiRespon
         return res.status(405).json({error : "Method not allowed, please use GET"});
     }
     
-    const follow = await if_follow(prisma, req.body);
+    const follow = await if_follow(prisma, req.query);
 
     await prisma.$disconnect();
     return res.status(200).json({status : follow});

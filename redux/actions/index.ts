@@ -11,6 +11,13 @@ export const setUsername = (username : string) => {
     }
 }
 
+export const setUserId = (userId : number) => {
+    return {
+        type : "USER_ID",
+        payload: userId
+    }
+}
+
 export const logout = () => {
     return {
         type : "LOGOUT"

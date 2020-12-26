@@ -24,10 +24,11 @@ export default async function login(req : NextApiRequest, res : NextApiResponse)
 
         const updateLogin = await prisma.user.update({
             where : {username : username},
-            data : {lastLogin : currentTime}
+            data : {lastLogin : currentTime},
+            select : {id : true}
         });
         await prisma.$disconnect();
-        return res.status(200).json({success : "Welcome back!"});
+        return res.status(200).json({success : "Welcome back!", userId : updateLogin.id});
     }else{
         await prisma.$disconnect();
         return res.status(400).json({error : "The username and password entered is not matched"});

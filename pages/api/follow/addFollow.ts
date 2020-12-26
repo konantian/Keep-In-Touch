@@ -8,12 +8,12 @@ export default async function addFollow(req : NextApiRequest, res : NextApiRespo
         return res.status(405).json({error : "Method not allowed, please use POST"});
     }
 
-    const {userId, followerId} = req.body;
+    const { user, follower } = req.body;
 
     const addFollow = await prisma.follow.create({
         data : {
-            user : {connect : {id : userId}},
-            follower : {connect : {id : followerId}},
+            user : {connect : {username : user}},
+            follower : {connect : {username : follower}},
             followedAt : currentTime
         }
     });

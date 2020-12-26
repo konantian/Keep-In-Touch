@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { message, Divider, Spin} from 'antd';
-import { USER_BY_USERNAME  } from '../../constants/api';
+import { USER_BY_USERNAME } from '../../constants/api';
 
 const DynamicPostList = dynamic(() => import('../../components/postList'))
 const DynamicHeader = dynamic(() => import('../../components/header'))
@@ -54,7 +54,9 @@ const Profile = () => {
                 <div className="main" >
                     <DynamicHeader selectedKey={["5"]}/>
                     <div className="profileHeader">
-                    {!profile ? <div className="loader" ><Spin size="large" tip="Loading user's profile ... "/></div>: 
+                    {!profile ? <div className="loader" >
+                                    <Spin size="large" tip="Loading user's profile ... "/>
+                                </div> : 
                         <div>
                             <DynamicProfileHeader username={username} profile={profile} />
                             <Divider />
