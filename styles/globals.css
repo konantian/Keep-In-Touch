@@ -150,3 +150,8 @@ a {
   color : #8c8c8c;
   font-weight: bold;
 }
+
+.postTitle{
+  display : flex;
+  justify-content: space-between;
+}

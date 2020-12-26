@@ -83,10 +83,12 @@ const CommentList = ({ postId, visible, onClose }) => {
                                     <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
                                 </Tooltip>}
                         actions={[
+                            item.author.username === username ? 
                             <a  key="delete" onClick={() => deleteComment(item.id)} className="feedbackButton" >
                                 <DeleteOutlined className="feedbackButton" />{"Delete"}
-                            </a >,
+                            </a > : null,
                         ]}
+
                     />
                 )}
             /> }

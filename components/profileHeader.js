@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { MenuOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message } from 'antd';
@@ -80,7 +81,7 @@ const ProfileHeader = ({ profile, username }) => {
         >
             <Descriptions size="middle" column={2} className="descriptions">
                 <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>
-                <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >{profile.lastLogin}</Descriptions.Item>
+                <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >{dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
                 <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>{followers}</Descriptions.Item>
                 <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>{profile.following}</Descriptions.Item>
                 <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>{profile.bio}</Descriptions.Item>

@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Tag, BackTop, Tooltip } from 'antd';
-import { MessageOutlined,LikeOutlined } from "@ant-design/icons";
+import { List, Avatar, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
+import { MessageOutlined, LikeOutlined, EllipsisOutlined, DeleteOutlined } from "@ant-design/icons";
 import { randomColor } from '../utils/randomColor';
+import { POST_BY_ID } from '../constants/api';
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
 dayjs.extend(relativeTime)
@@ -16,6 +19,40 @@ const PostList = ({ posts }) => {
 
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
+    const username = useSelector((state) => state.username);
+
+    const menu = (author, postId) => {
+         return(
+            <Menu>
+                <Menu.Item key="1" icon={<LikeOutlined />}>
+                    Like
+                </Menu.Item>
+                <Menu.Item 
+                    key="2" 
+                    icon={<MessageOutlined />}
+                    onClick={() => {
+                        setPostId(postId);
+                        setVisible(true);
+                    }}
+                >
+                    Comment
+                </Menu.Item>
+                {author === username ?
+                    <Menu.Item 
+                        danger 
+                        key="3" 
+                        icon={<DeleteOutlined />}
+                        onClick={() => {
+                            axios.delete(POST_BY_ID(postId)).then(res => {
+                                message.success(res.data['success']);
+                            })
+                        }}
+                    >
+                        Delete
+                    </Menu.Item> : null}
+            </Menu>
+         )
+    };
 
     return (
         <div>
@@ -46,7 +83,13 @@ const PostList = ({ posts }) => {
                     <List.Item.Meta
                         avatar={<Avatar size={50} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
                         title={
-                            <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
+                            <div className="postTitle" >
+                                <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
+                                <Dropdown key="status" overlay={menu(item.author.username, item.id)}>
+                                    <Button shape="round"><EllipsisOutlined /></Button>
+                                </Dropdown>
+                            </div>
+                            
                         }
                         key={item.id}
                         description={
