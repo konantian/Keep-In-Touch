@@ -1,3 +1,5 @@
+import { get_visible_posts_by_user } from  './postUtil';
+
 export const get_tags_by_post = async (prisma, id) => {
 
     const result = await prisma.post.findFirst({
@@ -16,22 +18,13 @@ export const get_tags = async (prisma) => {
     return tags.map(item => item.name);
 }
 
-export const get_posts_by_tag = async (prisma, tag) => {
+export const get_posts_by_tag = async (prisma, data) => {
 
-    const result = await prisma.tag.findMany({
-        where : {name : tag},
-        include : {post : {
-            include : {tags : true, author : true, comments : true}
-        }}
-    });
+    const { tag, username } = data;
 
-    const allPosts = result.map(tag => tag.post);
+    const visiblePosts = await get_visible_posts_by_user(prisma, username);
 
-    const posts = allPosts.map(post => {
-        post.tags = post.tags.map(tag => tag.name);
-        post.comments = post.comments.length;
-        return post;
-    })
+    const tagPosts = visiblePosts.filter(post => post.tags.includes(tag));
 
-    return posts;
+    return tagPosts;
 }
