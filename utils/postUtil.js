@@ -31,9 +31,42 @@ export const update_post = async (prisma, id, data) => {
     return result;
 }
 
+export const delete_comment = async (prisma, comments) => {
+
+    comments.forEach( async comment => {
+        await prisma.comment.delete({
+            where : {id : comment.id}
+        })
+    });
+    
+}
+
+export const delete_tag = async (prisma, tags) => {
+
+    tags.forEach( async tag => {
+        await prisma.tag.delete({
+            where : { name_postId : {
+                    name : tag.name,
+                    postId : tag.postId
+            }}
+        })
+    });
+}
+
 export const delete_post = async (prisma, id) => {
+
+    const postId = parseInt(id);
+
+    const post = await prisma.post.findFirst({
+        where : {id : postId},
+        include : {comments : true, tags : true}
+    });
+
+    await delete_comment(prisma, post.comments);
+    await delete_tag(prisma, post.tags);
+
     const result = await prisma.post.delete({
-        where : {id : parseInt(id)}
+        where : {id : postId}
     });
 
     return result;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
@@ -117,7 +117,7 @@ const PostList = ({ posts, api }) => {
                 </List.Item>
                 )}
             />
-            <DynamicCommentList postId={postId} visible={visible} onClose={() => setVisible(false)} />
+            <DynamicCommentList postId={postId} visible={visible} onClose={() => setVisible(false)} updatePost={() => mutate(api)} />
         </div>
     )
 }

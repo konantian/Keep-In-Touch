@@ -12,7 +12,7 @@ import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api'
 const { TextArea } = Input;
 dayjs.extend(relativeTime)
 
-const CommentList = ({ postId, visible, onClose }) => {
+const CommentList = ({ postId, visible, onClose, updatePost }) => {
 
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
@@ -31,6 +31,7 @@ const CommentList = ({ postId, visible, onClose }) => {
         axios.delete(COMMENT_BY_ID(commentId)).then(res =>{
             message.success(res.data['success'],[0.5]);
             mutate(COMMENT_BY_ID);
+            updatePost();
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);
@@ -46,6 +47,7 @@ const CommentList = ({ postId, visible, onClose }) => {
             message.success(res.data['success'],[0.5]);
             formRef.current.resetFields();
             mutate(COMMENT_BY_ID);
+            updatePost();
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);
