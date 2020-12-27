@@ -42,7 +42,7 @@ const Profile = () => {
     const {data : profile, error } = useSWR(username !== undefined ? USER_BY_USERNAME : null,getProfile);
 
     return (
-        <div>
+        <div className="main" >
             <Head>
                 <title>Profile</title>
                 <meta
@@ -50,23 +50,20 @@ const Profile = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            {isLogged ? (
-                <div className="main" >
-                    <DynamicHeader selectedKey={["5"]}/>
-                    <div className="profileHeader">
-                    {!profile ? <div className="loader" >
-                                    <Spin size="large" tip="Loading user's profile ... "/>
-                                </div> : 
-                        <div>
-                            <DynamicProfileHeader username={username} profile={profile} />
-                            <Divider />
-                            <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME} />
-                         </div>
-                    }
-                    </div>
-                    <DynamicFooter />
+            <DynamicHeader selectedKey={["5"]}/>
+            <div className="pageContainer">
+            {!profile ? 
+                <div className="loader" >
+                    <Spin size="large" tip="Loading user's profile ... "/>
+                </div> : 
+                <div>
+                    <DynamicProfileHeader username={username} profile={profile} />
+                    <Divider />
+                    <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME} />
                 </div>
-            ) : null}
+            }
+            </div>
+            <DynamicFooter />
         </div>
     )
 }

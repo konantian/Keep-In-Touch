@@ -22,7 +22,7 @@ const Search = () => {
     }, []);
 
     return (
-        <div>
+        <div className="main">
             <Head>
                 <title>Search Page</title>
                 <meta
@@ -30,13 +30,11 @@ const Search = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            {isLogged ? (
-                <div>
-                    <DynamicHeader selectedKey={["3"]}/>
-                    <DynamicSearchBar />
-                    <DynamicFooter />
-                </div>
-            ) : null}
+            <DynamicHeader selectedKey={["3"]}/>
+            <div className="pageContainer">
+                <DynamicSearchBar />
+            </div>
+            <DynamicFooter />
         </div>
     )
 }

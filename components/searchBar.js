@@ -25,7 +25,7 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="searchBar">
+        <div>
             <Form.Item>
                 <AutoComplete
                     options={options}

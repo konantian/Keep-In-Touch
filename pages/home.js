@@ -36,7 +36,7 @@ const Home = () => {
     const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API, fetchVisiblePosts);
 
     return (
-        <div>
+        <div className="main" >
             <Head>
                 <title>Home</title>
                 <meta
@@ -44,16 +44,12 @@ const Home = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            {isLogged ? (
-                <div className="main" >
-                    <DynamicHeader selectedKey={["1"]} />
-                    <div className="postList" >
-                        {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
-                            : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API} />}
-                    </div>
-                    <DynamicFooter />
-                </div>
-            ) : null}
+            <DynamicHeader selectedKey={["1"]} />
+            <div className="pageContainer" >
+                {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
+                    : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API} />}
+            </div>
+            <DynamicFooter />
         </div>
     )
 

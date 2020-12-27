@@ -55,11 +55,11 @@ const SignUpForm = ({ onFinish, loading, setLoading }) => {
             <div className="loginButtons">
                 <Form.Item >
                     <Link href="/">
-                        <Button className="loginButton" type="primary" shape="round" size="large" >Log in</Button>
+                        <Button className="authButton" type="primary" shape="round" size="large" >Log in</Button>
                     </Link>
                 </Form.Item>
                 <Form.Item >
-                    <Button className="signButton" loading={loading} type="primary" onClick={() => setLoading(true)} shape="round" size="large" htmlType="submit">Sign Up</Button>
+                    <Button className="authButton" loading={loading} type="primary" onClick={() => setLoading(true)} shape="round" size="large" htmlType="submit">Sign Up</Button>
                 </Form.Item>
             </div>
         </Form>

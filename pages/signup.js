@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { SIGNUP_API } from '../constants/api';
 
 const DynamicSignUpForm= dynamic(() => import('../components/signupForm'))
+const DynamicFooter = dynamic(() => import('../components/footer'))
 
 const SignUp = () =>{
 
@@ -41,13 +42,17 @@ const SignUp = () =>{
       };
 
     return (
-        <div className="authContainer">
+        <div className="main" >
             <Head>
                 <title>Sign Up</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <DynamicSignUpForm loading={loading} setLoading={setLoading} onFinish={onFinish} />
+             <div className="authContainer">
+                <DynamicSignUpForm loading={loading} setLoading={setLoading} onFinish={onFinish} />
+            </div>
+            <DynamicFooter />
         </div>
+       
         
     )
 }

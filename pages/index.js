@@ -9,6 +9,7 @@ import { login, setUsername, setUserId } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
 const DynamicLoginForm= dynamic(() => import('../components/loginForm'))
+const DynamicFooter = dynamic(() => import('../components/footer'))
 
 const Login = () => {
 
@@ -49,21 +50,16 @@ const Login = () => {
       };
 
     return (
-        <div className="main" >
+        <div className="main">
             <div className="authContainer">
-                <Head>
-                    <title>Login</title>
-                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                </Head>
-                {isLogged ? null :
-                    <DynamicLoginForm 
-                        loading={loading} 
-                        setLoading={setLoading} 
-                        formRef={formRef} 
-                        onFinish={onFinish}
-                    />
-                }
+                <DynamicLoginForm 
+                    loading={loading} 
+                    setLoading={setLoading} 
+                    formRef={formRef} 
+                    onFinish={onFinish}
+                />
             </div>
+            <DynamicFooter />
         </div>    
     )
 }

@@ -21,7 +21,7 @@ const Post = () => {
     }, []);
 
     return (
-        <div>
+        <div className="main">
             <Head>
                 <title>New Post</title>
                 <meta
@@ -29,13 +29,9 @@ const Post = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            {isLogged ? (
-                <div>
-                    <DynamicHeader selectedKey={["2"]}/>
-                    <div className="newPost"></div>
-                    <DynamicFooter />
-                </div>
-            ) : null}
+            <DynamicHeader selectedKey={["2"]}/>
+            <div className="pageContainer"></div>
+            <DynamicFooter />
         </div>
     )
 }

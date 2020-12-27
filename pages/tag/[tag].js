@@ -40,7 +40,7 @@ const PostByTag = () => {
     const {data : posts, error} = useSWR(tag !== undefined ? POSTS_BY_TAG : null, fetchPosts);
 
     return (
-        <div>
+        <div className="main" >
             <Head>
                 <title>{`${tag} Posts`}</title>
                 <meta
@@ -49,7 +49,7 @@ const PostByTag = () => {
                 />
             </Head>
             <DynamicHeader selectedKey={["1"]} />
-            <div className="postList">
+            <div className="pageContainer">
                 {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
                     <DynamicPostList posts={posts} api={POSTS_BY_TAG} />
                 }

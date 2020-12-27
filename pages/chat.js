@@ -8,7 +8,7 @@ const DynamicFooter = dynamic(() => import('../components/footer'))
 const Chat = () => {
 
     return (
-        <div  >
+        <div className="main" >
             <Head>
                 <title>Message</title>
                 <meta
@@ -16,13 +16,9 @@ const Chat = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <div>
-                <DynamicHeader selectedKey={["4"]} />
-                <div className="chatPage" >
-
-                </div>
-                <DynamicFooter />
-            </div>   
+            <DynamicHeader selectedKey={["4"]} />
+            <div className="pageContainer" ></div>
+            <DynamicFooter />
         </div>
     )
 }
