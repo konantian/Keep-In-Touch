@@ -18,6 +18,7 @@ const Profile = () => {
     const router = useRouter();
     const { username } = router.query;
     const isLogged = useSelector((state) => state.isLogged);
+    const currentUser = useSelector((state) => state.username);
     
     useEffect(() => {
         if (!isLogged) {
@@ -27,7 +28,11 @@ const Profile = () => {
     }, []);
 
     const getProfile = async () => {
-        const response = await axios.get(USER_BY_USERNAME(username));
+        const response = await axios.get(USER_BY_USERNAME(username),{
+            params: {
+                currentUser : currentUser
+            }
+        });
         response.data.posts.sort((a,b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })

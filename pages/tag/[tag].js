@@ -17,7 +17,7 @@ const PostByTag = () => {
     const router = useRouter();
     const { tag } = router.query;
     const isLogged = useSelector((state) => state.isLogged);
-    const username = useSelector((state) => state.username);
+    const currentUser = useSelector((state) => state.username);
 
     useEffect(() => {
         if (!isLogged) {
@@ -27,10 +27,9 @@ const PostByTag = () => {
     }, []);
 
     const fetchPosts =  async () => {
-        const response = await axios.get(POSTS_BY_TAG,{
+        const response = await axios.get(POSTS_BY_TAG(tag),{
             params: {
-                tag : tag,
-                username : username
+                currentUser : currentUser
             }});
         response.data.posts.sort((a,b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);

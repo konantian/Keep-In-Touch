@@ -81,7 +81,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     //all posts that are visible to followers only
     const following = await get_following_by_user(prisma, username);
     const followerPosts = await prisma.post.findMany({
-        where : {author : {id : {in : following}} ,
+        where : {author : {username : {in : following}} ,
                 visibility : "FOLLOWERS"},
         include : {comments : true, tags : true, author : true}     
     });
@@ -90,7 +90,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     //all posts that are visible to friends only
     const friends = await get_friends_by_user(prisma, username);
     const friendPosts = await prisma.post.findMany({
-        where : {author : {id : {in : friends}},
+        where : {author : {username : {in : friends}},
                 visibility : 'FRIENDS'},
         include : {comments : true, tags : true, author : true}   
     });

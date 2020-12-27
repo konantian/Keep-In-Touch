@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../../lib/prisma';
-import { get_posts_by_tag } from '../../../utils/tagUtil';
+import prisma from '../../../../lib/prisma';
+import { get_posts_by_tag } from '../../../../utils/tagUtil';
 
 export default async function getPostsByTag(req : NextApiRequest, res : NextApiResponse ){
 

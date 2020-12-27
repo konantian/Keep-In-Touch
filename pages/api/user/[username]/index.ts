@@ -8,7 +8,7 @@ export default async function getUserByUsername(req : NextApiRequest, res : Next
     return res.status(405).json({error : "Method not allowed, please use GET"});
   }
 
-  const user = await get_user_by_username(prisma, req.query.username);
+  const user = await get_user_by_username(prisma, req.query);
 
   return res.status(200).json(user);
 }

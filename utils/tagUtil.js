@@ -20,9 +20,9 @@ export const get_tags = async (prisma) => {
 
 export const get_posts_by_tag = async (prisma, data) => {
 
-    const { tag, username } = data;
+    const { tag, currentUser } = data;
 
-    const visiblePosts = await get_visible_posts_by_user(prisma, username);
+    const visiblePosts = await get_visible_posts_by_user(prisma, currentUser);
 
     const tagPosts = visiblePosts.filter(post => post.tags.includes(tag));
 
