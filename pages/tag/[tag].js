@@ -26,8 +26,8 @@ const PostByTag = () => {
         };
     }, []);
 
-    const fetchPosts =  async (tag) => {
-        const response = await axios.get(POSTS_BY_TAG(tag),{
+    const fetchPosts =  async ( url ) => {
+        const response = await axios.get(url,{
             params: {
                 currentUser : currentUser
             }});
@@ -37,7 +37,7 @@ const PostByTag = () => {
         return response.data.posts;
     }
 
-    const {data : posts, error} = useSWR(tag !== undefined ? tag : null, fetchPosts);
+    const {data : posts, error} = useSWR(tag !== undefined ? POSTS_BY_TAG(tag) : null, fetchPosts);
 
     return (
         <div className="main" >
@@ -51,7 +51,7 @@ const PostByTag = () => {
             <DynamicHeader selectedKey={["1"]} />
             <div className="pageContainer">
                 {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
-                    <DynamicPostList posts={posts} api={POSTS_BY_TAG} />
+                    <DynamicPostList posts={posts} api={POSTS_BY_TAG(tag)} />
                 }
             </div>
             <DynamicFooter />

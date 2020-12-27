@@ -24,7 +24,7 @@ const Search = () => {
     return (
         <div className="main">
             <Head>
-                <title>Search Page</title>
+                <title>Search</title>
                 <meta
                     name="viewport"
                     content="initial-scale=1.0, width=device-width"

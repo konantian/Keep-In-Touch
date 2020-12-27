@@ -27,8 +27,8 @@ const Profile = () => {
         };
     }, []);
 
-    const getProfile = async (username) => {
-        const response = await axios.get(USER_BY_USERNAME(username),{
+    const getProfile = async ( url ) => {
+        const response = await axios.get(url,{
             params: {
                 currentUser : currentUser
             }
@@ -39,7 +39,7 @@ const Profile = () => {
         return response.data;
     }
 
-    const {data : profile, error } = useSWR(username !== undefined ? username : null,getProfile);
+    const {data : profile, error } = useSWR(username !== undefined ? USER_BY_USERNAME(username) : null,getProfile);
 
     return (
         <div className="main" >
@@ -59,7 +59,7 @@ const Profile = () => {
                 <div>
                     <DynamicProfileHeader username={username} profile={profile} />
                     <Divider />
-                    <DynamicPostList posts={profile.posts} api={username} />
+                    <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME(username)} />
                 </div>
             }
             </div>

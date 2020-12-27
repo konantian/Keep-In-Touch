@@ -17,9 +17,9 @@ a {
 
 .authContainer{
   display: flex;
-  align-items: center;
   justify-content: center;
   flex: 1 0 auto;
+  margin-top: 15%;
 }
 
 .authButton{

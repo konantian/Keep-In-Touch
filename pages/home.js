@@ -3,7 +3,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
-import { message, Spin} from 'antd';
+import { message, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { VISIBLE_POSTS_API }from '../constants/api';
@@ -25,15 +25,15 @@ const Home = () => {
         };
     }, []);
 
-    const fetchVisiblePosts =  async () => {
-        const response = await axios.get(VISIBLE_POSTS_API(username));
+    const fetchVisiblePosts =  async ( url ) => {
+        const response = await axios.get(url);
         response.data.posts.sort((a,b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })
         return response.data.posts;
     }
 
-    const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API, fetchVisiblePosts);
+    const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API(username), fetchVisiblePosts);
 
     return (
         <div className="main" >
@@ -47,7 +47,7 @@ const Home = () => {
             <DynamicHeader selectedKey={["1"]} />
             <div className="pageContainer" >
                 {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
-                    : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API} />}
+                    : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API(username)} />}
             </div>
             <DynamicFooter />
         </div>
