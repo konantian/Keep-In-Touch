@@ -26,7 +26,7 @@ const PostByTag = () => {
         };
     }, []);
 
-    const fetchPosts =  async () => {
+    const fetchPosts =  async (tag) => {
         const response = await axios.get(POSTS_BY_TAG(tag),{
             params: {
                 currentUser : currentUser
@@ -37,7 +37,7 @@ const PostByTag = () => {
         return response.data.posts;
     }
 
-    const {data : posts, error} = useSWR(tag !== undefined ? POSTS_BY_TAG : null, fetchPosts);
+    const {data : posts, error} = useSWR(tag !== undefined ? tag : null, fetchPosts);
 
     return (
         <div className="main" >

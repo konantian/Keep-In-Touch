@@ -16,7 +16,7 @@ const DynamicProfileHeader = dynamic(() => import('../../components/profileHeade
 const Profile = () => {
 
     const router = useRouter();
-    const { username } = router.query;
+    const { username }  = router.query;
     const isLogged = useSelector((state) => state.isLogged);
     const currentUser = useSelector((state) => state.username);
     
@@ -27,7 +27,7 @@ const Profile = () => {
         };
     }, []);
 
-    const getProfile = async () => {
+    const getProfile = async (username) => {
         const response = await axios.get(USER_BY_USERNAME(username),{
             params: {
                 currentUser : currentUser
@@ -39,7 +39,7 @@ const Profile = () => {
         return response.data;
     }
 
-    const {data : profile, error } = useSWR(username !== undefined ? USER_BY_USERNAME : null,getProfile);
+    const {data : profile, error } = useSWR(username !== undefined ? username : null,getProfile);
 
     return (
         <div className="main" >
@@ -59,7 +59,7 @@ const Profile = () => {
                 <div>
                     <DynamicProfileHeader username={username} profile={profile} />
                     <Divider />
-                    <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME} />
+                    <DynamicPostList posts={profile.posts} api={username} />
                 </div>
             }
             </div>
