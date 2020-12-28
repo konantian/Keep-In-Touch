@@ -3,7 +3,6 @@ import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Spin } from  'antd';
 import {  FOLLOWER_API  } from '../../constants/api';
@@ -16,8 +15,6 @@ const Follower = () => {
 
     const router = useRouter();
     const { username }  = router.query;
-    const isLogged = useSelector((state) => state.isLogged);
-    const currentUser = useSelector((state) => state.username);
 
     const getFollower = async ( url ) => {
         const response = await axios.get(url);
@@ -40,7 +37,7 @@ const Follower = () => {
                 {!follower ? 
                 <div className="loader" >
                     <Spin size="large" tip="Loading user's follower ... "/>
-                </div> : <DynamicFollower follower={follower} /> }
+                </div> : <DynamicFollower follower={follower} username={username} api={FOLLOWER_API(username)} /> }
             </div>
             <DynamicFooter />
         </div>

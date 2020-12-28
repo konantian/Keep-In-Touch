@@ -40,7 +40,7 @@ const Following = () => {
                 {!following ? 
                 <div className="loader" >
                     <Spin size="large" tip="Loading user's following ... "/>
-                </div> : <DynamicFollowing following={following} api={FOLLOWING_API(username)} />}
+                </div> : <DynamicFollowing following={following} api={FOLLOWING_API(username)} username={username} />}
             </div>
             <DynamicFooter />
         </div>

@@ -35,24 +35,34 @@ export const if_follow = async (prisma, data) => {
 
 export const get_followers_by_user = async (prisma, username) => {
 
-    const followers = await prisma.follow.findMany({
-        where : {user : {username : username}},
-        include : {follower : {
-            select : {username : true}
-        }}
-    });
+    const followers = await get_followers(prisma, username);
     
     return followers.map(item => item.follower.username);
 }
 
-export const get_following_by_user = async (prisma, username) => {
+export const get_followers = async (prisma, username) => {
+    
+    const followers = await prisma.follow.findMany({
+        where : {user : {username : username}},
+        include : {follower : true}
+    });
+
+    return followers;
+}
+
+export const get_following = async (prisma, username) => {
 
     const following = await prisma.follow.findMany({
         where : {follower : {username : username}},
-        include : {user : {
-            select : {username : true}
-        }}
+        include : {user : true}
     });
+
+    return following;
+}
+
+export const get_following_by_user = async (prisma, username) => {
+
+    const following = await get_following(prisma, username);
     
     return following.map(item => item.user.username);
 
