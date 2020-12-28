@@ -10,7 +10,7 @@ const Chat = () => {
     return (
         <div className="main" >
             <Head>
-                <title>Message</title>
+                <title>Chat</title>
                 <meta
                     name="viewport"
                     content="initial-scale=1.0, width=device-width"

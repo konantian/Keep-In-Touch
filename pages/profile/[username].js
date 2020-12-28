@@ -44,7 +44,7 @@ const Profile = () => {
     return (
         <div className="main" >
             <Head>
-                <title>Profile</title>
+                <title>{username === currentUser ? "Profile" : `${username}'s Profile`}</title>
                 <meta
                     name="viewport"
                     content="initial-scale=1.0, width=device-width"

@@ -83,8 +83,12 @@ const ProfileHeader = ({ profile, username }) => {
             <Descriptions size="middle" column={2} className="descriptions">
                 <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>
                 <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >{dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
-                <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>{followers}</Descriptions.Item>
-                <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>{profile.following}</Descriptions.Item>
+                <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>
+                    {<a href={`/${username}/follower`}>{followers}</a>}
+                </Descriptions.Item>
+                <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
+                    {<a href={`/${username}/following`}>{profile.following}</a>}
+                </Descriptions.Item>
                 <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>{profile.bio}</Descriptions.Item>
             </Descriptions>
         </PageHeader>
