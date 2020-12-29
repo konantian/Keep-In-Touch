@@ -4,7 +4,7 @@ import { currentTime } from './currentTime';
 
 export const create_post = async (prisma, data) => {
 
-    const { title, contentType, content, visibility, tags, username } = data;
+    const { title, contentType, content, visibility, tags, username, likes } = data;
 
     const result = await prisma.post.create({
         data : {
@@ -14,6 +14,7 @@ export const create_post = async (prisma, data) => {
             visibility : visibility,
             createdAt : currentTime,
             updatedAt : currentTime,
+            likes : likes,
             tags: {create: tags},
             author : {connect : {username : username}}
         }

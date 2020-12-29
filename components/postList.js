@@ -9,7 +9,11 @@ import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
-import { MessageOutlined, LikeOutlined, EllipsisOutlined, DeleteOutlined } from "@ant-design/icons";
+import { MessageOutlined, 
+         LikeOutlined, 
+         EllipsisOutlined, 
+         DeleteOutlined, 
+         EditOutlined } from "@ant-design/icons";
 import { randomColor } from '../utils/randomColor';
 import { POST_BY_ID } from '../constants/api';
 
@@ -78,8 +82,15 @@ const PostList = ({ posts, api }) => {
                             }} 
                         >
                             <MessageOutlined className="feedbackButton" />
-                            {item.comments}
+                            {item.comments} comment(s)
                         </a>,
+                        <div>
+                            {item.author.username === username ? 
+                            <a key="edit" className="feedbackButton">
+                                <EditOutlined className="feedbackButton" />
+                                Edit
+                            </a> : null}
+                        </div>
                     ]}
                 >
                     <List.Item.Meta
