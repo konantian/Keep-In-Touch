@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../lib/prisma';
-import {get_tags} from '../../utils/tagUtil';
+import { get_tags } from '../../utils/tagUtil';
 
 export default async function getAllTags(req : NextApiRequest, res : NextApiResponse ){
 
@@ -9,7 +9,8 @@ export default async function getAllTags(req : NextApiRequest, res : NextApiResp
     }
 
     const tags = await get_tags(prisma);
+    const uniqueTags = tags.filter((tag, idx) => tags.indexOf(tag) === idx);
 
     await prisma.$disconnect();
-    return res.status(200).json({tags : tags});
+    return res.status(200).json({tags : uniqueTags});
 }

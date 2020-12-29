@@ -5,7 +5,7 @@ import useSWR, { mutate } from 'swr';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { List, Avatar, Button, message, Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
+import { List, Avatar, Button, message, Popconfirm, Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
 import { DeleteOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api';
 
@@ -84,9 +84,18 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
                                 </Tooltip>}
                         actions={[
                             item.author.username === username ? 
-                            <a  key="delete" onClick={() => deleteComment(item.id)} className="feedbackButton" >
-                                <DeleteOutlined className="feedbackButton" />{"Delete"}
-                            </a > : null,
+                            
+                            <Popconfirm
+                                placement="left"
+                                title="Are you sure to delete this comment?"
+                                onConfirm={() => deleteComment(item.id)}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <a  key="delete" className="feedbackButton" >
+                                    <DeleteOutlined className="feedbackButton" />{"Delete"}
+                                </a > 
+                            </Popconfirm> : null,
                         ]}
 
                     />

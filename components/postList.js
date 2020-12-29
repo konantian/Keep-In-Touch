@@ -9,7 +9,7 @@ import { FcLike } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
+import { List, Avatar, Popconfirm, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
 import { MessageOutlined, 
          HeartOutlined, 
          EllipsisOutlined, 
@@ -26,6 +26,15 @@ const PostList = ({ posts, api }) => {
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
     const username = useSelector((state) => state.username);
+
+    const deletePost = postId => {
+        axios.delete(POST_BY_ID(postId)).then(res => {
+            message.success(res.data['success'],[0.5]);
+            mutate(api);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
     const menu = (author, postId) => {
          return(
@@ -48,14 +57,18 @@ const PostList = ({ posts, api }) => {
                         danger 
                         key="3" 
                         icon={<DeleteOutlined />}
-                        onClick={() => {
-                            axios.delete(POST_BY_ID(postId)).then(res => {
-                                message.success(res.data['success'],[0.5]);
-                                mutate(api);
-                            })
-                        }}
                     >
-                        Delete
+                        <Popconfirm
+                            placement="bottom"
+                            title="Are you sure to delete this post?"
+                            onConfirm={() => deletePost(postId)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <a  key="delete" className="feedbackButton" >
+                                Delete
+                            </a > 
+                        </Popconfirm> 
                     </Menu.Item> : null}
             </Menu>
          )

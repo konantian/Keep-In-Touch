@@ -7,6 +7,7 @@ import { message } from 'antd';
 
 const DynamicHeader= dynamic(() => import('../components/header'))
 const DynamicFooter = dynamic(() => import('../components/footer'))
+const DynamicEditor = dynamic(() => import('../components/postEdit'))
 
 const Post = () => {
 
@@ -30,7 +31,9 @@ const Post = () => {
                 />
             </Head>
             <DynamicHeader selectedKey={["2"]}/>
-            <div className="pageContainer"></div>
+            <div className="pageContainer">
+                <DynamicEditor />
+            </div>
             <DynamicFooter />
         </div>
     )
