@@ -78,7 +78,7 @@ const ProfileHeader = ({ profile, username }) => {
                     <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <PlusOutlined /></Button>
                 ) : null
             ]}
-            avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
+            avatar={{ src: '/boy.png' }}
         >
             <Descriptions size="middle" column={2} className="descriptions">
                 <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>

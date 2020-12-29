@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { mutate } from 'swr';
+import { FcLike } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
 import { MessageOutlined, 
-         LikeOutlined, 
+         HeartOutlined, 
          EllipsisOutlined, 
          DeleteOutlined, 
          EditOutlined } from "@ant-design/icons";
@@ -29,7 +30,7 @@ const PostList = ({ posts, api }) => {
     const menu = (author, postId) => {
          return(
             <Menu>
-                <Menu.Item key="1" icon={<LikeOutlined />}>
+                <Menu.Item key="1" icon={<HeartOutlined />}>
                     Like
                 </Menu.Item>
                 <Menu.Item 
@@ -72,7 +73,7 @@ const PostList = ({ posts, api }) => {
                     key={item.id}
                     actions={[
                         <a  key="like" className="feedbackButton" >
-                            <LikeOutlined className="feedbackButton"/>
+                            <FcLike className="feedbackButton"/>
                             {item.likes}
                         </a >,
                         <a  key="comment" className="feedbackButton"
@@ -94,7 +95,7 @@ const PostList = ({ posts, api }) => {
                     ]}
                 >
                     <List.Item.Meta
-                        avatar={<Avatar size={50} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
+                        avatar={<Avatar size={50} src="/boy.png" />}
                         title={
                             <div className="postTitle" >
                                 <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 

@@ -77,7 +77,7 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
                                 >
                                     <span className="commentAuthor" >{item.author.username}</span>
                                 </a>}
-                        avatar={<Avatar size={40} src="https://avatars1.githubusercontent.com/u/8186664?s=460&v=4" />}
+                        avatar={<Avatar size={40} src="/boy.png" />}
                         content={item.content}
                         datetime={<Tooltip title={dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
                                     <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
