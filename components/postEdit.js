@@ -57,11 +57,10 @@ const PostEditor = () => {
                 layout="horizontal" 
                 onFinish={onFinish} 
                 style={{"marginTop" : "15%"}} 
-                onValuesChange={({type}) => setType(type)}
                 ref={formRef}
             >
-                <Form.Item label="Content Type" name="type">
-                    <Radio.Group>
+                <Form.Item label="Content Type" name="type" >
+                    <Radio.Group onChange={(e) => setType(e.target.value)} >
                         <Radio.Button value="markdown">Markdown</Radio.Button>
                         <Radio.Button value="text">Text</Radio.Button>
                     </Radio.Group>
