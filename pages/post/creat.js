@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 
-const DynamicHeader= dynamic(() => import('../components/header'))
-const DynamicFooter = dynamic(() => import('../components/footer'))
-const DynamicEditor = dynamic(() => import('../components/postEdit'))
+const DynamicHeader= dynamic(() => import('../../components/header'))
+const DynamicFooter = dynamic(() => import('../../components/footer'))
+const DynamicEditor = dynamic(() => import('../../components/newPost'))
 
-const Post = () => {
+const PostCreat = () => {
 
     const router = useRouter();
     const isLogged = useSelector((state) => state.isLogged);
@@ -39,4 +39,4 @@ const Post = () => {
     )
 }
 
-export default Post;
+export default PostCreat;

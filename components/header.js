@@ -35,7 +35,7 @@ const Header = ({ selectedKey }) => {
                 <Link href="/home">Home</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<EditOutlined  />}>
-                <Link href="/post">Post</Link>
+                <Link href="/post/creat">Post</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<SearchOutlined />}>
                 <Link href="/search">Search</Link>

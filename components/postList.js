@@ -100,7 +100,7 @@ const PostList = ({ posts, api }) => {
                         </a>,
                         <div>
                             {item.author.username === username ? 
-                            <a key="edit" className="feedbackButton">
+                            <a href={`/post/${item.id}`} key="edit" className="feedbackButton">
                                 <EditOutlined className="feedbackButton" />
                                 Edit
                             </a> : null}

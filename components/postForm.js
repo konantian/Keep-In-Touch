@@ -1,63 +1,26 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import useSWR from 'swr';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 import ReactMarkDown from "react-markdown";
-import { message, Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
-import { TAGS_API, POSTS_API } from '../constants/api';
+import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
 import { randomColor } from '../utils/randomColor';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const PostEditor = () => {
+const PostForm = ({ onFinish, text, tags, initialValues }) => {
 
     const formRef = useRef(null);
-    const router = useRouter();
     const [visible, setVisible] = useState(false);
-    const [type, setType] = useState('text');
-    const username = useSelector((state) => state.username);
-
-    const getTags = async ( url ) => {
-        const response = await axios.get(url);
-        response.data.tags.sort((a, b) => {
-            return a.length - b.length;
-        })
-        return response.data.tags;
-    }
-
-    const { data : tags, error} = useSWR(TAGS_API, getTags);
-
-    const onFinish = values => {
-        const postData = {
-           username : username,
-           title : values.title,
-           contentType : values.type,
-           content : values.content,
-        };
-        if(values.tags) {
-            const tags = values.tags.map(tag => {
-                return {name : tag};
-            });
-            postData.tags = tags;
-        }
-
-       axios.post(POSTS_API,postData).then((res) =>{
-           message.success(res.data['success'],[0.5]);
-           router.push("/home");
-       }).catch((err) => {
-           console.log(err);
-       })
-    }
+    const [type, setType] = useState(initialValues !== null ? initialValues.type : 'text');
 
     return (
         <div>
+            {console.log(initialValues)}
             <Form 
                 layout="horizontal" 
                 onFinish={onFinish} 
-                style={{"marginTop" : "15%"}} 
+                style={{"marginTop" : "15%"}}
                 ref={formRef}
+                initialValues={initialValues}
             >
                 <Form.Item label="Content Type" name="type" >
                     <Radio.Group onChange={(e) => setType(e.target.value)} >
@@ -90,7 +53,7 @@ const PostEditor = () => {
                 </Form.Item>
                 <div className="loginButtons">
                     <Form.Item >
-                        <Button className="authButton" type="primary" htmlType="submit" shape="round" size="large" >Post</Button>
+                        <Button className="authButton" type="primary" htmlType="submit" shape="round" size="large" >{text}</Button>
                     </Form.Item>
                     {type === 'markdown' ?
                     <Form.Item >
@@ -112,8 +75,7 @@ const PostEditor = () => {
             </Modal>
         </div>
         
-        
     )
 }
 
-export default PostEditor;
+export default PostForm;
