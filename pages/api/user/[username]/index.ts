@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
-import {get_user_by_username} from '../../../../utils/userUtil';
+import { get_user_by_username } from '../../../../utils/userUtil';
 
 export default async function getUserByUsername(req : NextApiRequest, res : NextApiResponse ){
 

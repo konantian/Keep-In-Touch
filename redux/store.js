@@ -1,9 +1,10 @@
-import {createStore, applyMiddleware, compose} from 'redux';
-import {createWrapper} from 'next-redux-wrapper';
 import thunk from 'redux-thunk';
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
 import storage from './storage';
-import {parse, stringify} from 'flatted';
+import { parse, stringify } from 'flatted';
+import { createWrapper } from 'next-redux-wrapper';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
+
 
 export const transformCircular = createTransform(
       (inboundState, key) => stringify(inboundState),

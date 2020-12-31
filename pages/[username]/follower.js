@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Spin } from  'antd';
-import {  FOLLOWER_API  } from '../../constants/api';
+import { FOLLOWER_API } from '../../constants/api';
 
 const DynamicHeader = dynamic(() => import('../../components/header'))
 const DynamicFooter = dynamic(() => import('../../components/footer'))

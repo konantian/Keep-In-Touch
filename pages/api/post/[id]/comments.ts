@@ -1,4 +1,4 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
 import { get_comments_by_post } from '../../../../utils/commentUtil';
 

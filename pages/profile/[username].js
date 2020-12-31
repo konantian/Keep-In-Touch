@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { message, Divider, Spin} from 'antd';
+import { message, Divider, Spin } from 'antd';
 import { USER_BY_USERNAME } from '../../constants/api';
 
 const DynamicPostList = dynamic(() => import('../../components/postList'))
@@ -33,7 +33,7 @@ const Profile = () => {
                 currentUser : currentUser
             }
         });
-        response.data.posts.sort((a,b) => {
+        response.data.posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })
         return response.data;

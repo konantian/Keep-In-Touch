@@ -31,7 +31,7 @@ const PostByTag = () => {
             params: {
                 currentUser : currentUser
             }});
-        response.data.posts.sort((a,b) => {
+        response.data.posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })
         return response.data.posts;

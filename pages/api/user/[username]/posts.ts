@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
-import {get_posts_by_user} from '../../../../utils/postUtil';
+import { get_posts_by_user } from '../../../../utils/postUtil';
 
 export default async function getPostsByUser(req : NextApiRequest, res : NextApiResponse ){
 

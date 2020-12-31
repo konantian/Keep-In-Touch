@@ -1,6 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../lib/prisma';
-import {remove_follow} from '../../../utils/followUtil';
+import { remove_follow } from '../../../utils/followUtil';
 
 export default async function unFollow(req : NextApiRequest, res : NextApiResponse){
 
