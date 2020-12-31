@@ -68,7 +68,14 @@ model Comment {
   authorId  Int
   content   String
   createdAt String
-  updatedAt String
   post      Post     @relation(fields: [postId],   references: [id])
   author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Like{
+  @@id([postId, authorId])
+  postId    Int
+  authorId  Int
+  post      Post  @relation(fields: [postId],   references: [id])
+  author    User  @relation(fields: [authorId], references: [id])
 }

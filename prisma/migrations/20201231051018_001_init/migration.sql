@@ -54,9 +54,16 @@ CREATE TABLE "Comment" (
     "authorId" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
     "createdAt" TEXT NOT NULL,
-    "updatedAt" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Like" (
+    "postId" INTEGER NOT NULL,
+    "authorId" INTEGER NOT NULL,
+
+    PRIMARY KEY ("postId","authorId")
 );
 
 -- CreateIndex
@@ -82,3 +89,9 @@ ALTER TABLE "Comment" ADD FOREIGN KEY("postId")REFERENCES "Post"("id") ON DELETE
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD FOREIGN KEY("authorId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Like" ADD FOREIGN KEY("postId")REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Like" ADD FOREIGN KEY("authorId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
