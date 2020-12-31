@@ -16,7 +16,7 @@ import { MessageOutlined,
          DeleteOutlined, 
          EditOutlined } from "@ant-design/icons";
 import { randomColor } from '../utils/randomColor';
-import { POST_BY_ID } from '../constants/api';
+import { POST_BY_ID, LIKE_API } from '../constants/api';
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
 dayjs.extend(relativeTime)
@@ -26,10 +26,22 @@ const PostList = ({ posts, api }) => {
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
     const username = useSelector((state) => state.username);
+    const userId = useSelector((state) => state.userId);
 
     const deletePost = postId => {
         axios.delete(POST_BY_ID(postId)).then(res => {
             message.success(res.data['success'],[0.5]);
+            mutate(api);
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const updateLike = postId => {
+        axios.patch(LIKE_API, {
+            userId : userId,
+            postId : postId
+        }).then(res => {
             mutate(api);
         }).catch(err => {
             console.log(err);
@@ -85,8 +97,11 @@ const PostList = ({ posts, api }) => {
                 <List.Item
                     key={item.id}
                     actions={[
-                        <a  key="like" className="feedbackButton" >
-                            <FcLike className="feedbackButton"/>
+                        <a  key="like" onClick={() => updateLike(item.id)} className="feedbackButton" >
+                            {item.Like.includes(userId) ?
+                                <FcLike className="feedbackButton"/> :
+                                <HeartOutlined className="feedbackButton"/>
+                            }
                             {item.likes}
                         </a >,
                         <a  key="comment" className="feedbackButton"

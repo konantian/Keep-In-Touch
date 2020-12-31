@@ -7,6 +7,7 @@ export const USERS_API = '/api/users';
 export const POSTS_API = '/api/posts';
 export const COMMENTS_API = '/api/comments';
 export const TAGS_API = '/api/tags';
+export const LIKE_API = '/api/like';
 export const COMMENT_BY_ID = (id : number) =>`/api/comment/${id}`;
 export const POST_BY_ID = (id : number) =>`/api/post/${id}`;
 export const TAGS_BY_POST = (id : number) =>`/api/post/${id}/tags`;

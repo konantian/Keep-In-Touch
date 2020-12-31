@@ -102,6 +102,16 @@ export const get_posts_by_user = async (prisma, username) => {
     return posts;
 }
 
+export const if_liked = async(prisma, postId, username) => {
+    const result = await prisma.like.findFirst({
+        where : { postId : postId,
+                  author : {username : username}}
+    });
+
+    if(result) return true;
+    return false;
+}
+
 //get all visible posts by current user
 export const get_visible_posts_by_user = async (prisma, username) => {
 
@@ -109,7 +119,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const publicPosts = await prisma.post.findMany({
         where : {author : {username : {not : username}},
                 visibility : 'PUBLIC'},
-        include : {comments : true, tags : true, author : true}
+        include : {comments : true, tags : true, author : true, Like : true}
     });
 
     //all posts that are visible to followers only
@@ -117,7 +127,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const followerPosts = await prisma.post.findMany({
         where : {author : {username : {in : following}} ,
                 visibility : "FOLLOWERS"},
-        include : {comments : true, tags : true, author : true}     
+        include : {comments : true, tags : true, author : true, Like : true}     
     });
 
 
@@ -126,13 +136,13 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const friendPosts = await prisma.post.findMany({
         where : {author : {username : {in : friends}},
                 visibility : 'FRIENDS'},
-        include : {comments : true, tags : true, author : true}   
+        include : {comments : true, tags : true, author : true, Like : true}   
     });
 
     //self posts
     const selfPosts = await prisma.post.findMany({
         where : {author : {username : username}},
-        include : {comments : true, tags : true, author : true} 
+        include : {comments : true, tags : true, author : true, Like : true} 
     });
 
     const visiblePosts = [...publicPosts, ...followerPosts, ...friendPosts, ...selfPosts];
@@ -140,6 +150,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const posts = visiblePosts.map((post,idx) => {
         post.tags = post.tags.map(tag => tag.name);
         post.comments = post.comments.length;
+        post.Like = post.Like.map(like  => like.authorId);
         return post;
     })
 

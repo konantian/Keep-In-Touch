@@ -24,7 +24,7 @@ const Login = () => {
             router.push('/home');
         }else{
             const username = localStorage.getItem('username');
-            if(username){
+            if(username && formRef.current){
                 formRef.current.setFieldsValue({username : username});
                 localStorage.removeItem('username');
             }
