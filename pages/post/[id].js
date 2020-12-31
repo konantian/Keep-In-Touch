@@ -47,6 +47,7 @@ const EditPost = () => {
            title : values.title,
            contentType : values.type,
            content : values.content,
+           visibility : values.visibility
         };
 
        axios.patch(POST_BY_ID(router.query.id),postData).then((res) =>{

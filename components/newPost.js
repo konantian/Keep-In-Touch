@@ -30,6 +30,7 @@ const PostEditor = () => {
            title : values.title,
            contentType : values.type,
            content : values.content,
+           visibility : values.visibility
         };
         if(values.tags) {
             const tags = values.tags.map(tag => {

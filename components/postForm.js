@@ -43,6 +43,17 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                         )}
                     </Select>
                 </Form.Item>
+                <Form.Item 
+                    label="Visibility" 
+                    name="visibility"
+                >
+                    <Select defaultValue="PUBLIC">
+                        <Select.Option value="PUBLIC">PUBLIC</Select.Option>
+                        <Select.Option value="FOLLOWERS">FOLLOWERS</Select.Option>
+                        <Select.Option value="FRIENDS">FRIENDS</Select.Option>
+                        <Select.Option value="PRIVATE">PRIVATE</Select.Option>
+                    </Select>
+                </Form.Item>
                 <Form.Item name="content">
                     <TextArea 
                         showCount
