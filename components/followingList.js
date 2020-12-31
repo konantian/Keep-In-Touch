@@ -3,6 +3,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { mutate } from 'swr';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
 import { CloseOutlined } from "@ant-design/icons";
@@ -48,7 +49,7 @@ const FollowingList = ({ following, username, api}) => {
                         </div>
                     }
                     description={
-                        <div style={{"marginTop" : "-25px"}}>
+                        <div style={{"marginTop" : "-15px"}}>
                             Followed At {dayjs(item.followedAt).format('YYYY-MM-DD HH:mm:ss')}
                         </div>
                     }
@@ -57,5 +58,11 @@ const FollowingList = ({ following, username, api}) => {
         )}
     />)
 }
+
+FollowingList.propTypes = {
+    following : PropTypes.array.isRequired,
+    username : PropTypes.string.isRequired,
+    api : PropTypes.string.isRequired,
+};
 
 export default FollowingList;

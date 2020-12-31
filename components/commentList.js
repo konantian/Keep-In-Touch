@@ -131,7 +131,8 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
 CommentList.propTypes = {
     postId : PropTypes.number,
     visible : PropTypes.bool.isRequired,
-    onClose : PropTypes.func.isRequired
+    onClose : PropTypes.func.isRequired,
+    updatePost : PropTypes.func.isRequired
 };
 
 export default CommentList;

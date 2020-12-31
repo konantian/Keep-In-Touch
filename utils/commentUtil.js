@@ -16,7 +16,6 @@ export const create_comment = async (prisma, data) => {
         data : { 
             content : content,
             createdAt : currentTime,
-            updatedAt : currentTime,
             post : {connect : {id : parseInt(postId)}},
             author : {connect : {username : username}}
         }

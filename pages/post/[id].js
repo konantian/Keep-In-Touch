@@ -25,13 +25,7 @@ const EditPost = () => {
     const getPost = async ( postId ) => {
         const response = await axios.get(POST_BY_ID(postId));
         const post = response.data;
-        const initial = {
-            type : post.contentType,
-            title : post.title,
-            content : post.content,
-            tags : post.tags
-        }
-        setInitialValues(initial);
+        setInitialValues(post);
     }
 
     const getTags = async ( url ) => {
@@ -45,7 +39,7 @@ const EditPost = () => {
     const onFinish = values => {
         const postData = {
            title : values.title,
-           contentType : values.type,
+           contentType : values.contentType,
            content : values.content,
            visibility : values.visibility
         };

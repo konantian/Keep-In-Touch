@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
 import { randomColor } from '../utils/randomColor';
@@ -14,7 +15,6 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
 
     return (
         <div>
-            {console.log(initialValues)}
             <Form 
                 layout="horizontal" 
                 onFinish={onFinish} 
@@ -22,7 +22,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                 ref={formRef}
                 initialValues={initialValues}
             >
-                <Form.Item label="Content Type" name="type" >
+                <Form.Item label="Content Type" name="contentType" >
                     <Radio.Group onChange={(e) => setType(e.target.value)} >
                         <Radio.Button value="markdown">Markdown</Radio.Button>
                         <Radio.Button value="text">Text</Radio.Button>
@@ -47,7 +47,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                     label="Visibility" 
                     name="visibility"
                 >
-                    <Select defaultValue="PUBLIC">
+                    <Select>
                         <Select.Option value="PUBLIC">PUBLIC</Select.Option>
                         <Select.Option value="FOLLOWERS">FOLLOWERS</Select.Option>
                         <Select.Option value="FRIENDS">FRIENDS</Select.Option>
@@ -88,5 +88,12 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
         
     )
 }
+
+PostForm.propTypes = {
+    onFinish : PropTypes.func.isRequired,
+    text : PropTypes.string.isRequired,
+    tags : PropTypes.array,
+    initialValues : PropTypes.object,
+};
 
 export default PostForm;

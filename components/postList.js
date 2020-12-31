@@ -163,7 +163,8 @@ const PostList = ({ posts, api }) => {
 }
 
 PostList.propTypes = {
-    posts : PropTypes.array.isRequired
+    posts : PropTypes.array.isRequired,
+    api : PropTypes.string.isRequired,
 };
 
 export default PostList;

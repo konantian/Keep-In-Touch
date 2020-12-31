@@ -3,6 +3,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { mutate } from 'swr';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
 import { CloseOutlined } from "@ant-design/icons";
@@ -58,5 +59,12 @@ const FollowerList = ({ follower, username, api }) => {
         />
     )
 }
+
+FollowerList.propTypes = {
+    follower : PropTypes.array.isRequired,
+    username : PropTypes.string.isRequired,
+    api : PropTypes.string.isRequired,
+};
+
 
 export default FollowerList;

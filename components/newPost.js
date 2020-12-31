@@ -28,7 +28,7 @@ const PostEditor = () => {
         const postData = {
            username : username,
            title : values.title,
-           contentType : values.type,
+           contentType : values.contentType,
            content : values.content,
            visibility : values.visibility
         };
@@ -49,7 +49,7 @@ const PostEditor = () => {
 
     return (
         <div>
-            <DynamicPost onFinish={onFinish} text="Post" tags={tags} initialValues={null}/>
+            <DynamicPost onFinish={onFinish} text="Post" tags={tags} initialValues={{visibility : "PUBLIC"}}/>
         </div>
         
     )
