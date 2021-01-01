@@ -10,7 +10,7 @@ import { FcOrgUnit } from 'react-icons/fc';
 import {
     HomeOutlined,
     UserOutlined,
-    EditOutlined,
+    FormOutlined,
     SearchOutlined,
     LogoutOutlined,
     MessageOutlined
@@ -38,7 +38,7 @@ const Header = ({ selectedKey }) => {
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<EditOutlined  />}>
+            <Menu.Item key="2" icon={<FormOutlined  />}>
                 <Link href="/post/creat">Post</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<SearchOutlined />}>

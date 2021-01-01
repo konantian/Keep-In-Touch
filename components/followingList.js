@@ -6,7 +6,7 @@ import { mutate } from 'swr';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
-import { CloseOutlined } from "@ant-design/icons";
+import { UserDeleteOutlined } from "@ant-design/icons";
 import { UNFOLLOW_API } from '../constants/api';
 
 const FollowingList = ({ following, username, api}) => {
@@ -44,7 +44,7 @@ const FollowingList = ({ following, username, api}) => {
                                     shape="round"
                                     onClick={() => unFollow(item.user.id)}
                                 >
-                                    <CloseOutlined />Unfollow
+                                    <UserDeleteOutlined />Unfollow
                                 </Button> : null}
                         </div>
                     }

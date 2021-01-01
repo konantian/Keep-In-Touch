@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Popconfirm, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
-import { MessageOutlined, 
+import { CommentOutlined,
          HeartOutlined, 
          EllipsisOutlined, 
          DeleteOutlined, 
@@ -56,7 +56,7 @@ const PostList = ({ posts, api }) => {
                 </Menu.Item>
                 <Menu.Item 
                     key="2" 
-                    icon={<MessageOutlined />}
+                    icon={<CommentOutlined />}
                     onClick={() => {
                         setPostId(postId);
                         setVisible(true);
@@ -110,7 +110,7 @@ const PostList = ({ posts, api }) => {
                                 setVisible(true);
                             }} 
                         >
-                            <MessageOutlined className="feedbackButton" />
+                            <CommentOutlined className="feedbackButton" />
                             {item.comments} comment(s)
                         </a>,
                         <div>

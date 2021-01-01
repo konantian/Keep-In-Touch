@@ -4,7 +4,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import useSWR, { mutate } from 'swr';
 import { useSelector } from 'react-redux';
-import { MenuOutlined, PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import { MenuOutlined, EditOutlined, CloseOutlined, UserAddOutlined } from '@ant-design/icons';
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message } from 'antd';
 import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API } from '../constants/api';
 
@@ -75,8 +75,8 @@ const ProfileHeader = ({ profile, username }) => {
                     <Dropdown key="status" overlay={menu}>
                         <Button size="large" key="statusButton" shape="round">{status} <MenuOutlined /></Button>
                     </Dropdown> : 
-                    <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <PlusOutlined /></Button>
-                ) : null
+                    <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <UserAddOutlined /></Button>
+                ) : <Button type="primary" shape="round" size="large" >Edit Profile <EditOutlined /></Button>
             ]}
             avatar={{ src: '/boy.png' }}
         >
