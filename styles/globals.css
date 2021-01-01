@@ -98,3 +98,7 @@ a {
   display : flex;
   justify-content: space-between;
 }
+
+.followDescription{
+  margin-top: -25px;
+}
