@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import { FcOrgUnit } from 'react-icons/fc';
 import {
     HomeOutlined,
     UserOutlined,
@@ -31,6 +32,9 @@ const Header = ({ selectedKey }) => {
 
     return (
         <Menu className="headerMenu" theme="dark" mode="horizontal" selectedKeys={selectedKey}>
+            <Menu.Item>
+                <FcOrgUnit />
+            </Menu.Item>    
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>
