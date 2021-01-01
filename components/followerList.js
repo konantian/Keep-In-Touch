@@ -49,7 +49,7 @@ const FollowerList = ({ follower, username, api }) => {
                         </div>
                     }
                     description={
-                        <div style={{"marginTop" : "-15px"}}>
+                        <div className="followDescription" >
                             Followed At {dayjs(item.followedAt).format('YYYY-MM-DD HH:mm:ss')}
                         </div>
                     }
