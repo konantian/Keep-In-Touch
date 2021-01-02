@@ -32,7 +32,6 @@ CREATE TABLE "Post" (
     "contentType" TEXT NOT NULL,
     "visibility" "VISIBILITY" NOT NULL DEFAULT E'PUBLIC',
     "authorId" INTEGER NOT NULL,
-    "likes" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TEXT NOT NULL,
     "updatedAt" TEXT NOT NULL,
 

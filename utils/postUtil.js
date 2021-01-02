@@ -4,7 +4,7 @@ import { currentTime } from './currentTime';
 
 export const create_post = async (prisma, data) => {
 
-    const { title, contentType, content, visibility, tags, username, likes } = data;
+    const { title, contentType, content, visibility, tags, username } = data;
 
     const result = await prisma.post.create({
         data : {
@@ -14,7 +14,6 @@ export const create_post = async (prisma, data) => {
             visibility : visibility,
             createdAt : currentTime,
             updatedAt : currentTime,
-            likes : likes,
             tags: {create: tags},
             author : {connect : {username : username}}
         }
@@ -54,17 +53,30 @@ export const delete_tag = async (prisma, tags) => {
     });
 }
 
+export const delete_like = async (prisma, likes) =>{
+
+    likes.forEach( async like => {
+        await prisma.like.delete({
+            where : {postId_authorId : {
+                postId : like.postId,
+                authorId : like.authorId,
+            }}
+        })
+    });
+}
+
 export const delete_post = async (prisma, id) => {
 
     const postId = parseInt(id);
 
     const post = await prisma.post.findFirst({
         where : {id : postId},
-        include : {comments : true, tags : true}
+        include : {comments : true, tags : true, likes : true}
     });
 
     await delete_comment(prisma, post.comments);
     await delete_tag(prisma, post.tags);
+    await delete_like(prisma, post.likes);
 
     const result = await prisma.post.delete({
         where : {id : postId}
@@ -77,11 +89,12 @@ export const get_post_by_id = async (prisma, id) => {
 
     const post = await prisma.post.findFirst({
         where : {id : parseInt(id)},
-        include : {comments : true, tags : true}
+        include : {comments : true, tags : true, likes : true}
     });
 
     post.tags = post.tags.map(item => item.name);
     post.comments = post.comments.length;
+    post.likes = post.likes.length;
 
     return post;
 }
@@ -90,12 +103,13 @@ export const get_posts_by_user = async (prisma, username) => {
 
     const result = await prisma.post.findMany({
         where : {author : {username : username}},
-        include : {comments : true, tags : true}
+        include : {comments : true, tags : true, likes :true}
     });
 
     const posts = result.map(post => {
         post.tags = post.tags.map(tag => tag.name);
         post.comments = post.comments.length;
+        post.likes = post.likes.length;
         return post;
     });
 
@@ -119,7 +133,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const publicPosts = await prisma.post.findMany({
         where : {author : {username : {not : username}},
                 visibility : 'PUBLIC'},
-        include : {comments : true, tags : true, author : true, Like : true}
+        include : {comments : true, tags : true, author : true, likes : true}
     });
 
     //all posts that are visible to followers only
@@ -127,7 +141,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const followerPosts = await prisma.post.findMany({
         where : {author : {username : {in : following}} ,
                 visibility : "FOLLOWERS"},
-        include : {comments : true, tags : true, author : true, Like : true}     
+        include : {comments : true, tags : true, author : true, likes : true}     
     });
 
 
@@ -136,13 +150,13 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const friendPosts = await prisma.post.findMany({
         where : {author : {username : {in : friends}},
                 visibility : 'FRIENDS'},
-        include : {comments : true, tags : true, author : true, Like : true}   
+        include : {comments : true, tags : true, author : true, likes : true}   
     });
 
     //self posts
     const selfPosts = await prisma.post.findMany({
         where : {author : {username : username}},
-        include : {comments : true, tags : true, author : true, Like : true} 
+        include : {comments : true, tags : true, author : true, likes : true} 
     });
 
     const visiblePosts = [...publicPosts, ...followerPosts, ...friendPosts, ...selfPosts];
@@ -150,7 +164,8 @@ export const get_visible_posts_by_user = async (prisma, username) => {
     const posts = visiblePosts.map((post,idx) => {
         post.tags = post.tags.map(tag => tag.name);
         post.comments = post.comments.length;
-        post.Like = post.Like.map(like  => like.authorId);
+        post.liked = post.likes.map(like  => like.authorId);
+        post.likes = post.likes.length;
         return post;
     })
 

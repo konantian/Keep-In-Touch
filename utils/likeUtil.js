@@ -10,19 +10,7 @@ export const addLike = async (prisma, data) => {
         }
     });
 
-    const like = await prisma.post.findFirst({
-        where : {id : postId},
-        select : {likes : true}
-    })
-
-    const newLikes = like.likes + 1;
-
-    const updateLikes = await prisma.post.update({
-        where : {id : postId},
-        data : {likes : newLikes}
-    })
-
-    return updateLikes;
+    return result;
 }
 
 export const unLike = async (prisma, data) => {
@@ -36,19 +24,7 @@ export const unLike = async (prisma, data) => {
         }}
     });
 
-    const like = await prisma.post.findFirst({
-        where : {id : postId},
-        select : {likes : true}
-    })
-
-    const newLikes = like.likes - 1;
-
-    const updateLikes = await prisma.post.update({
-        where : {id : postId},
-        data : {likes : newLikes}
-    })
-
-    return updateLikes;
+    return result;
 
 }
 

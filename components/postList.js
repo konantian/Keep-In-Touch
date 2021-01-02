@@ -98,7 +98,7 @@ const PostList = ({ posts, api }) => {
                     key={item.id}
                     actions={[
                         <a  key="like" onClick={() => updateLike(item.id)} className="feedbackButton" >
-                            {item.Like.includes(userId) ?
+                            {item.liked.includes(userId) ?
                                 <FcLike className="feedbackButton"/> :
                                 <HeartOutlined className="feedbackButton"/>
                             }

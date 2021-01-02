@@ -47,11 +47,11 @@ model Post {
   contentType String
   visibility  VISIBILITY   @default(PUBLIC)
   authorId    Int
-  likes       Int      @default(0)
   createdAt   String 
   updatedAt   String
   tags        Tag[]
   comments    Comment[]
+  likes       Like[]
   author      User     @relation(fields: [authorId], references: [id])
 }
 
