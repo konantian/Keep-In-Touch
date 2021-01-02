@@ -49,3 +49,11 @@ export const get_users = async (prisma) => {
 
     return users;
 }
+
+export const update_bio = async( prisma, username, bio) => {
+    const result = await prisma.user.update({
+        where : {username: username},
+        data : {bio : bio}
+    });
+    return result;
+}

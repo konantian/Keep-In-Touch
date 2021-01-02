@@ -4,15 +4,16 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import useSWR, { mutate } from 'swr';
 import { useSelector } from 'react-redux';
-import { MenuOutlined, EditOutlined, CloseOutlined, UserAddOutlined } from '@ant-design/icons';
-import { PageHeader,  Descriptions, Button, Dropdown, Menu, message } from 'antd';
-import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API } from '../constants/api';
+import { MenuOutlined, EditOutlined, CloseOutlined, UserAddOutlined, SaveOutlined } from '@ant-design/icons';
+import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input } from 'antd';
+import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
 
 const ProfileHeader = ({ profile, username }) => {
 
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
     const [followers, setFollowers] = useState(0);
+    const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
         setFollowers(profile.followers);
@@ -63,7 +64,8 @@ const ProfileHeader = ({ profile, username }) => {
             Unfollow
           </Menu.Item>
         </Menu>
-      );
+    );
+
 
     return (
         <PageHeader
@@ -76,7 +78,11 @@ const ProfileHeader = ({ profile, username }) => {
                         <Button size="large" key="statusButton" shape="round">{status} <MenuOutlined /></Button>
                     </Dropdown> : 
                     <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <UserAddOutlined /></Button>
-                ) : <Button type="primary" shape="round" size="large" >Edit Profile <EditOutlined /></Button>
+                ) : (
+                    isEdit ? <Button type="primary" onClick={() => setIsEdit(false)} shape="round" size="large" >Save <SaveOutlined /></Button> :
+                    <Button type="primary" onClick={() => setIsEdit(true)} shape="round" size="large" >Edit <EditOutlined /></Button>
+                )
+                
             ]}
             avatar={{ src: '/boy.png' }}
         >
@@ -89,7 +95,9 @@ const ProfileHeader = ({ profile, username }) => {
                 <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
                     {<a href={`/${username}/following`}>{profile.following}</a>}
                 </Descriptions.Item>
-                <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>{profile.bio}</Descriptions.Item>
+                <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
+                    {isEdit ? <Input.TextArea autoSize={{ minRows: 2, maxRows: 5 }} defaultValue={profile.bio}/> : profile.bio }
+                </Descriptions.Item>
             </Descriptions>
         </PageHeader>
     )
