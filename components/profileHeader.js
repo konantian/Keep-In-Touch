@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -10,14 +10,17 @@ import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../co
 
 const ProfileHeader = ({ profile, username }) => {
 
+    const inputRef = useRef(null);
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
-    const [followers, setFollowers] = useState(0);
+    const [followers, setFollowers] = useState(profile.followers);
+    const [bio, setBio] = useState(profile.bio);
     const [isEdit, setIsEdit] = useState(false);
 
     useEffect(() => {
         setFollowers(profile.followers);
-    },[])
+        setBio(profile.bio);
+    },[profile])
 
     const getFollow = async () => {
         const response = await axios.get(IF_FOLLOW_API,
@@ -66,6 +69,18 @@ const ProfileHeader = ({ profile, username }) => {
         </Menu>
     );
 
+    const update_bio = ( value ) => {
+        setIsEdit(false);
+        axios.patch(USER_BY_USERNAME(username),{
+            bio : value
+        }).then(res =>{
+            message.success(res.data['success'],[0.5]);
+            setBio(value);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
 
     return (
         <PageHeader
@@ -79,8 +94,8 @@ const ProfileHeader = ({ profile, username }) => {
                     </Dropdown> : 
                     <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <UserAddOutlined /></Button>
                 ) : (
-                    isEdit ? <Button type="primary" onClick={() => setIsEdit(false)} shape="round" size="large" >Save <SaveOutlined /></Button> :
-                    <Button type="primary" onClick={() => setIsEdit(true)} shape="round" size="large" >Edit <EditOutlined /></Button>
+                    isEdit ? <Button type="primary" key="saveButton" onClick={() => update_bio(inputRef.current.state.value)} shape="round" size="large" >Save <SaveOutlined /></Button> :
+                    <Button type="primary" key="editButton" onClick={() => setIsEdit(true)} shape="round" size="large" >Edit <EditOutlined /></Button>
                 )
                 
             ]}
@@ -96,7 +111,7 @@ const ProfileHeader = ({ profile, username }) => {
                     {<a href={`/${username}/following`}>{profile.following}</a>}
                 </Descriptions.Item>
                 <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
-                    {isEdit ? <Input.TextArea autoSize={{ minRows: 2, maxRows: 5 }} defaultValue={profile.bio}/> : profile.bio }
+                    {isEdit ? <Input.TextArea ref={inputRef} onPressEnter={(e) => update_bio(e.target.value)} autoSize={{ minRows: 3, maxRows: 5 }} defaultValue={bio}/> : bio }
                 </Descriptions.Item>
             </Descriptions>
         </PageHeader>
