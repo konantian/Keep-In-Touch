@@ -14,7 +14,7 @@ export const transformCircular = createTransform(
 
 const persistConfig = {
       key: "keep-in-touch",
-      whitelist: ["isLogged", "username", "userId"], 
+      whitelist: ["isLogged", "username", "userId", "token"], 
       storage, // if needed, use a safer storage
       transforms: [transformCircular]
 };
@@ -22,7 +22,8 @@ const persistConfig = {
 const initialState = {
       isLogged: false,
       username : null,
-      userId : null
+      userId : null,
+      token : null
   };
 
 const authReducer = (state = initialState, action) => {
@@ -33,6 +34,8 @@ const authReducer = (state = initialState, action) => {
                   return {...state, username: action.payload};
             case 'USER_ID':
                   return {...state, userId: action.payload};
+            case 'TOKEN':
+                  return {...state, token: action.payload};
             case 'LOGOUT':
                   return initialState;
             default:

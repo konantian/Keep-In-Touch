@@ -19,6 +19,8 @@ const Profile = () => {
     const { username }  = router.query;
     const isLogged = useSelector((state) => state.isLogged);
     const currentUser = useSelector((state) => state.username);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
     
     useEffect(() => {
         if (!isLogged) {
@@ -28,11 +30,13 @@ const Profile = () => {
     }, []);
 
     const getProfile = async ( url ) => {
-        const response = await axios.get(url,{
+        const config = {
+            headers: headers,
             params: {
                 currentUser : currentUser
-            }
-        });
+            },
+          }
+        const response = await axios.get(url,config);
         response.data.posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })

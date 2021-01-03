@@ -17,6 +17,8 @@ const Home = () => {
     const router = useRouter();
     const isLogged = useSelector((state) => state.isLogged);
     const username = useSelector((state) => state.username);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     useEffect(() => {
         if (!isLogged) {
@@ -26,7 +28,7 @@ const Home = () => {
     }, []);
 
     const fetchVisiblePosts =  async ( url ) => {
-        const response = await axios.get(url);
+        const response = await axios.get(url, { headers : headers});
         response.data.posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
         })

@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'; 
-import { login, setUsername, setUserId } from '../redux/actions';
+import { login, setUsername, setUserId, setToken } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
 const DynamicLoginForm= dynamic(() => import('../components/loginForm'))
@@ -41,6 +41,7 @@ const Login = () => {
                 dispatch(login());
                 dispatch(setUsername(values.username));
                 dispatch(setUserId(res.data.userId));
+                dispatch(setToken(res.data.authToken));
                 router.push('/home');
             }).catch((err) => {
                 setLoading(false);

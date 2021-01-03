@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
+import { authenticated } from '../../authenticated';
 import { get_user_by_username, update_bio } from '../../../../utils/userUtil';
 
-export default async function getUserByUsername(req : NextApiRequest, res : NextApiResponse ){
+export default authenticated(async function getUserByUsername(req : NextApiRequest, res : NextApiResponse ){
 
   if(req.method === 'GET'){
     const user = await get_user_by_username(prisma, req.query);
@@ -16,4 +17,4 @@ export default async function getUserByUsername(req : NextApiRequest, res : Next
     }
     return res.status(400).json({error : "Cannot update the profile right now"});
   }
-}
+});
