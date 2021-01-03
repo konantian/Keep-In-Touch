@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../lib/prisma';
+import { authenticated } from '../authenticated'; 
 import { update_like } from '../../../utils/likeUtil';
 
-export default async function Like(req : NextApiRequest, res : NextApiResponse ){
+export default authenticated(async function Like(req : NextApiRequest, res : NextApiResponse ){
 
 
     if(req.method !== 'PATCH'){
@@ -13,4 +14,4 @@ export default async function Like(req : NextApiRequest, res : NextApiResponse )
 
     return res.status(200).json(updateLike);
 
-}
+});

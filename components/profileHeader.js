@@ -20,6 +20,8 @@ const ProfileHeader = ({ profile, username }) => {
     const [followers, setFollowers] = useState(profile.followers);
     const [bio, setBio] = useState(profile.bio);
     const [isEdit, setIsEdit] = useState(false);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     useEffect(() => {
         setFollowers(profile.followers);
@@ -27,11 +29,14 @@ const ProfileHeader = ({ profile, username }) => {
     },[profile])
 
     const getFollow = async () => {
-        const response = await axios.get(IF_FOLLOW_API,
-            { params: {
+        const config = {
+            headers: headers,
+            params: {
                 user : currentUser,
                 follower : username
-            }});
+            },
+          }
+        const response = await axios.get(IF_FOLLOW_API, config);
         return response.data.status;
     }
 
@@ -39,10 +44,9 @@ const ProfileHeader = ({ profile, username }) => {
 
     const handleMenuClick = (e) => {
         if(e.key === '1'){
-            axios.post(UNFOLLOW_API,{
-                userId : profile.id,
-                followerId : userId
-            }).then((res) => {
+            const data = {userId : profile.id, followerId : userId};
+            const config = { headers : headers };
+            axios.post(UNFOLLOW_API, data, config).then((res) => {
                 message.success(res.data['success'],[0.5]);
                 setFollowers(followers - 1);
                 mutate(IF_FOLLOW_API);
@@ -53,10 +57,9 @@ const ProfileHeader = ({ profile, username }) => {
     }
 
     const follow = () => {
-        axios.post(FOLLOW_API,{
-            user : username,
-            follower : currentUser
-        }).then((res) => {
+        const data = {user : username, follower : currentUser};
+        const config = { headers : headers };
+        axios.post(FOLLOW_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
             setFollowers(followers + 1);
             mutate(IF_FOLLOW_API);
@@ -75,9 +78,9 @@ const ProfileHeader = ({ profile, username }) => {
 
     const update_bio = ( value ) => {
         setIsEdit(false);
-        axios.patch(USER_BY_USERNAME(username),{
-            bio : value
-        }).then(res =>{
+        const data = { bio : value };
+        const config = { headers : headers };
+        axios.patch(USER_BY_USERNAME(username), data, config).then(res =>{
             message.success(res.data['success'],[0.5]);
             setBio(value);
         }).catch((err) => {

@@ -1,14 +1,5 @@
 import { currentTime } from './currentTime';
 
-export const get_comment_by_id = async (prisma, id) => {
-
-    const comment = await prisma.comment.findFirst({
-        where : {id : parseInt(id)}
-    });
-
-    return comment;
-}
-
 export const create_comment = async (prisma, data) => {
     const { content, username, postId } = data;
 

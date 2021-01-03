@@ -16,11 +16,11 @@ const Following = () => {
 
     const router = useRouter();
     const { username }  = router.query;
-    const isLogged = useSelector((state) => state.isLogged);
-    const currentUser = useSelector((state) => state.username);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     const getFollower = async ( url ) => {
-        const response = await axios.get(url);
+        const response = await axios.get(url, { headers : headers});
         return response.data.following;
     }
 
