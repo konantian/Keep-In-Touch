@@ -1,8 +1,9 @@
 import  { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../lib/prisma';
+import { authenticated } from './authenticated';
 import { create_post } from '../../utils/postUtil';
 
-export default async function Posts(req : NextApiRequest, res : NextApiResponse ){
+export default authenticated(async function Posts(req : NextApiRequest, res : NextApiResponse ){
 
     if(req.method !== 'POST'){
         return res.status(405).json({error : "Method not allowed, please use POST"});
@@ -15,4 +16,4 @@ export default async function Posts(req : NextApiRequest, res : NextApiResponse 
 
     await prisma.$disconnect();
     return res.status(201).json({success : "New post has been created"});
-}
+});

@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
+import { authenticated } from '../../authenticated';
 import { get_post_by_id, update_post, delete_post } from '../../../../utils/postUtil';
 
-export default async function Post(req : NextApiRequest, res : NextApiResponse ){
+export default authenticated(async function Post(req : NextApiRequest, res : NextApiResponse ){
 
   if(req.method === 'GET'){
       const post = await get_post_by_id(prisma, req.query.id);
@@ -27,4 +28,4 @@ export default async function Post(req : NextApiRequest, res : NextApiResponse )
   }else{
       return res.status(405).json({error : "Only GET and PATCH available"});
   }
-}
+});

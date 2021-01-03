@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import { Form, Input, AutoComplete } from 'antd';
 import { USERS_API } from '../constants/api';
 
@@ -9,9 +10,11 @@ const SearchBar = () => {
 
     const router = useRouter();
     const [options, setOptions] = useState([]);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     const getUsers = async () => {
-        const response = await axios.get(USERS_API);
+        const response = await axios.get(USERS_API, { headers : headers});
         const users = response.data.users.map((username) => {
             return { value: username };
         });

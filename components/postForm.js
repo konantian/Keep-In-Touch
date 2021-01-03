@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
@@ -11,7 +11,13 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
 
     const formRef = useRef(null);
     const [visible, setVisible] = useState(false);
-    const [type, setType] = useState(initialValues !== null ? initialValues.type : 'text');
+    const [type, setType] = useState(null);
+
+    useEffect(() => {
+        if(initialValues !== null){
+            setType(initialValues.contentType)
+        }
+    }, [initialValues])
 
     return (
         <div>

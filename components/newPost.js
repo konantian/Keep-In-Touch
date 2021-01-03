@@ -13,9 +13,11 @@ const PostEditor = () => {
 
     const router = useRouter();
     const username = useSelector((state) => state.username);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     const getTags = async ( url ) => {
-        const response = await axios.get(url);
+        const response = await axios.get(url, { headers : headers });
         response.data.tags.sort((a, b) => {
             return a.length - b.length;
         })
@@ -38,8 +40,9 @@ const PostEditor = () => {
             });
             postData.tags = tags;
         }
+        const config = { headers : headers};
 
-       axios.post(POSTS_API,postData).then((res) =>{
+       axios.post(POSTS_API, postData, config).then((res) =>{
            message.success(res.data['success'],[0.5]);
            router.push("/home");
        }).catch((err) => {

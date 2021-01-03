@@ -13,12 +13,13 @@ const FollowingList = ({ following, username, api}) => {
 
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     const unFollow = ( followerId ) => {
-        axios.post(UNFOLLOW_API,{
-            userId : followerId,
-            followerId : userId
-        }).then((res) => {
+        const data = {userId : followerId, followerId : userId};
+        const config = { headers : headers};
+        axios.post(UNFOLLOW_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
             mutate(api);
         }).catch((err) => {

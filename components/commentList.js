@@ -42,11 +42,13 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
     }
 
     const onFinish = values => {
-        axios.post(COMMENTS_API, {
+        const data = {
             content : values.content,
             username : username,
             postId : postId
-        }).then((res) => {
+        };
+        const config = { headers : headers};
+        axios.post(COMMENTS_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
             formRef.current.resetFields();
             mutate(COMMENTS_BY_POST(postId));

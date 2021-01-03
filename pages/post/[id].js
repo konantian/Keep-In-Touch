@@ -4,6 +4,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import { message, Spin } from 'antd';
 import { POST_BY_ID, TAGS_API } from '../../constants/api';
 
@@ -15,6 +16,8 @@ const EditPost = () => {
 
     const router = useRouter();
     const [initialValues, setInitialValues] = useState(null);
+    const token = useSelector((state) => state.token);
+    const headers = {'Authorization': token}
 
     useEffect(() => {
         if (router.asPath !== router.route) {
@@ -23,13 +26,13 @@ const EditPost = () => {
     }, [router])
 
     const getPost = async ( postId ) => {
-        const response = await axios.get(POST_BY_ID(postId));
+        const response = await axios.get(POST_BY_ID(postId), { headers : headers});
         const post = response.data;
         setInitialValues(post);
     }
 
     const getTags = async ( url ) => {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {headers : headers});
         response.data.tags.sort((a, b) => {
             return a.length - b.length;
         })
@@ -44,7 +47,9 @@ const EditPost = () => {
            visibility : values.visibility
         };
 
-       axios.patch(POST_BY_ID(router.query.id),postData).then((res) =>{
+        const config = { headers : headers};
+
+       axios.patch(POST_BY_ID(router.query.id), postData, config).then((res) =>{
            message.success(res.data['success'],[0.5]);
            router.push("/home");
        }).catch((err) => {

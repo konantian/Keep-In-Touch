@@ -31,7 +31,7 @@ const PostList = ({ posts, api }) => {
     const headers = {'Authorization': token}
 
     const deletePost = postId => {
-        axios.delete(POST_BY_ID(postId)).then(res => {
+        axios.delete(POST_BY_ID(postId), {headers : headers}).then(res => {
             message.success(res.data['success'],[0.5]);
             mutate(api);
         }).catch(err => {
