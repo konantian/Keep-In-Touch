@@ -35,7 +35,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                     name="tags"
                     label="Tags"
                 >
-                    <Select mode="tags" placeholder="Please select your tags">
+                    <Select mode="tags" placeholder="Please select or enter your tags">
                         {!tags ? null  : tags.map((tag,idx) => 
                             <Option key={idx} value={tag}>
                                 <Tag color={randomColor()}>{tag}</Tag>

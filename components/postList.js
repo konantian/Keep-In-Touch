@@ -48,11 +48,17 @@ const PostList = ({ posts, api }) => {
         })
     }
 
-    const menu = (author, postId) => {
+    const menu = (author, postId, liked) => {
          return(
             <Menu>
-                <Menu.Item key="1" icon={<HeartOutlined />}>
-                    Like
+                <Menu.Item 
+                    key="1" 
+                    icon={liked.includes(userId) ? 
+                        <FcLike className="feedbackButton"/> : 
+                        <HeartOutlined /> }
+                    onClick={() => updateLike(postId)}
+                >
+                    {liked.includes(userId) ? "Unlike" : "like"}
                 </Menu.Item>
                 <Menu.Item 
                     key="2" 
@@ -127,7 +133,7 @@ const PostList = ({ posts, api }) => {
                         title={
                             <div className="postTitle" >
                                 <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
-                                <Dropdown key="status" overlay={menu(item.author.username, item.id)}>
+                                <Dropdown key="status" overlay={menu(item.author.username, item.id, item.liked)}>
                                     <Button shape="round"><EllipsisOutlined /></Button>
                                 </Dropdown>
                             </div>
