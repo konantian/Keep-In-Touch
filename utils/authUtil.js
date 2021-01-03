@@ -14,11 +14,10 @@ export const check_email = async (prisma, email) => {
     return result === null;
 }
 
-export const get_password = async (prisma, username) => {
+export const get_user = async (prisma, username) => {
     const result = await prisma.user.findFirst({
         where : {username : username},
-        select : {password : true}
     });
 
-    return result.password;
+    return result;
 }

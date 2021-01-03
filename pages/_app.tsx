@@ -5,8 +5,9 @@ import { wrapper } from '../redux/store';
 import { useStore } from 'react-redux';
 import { Spin } from 'antd';
 import { PersistGate } from 'redux-persist/integration/react';
+import type { AppProps } from 'next/app';
 
-const MyApp = ({Component, pageProps}) => {
+const MyApp = ({Component, pageProps} : AppProps) => {
     const store = useStore((state) => state);
     return(
         <PersistGate persistor={store.__persistor} loading={<div className="loader" ><Spin size="large" tip="Loading ... "/></div>}>
