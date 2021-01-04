@@ -16,11 +16,9 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
 
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
-    const token = useSelector((state) => state.token);
-    const headers = {'Authorization': token}
 
     const getComments = async( url ) => {
-        const response = await axios.get(url, { headers : headers});
+        const response = await axios.get(url, {withCredentials: true});
         response.data.comments.sort((a, b) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         })
@@ -30,7 +28,7 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
     const { data : comments, error} = useSWR(visible === true ? COMMENTS_BY_POST(postId) : null, getComments);
 
     const deleteComment = (commentId) => {
-        const config = { headers : headers};
+        const config = {withCredentials: true};
         axios.delete(COMMENT_BY_ID(commentId), config).then(res =>{
             message.success(res.data['success'],[0.5]);
             mutate(COMMENTS_BY_POST(postId));
@@ -47,7 +45,7 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
             username : username,
             postId : postId
         };
-        const config = { headers : headers};
+        const config = {withCredentials: true};
         axios.post(COMMENTS_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
             formRef.current.resetFields();

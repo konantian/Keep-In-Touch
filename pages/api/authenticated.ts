@@ -5,7 +5,7 @@ import { SECRET } from './secret';
 export const authenticated = (fn : NextApiHandler) => 
     async (req : NextApiRequest, res : NextApiResponse) => {
 
-        verify(req.headers.authorization!, SECRET, async (err, decoded) => {
+        verify(req.cookies.auth!, SECRET, async (err, decoded) => {
             if(!err && decoded){
                 return await fn(req,res);
             }

@@ -1,23 +1,19 @@
 const bcrypt = require('bcrypt');
-import { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
-import { check_username, get_user } from '../../../utils/authUtil';
+import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../lib/prisma';
 import { sign } from 'jsonwebtoken';
 import { SECRET } from '../secret';
+import cookie from 'cookie';
 import { currentTime } from '../../../utils/currentTime';
+import { check_username, get_user } from '../../../utils/authUtil';
 
-const authenticated = (fn : NextApiHandler) => 
-    async (req : NextApiRequest, res : NextApiResponse) => {
-        return await fn(req,res);
-}
-
-export default authenticated(async function login(req : NextApiRequest, res : NextApiResponse){
+export default async function login(req : NextApiRequest, res : NextApiResponse){
 
     if(req.method !== 'POST'){
         return res.status(405).json({error : "Method not allowed, please use POST"});
     }
 
-    const {username, password } = req.body;
+    const { username, password } = req.body;
 
     const newUsername = await check_username(prisma, username)
     if(newUsername){
@@ -35,8 +31,16 @@ export default authenticated(async function login(req : NextApiRequest, res : Ne
         });
         const claims = {sub : user.id, username : user.username };
         const jwt = sign(claims, SECRET, {expiresIn : '1h'});
+        res.setHeader('Set-Cookie', cookie.serialize('auth', jwt, {
+            httpOnly : true,
+            secure : process.env.NODE_ENV !== 'development',
+            sameSite : 'strict',
+            maxAge : 3600,
+            path : '/'
+        }))
+
         return res.status(200).json({success : "Welcome back!", userId : updateLogin.id, authToken : jwt});
     }else{
         return res.status(400).json({error : "The username and password entered is not matched"});
     }
-});
+}

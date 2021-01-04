@@ -20,8 +20,6 @@ const ProfileHeader = ({ profile, username }) => {
     const [followers, setFollowers] = useState(profile.followers);
     const [bio, setBio] = useState(profile.bio);
     const [isEdit, setIsEdit] = useState(false);
-    const token = useSelector((state) => state.token);
-    const headers = {'Authorization': token}
 
     useEffect(() => {
         setFollowers(profile.followers);
@@ -30,7 +28,7 @@ const ProfileHeader = ({ profile, username }) => {
 
     const getFollow = async () => {
         const config = {
-            headers: headers,
+            withCredentials: true,
             params: {
                 user : currentUser,
                 follower : username
@@ -45,7 +43,7 @@ const ProfileHeader = ({ profile, username }) => {
     const handleMenuClick = (e) => {
         if(e.key === '1'){
             const data = {userId : profile.id, followerId : userId};
-            const config = { headers : headers };
+            const config = {withCredentials: true};
             axios.post(UNFOLLOW_API, data, config).then((res) => {
                 message.success(res.data['success'],[0.5]);
                 setFollowers(followers - 1);
@@ -58,7 +56,7 @@ const ProfileHeader = ({ profile, username }) => {
 
     const follow = () => {
         const data = {user : username, follower : currentUser};
-        const config = { headers : headers };
+        const config = {withCredentials: true};
         axios.post(FOLLOW_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
             setFollowers(followers + 1);
@@ -79,7 +77,7 @@ const ProfileHeader = ({ profile, username }) => {
     const update_bio = ( value ) => {
         setIsEdit(false);
         const data = { bio : value };
-        const config = { headers : headers };
+        const config = {withCredentials: true};
         axios.patch(USER_BY_USERNAME(username), data, config).then(res =>{
             message.success(res.data['success'],[0.5]);
             setBio(value);

@@ -27,11 +27,9 @@ const PostList = ({ posts, api }) => {
     const [postId, setPostId] = useState(null);
     const username = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
-    const token = useSelector((state) => state.token);
-    const headers = {'Authorization': token}
 
     const deletePost = postId => {
-        axios.delete(POST_BY_ID(postId), {headers : headers}).then(res => {
+        axios.delete(POST_BY_ID(postId),{withCredentials: true}).then(res => {
             message.success(res.data['success'],[0.5]);
             mutate(api);
         }).catch(err => {
@@ -41,7 +39,7 @@ const PostList = ({ posts, api }) => {
 
     const updateLike = postId => {
         const data = {userId : userId, postId : postId};
-        const config = { headers : headers};
+        const config = {withCredentials: true};
         axios.patch(LIKE_API, data, config).then(() => {
             mutate(api);
         }).catch(err => {

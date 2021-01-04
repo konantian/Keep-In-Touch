@@ -4,7 +4,6 @@ import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 import { Spin } from  'antd';
 import { FOLLOWER_API } from '../../constants/api';
 
@@ -16,11 +15,9 @@ const Follower = () => {
 
     const router = useRouter();
     const { username }  = router.query;
-    const token = useSelector((state) => state.token);
-    const headers = {'Authorization': token}
 
     const getFollower = async ( url ) => {
-        const response = await axios.get(url, { headers : headers});
+        const response = await axios.get(url, {withCredentials: true});
         return response.data.followers;
     }
 

@@ -19,8 +19,6 @@ const Profile = () => {
     const { username }  = router.query;
     const isLogged = useSelector((state) => state.isLogged);
     const currentUser = useSelector((state) => state.username);
-    const token = useSelector((state) => state.token);
-    const headers = {'Authorization': token}
     
     useEffect(() => {
         if (!isLogged) {
@@ -31,7 +29,7 @@ const Profile = () => {
 
     const getProfile = async ( url ) => {
         const config = {
-            headers: headers,
+            withCredentials: true,
             params: {
                 currentUser : currentUser
             },

@@ -18,13 +18,6 @@ export const setUserId = (userId : number) => {
     }
 }
 
-export const setToken = (token : string) => {
-    return {
-        type : "TOKEN",
-        payload: token
-    }
-}
-
 export const logout = () => {
     return {
         type : "LOGOUT"

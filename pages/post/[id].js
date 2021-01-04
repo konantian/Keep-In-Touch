@@ -47,7 +47,7 @@ const EditPost = () => {
            visibility : values.visibility
         };
 
-        const config = { headers : headers};
+        const config =  {withCredentials: true};
 
        axios.patch(POST_BY_ID(router.query.id), postData, config).then((res) =>{
            message.success(res.data['success'],[0.5]);
