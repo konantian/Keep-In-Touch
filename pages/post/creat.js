@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { useSelector } from 'react-redux';
+import { useCookies } from "react-cookie";
 import { useRouter } from 'next/router';
 import { message } from 'antd';
 
@@ -12,17 +12,17 @@ const DynamicEditor = dynamic(() => import('../../components/newPost'))
 const PostCreat = () => {
 
     const router = useRouter();
-    const isLogged = useSelector((state) => state.isLogged);
+    const [cookie] = useCookies(["user"]);
 
     useEffect(() => {
-        if (!isLogged) {
-            message.error('Please login first');
+        if(!cookie['user']) {
             router.push('/');
-        };
+            message.error("Please login first",[1]);
+        }
     }, []);
 
     return (
-        <div className="main">
+        <div>
             <Head>
                 <title>New Post</title>
                 <meta
@@ -30,12 +30,17 @@ const PostCreat = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <DynamicHeader selectedKey={["2"]}/>
-            <div className="pageContainer">
-                <DynamicEditor />
-            </div>
-            <DynamicFooter />
+            {cookie['user'] ? 
+                <div className="main">
+                    <DynamicHeader selectedKey={["2"]}/>
+                    <div className="pageContainer">
+                        <DynamicEditor />
+                    </div>
+                    <DynamicFooter />
+                </div> : null
+            }
         </div>
+        
     )
 }
 

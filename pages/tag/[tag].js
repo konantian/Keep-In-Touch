@@ -4,6 +4,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { message, Spin} from 'antd';
+import { useCookies } from "react-cookie";
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { POSTS_BY_TAG } from '../../constants/api';
@@ -16,14 +17,14 @@ const PostByTag = () => {
 
     const router = useRouter();
     const { tag } = router.query;
-    const isLogged = useSelector((state) => state.isLogged);
     const currentUser = useSelector((state) => state.username);
+    const [cookie] = useCookies(["user"]);
 
     useEffect(() => {
-        if (!isLogged) {
-            message.error('Please login first');
+        if(!cookie['user']) {
             router.push('/');
-        };
+            message.error("Please login first",[1]);
+        }
     }, []);
 
     const fetchPosts =  async ( url ) => {
@@ -32,7 +33,7 @@ const PostByTag = () => {
             params: {
                 currentUser : currentUser
             },
-          }
+        }
         const response = await axios.get(url,config);
         response.data.posts.sort((a, b) => {
             return new Date(b.updatedAt) - new Date(a.updatedAt);
@@ -43,7 +44,7 @@ const PostByTag = () => {
     const {data : posts, error} = useSWR(tag !== undefined ? POSTS_BY_TAG(tag) : null, fetchPosts);
 
     return (
-        <div className="main" >
+        <div>
             <Head>
                 <title>{`${tag} Posts`}</title>
                 <meta
@@ -51,13 +52,18 @@ const PostByTag = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <DynamicHeader selectedKey={["1"]} />
-            <div className="pageContainer">
-                {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
-                    <DynamicPostList posts={posts} api={POSTS_BY_TAG(tag)} />
-                }
-            </div>
-            <DynamicFooter />
+            {cookie['user'] ? 
+                <div className="main" >
+                
+                    <DynamicHeader selectedKey={["1"]} />
+                    <div className="pageContainer">
+                        {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :
+                            <DynamicPostList posts={posts} api={POSTS_BY_TAG(tag)} />
+                        }
+                    </div>
+                    <DynamicFooter />
+                </div> : null
+            }
         </div>
     )
 }

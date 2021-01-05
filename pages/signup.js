@@ -4,20 +4,20 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux'; 
+import { useCookies } from "react-cookie";
 import { SIGNUP_API } from '../constants/api';
 
 const DynamicSignUpForm= dynamic(() => import('../components/signupForm'))
 const DynamicFooter = dynamic(() => import('../components/footer'))
 
-const SignUp = () =>{
+export default function SignUp ({ cookies }){
 
     const router = useRouter();
-    const isLogged = useSelector(state => state.isLogged);
     const [loading, setLoading] = useState(false);
+    const [cookie] = useCookies(["user"]);
 
     useEffect(() => {
-        if(isLogged) {
+        if(cookies && cookie['user']) {
             router.push('/home');
         }
     },[])
@@ -42,19 +42,24 @@ const SignUp = () =>{
       };
 
     return (
-        <div className="main" >
+        <div>
             <Head>
                 <title>Sign Up</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-             <div className="authContainer">
-                <DynamicSignUpForm loading={loading} setLoading={setLoading} onFinish={onFinish} />
-            </div>
-            <DynamicFooter />
-        </div>
-       
-        
+            {!cookies ? 
+                <div className="main" >
+                    <div className="authContainer">
+                        <DynamicSignUpForm loading={loading} setLoading={setLoading} onFinish={onFinish} />
+                    </div>
+                    <DynamicFooter />
+                </div> : null
+            }
+        </div> 
     )
 }
 
-export default SignUp;
+SignUp.getInitialProps = async (ctx) => {
+    const cookie = ctx.req?.headers.cookie;
+    return { cookies: cookie }
+}

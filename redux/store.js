@@ -14,21 +14,18 @@ export const transformCircular = createTransform(
 
 const persistConfig = {
       key: "keep-in-touch",
-      whitelist: ["isLogged", "username", "userId"], 
+      whitelist: ["username", "userId"], 
       storage, // if needed, use a safer storage
       transforms: [transformCircular]
 };
 
 const initialState = {
-      isLogged: false,
       username : null,
       userId : null,
   };
 
 const authReducer = (state = initialState, action) => {
       switch (action.type) {
-            case 'LOGIN':
-                  return {...state, isLogged: true};
             case 'USERNAME':
                   return {...state, username: action.payload};
             case 'USER_ID':

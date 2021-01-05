@@ -27,10 +27,10 @@ const Header = ({ selectedKey }) => {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
     const handleLogout = async () => {
-        dispatch(logout());
-        const response = await axios.post(LOGOUT_API);
-        message.success(response.data['success'],[0.5]);
         removeCookie('user');
+        const response = await axios.post(LOGOUT_API);
+        dispatch(logout());
+        message.success(response.data['success'],[0.5]);
         router.push('/')
     }
 

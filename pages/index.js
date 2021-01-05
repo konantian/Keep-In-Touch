@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux'; 
 import { useCookies } from "react-cookie";
-import { login, setUsername, setUserId } from '../redux/actions';
+import { setUsername, setUserId } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
 const DynamicLoginForm= dynamic(() => import('../components/loginForm'))
@@ -37,8 +37,6 @@ export default function Login ({ cookies }){
                 "username" : values.username,
                 "password" : values.password
             }).then((res) => {
-                setLoading(false);
-                dispatch(login());
                 dispatch(setUsername(values.username));
                 dispatch(setUserId(res.data.userId));
                 const user = { username : values.username, 
@@ -49,6 +47,7 @@ export default function Login ({ cookies }){
                     maxAge: 3600,
                     sameSite: true,
                 });
+                setLoading(false);
                 router.push('/home');
             }).catch((err) => {
                 setLoading(false);
