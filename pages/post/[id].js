@@ -16,7 +16,7 @@ const EditPost = () => {
 
     const router = useRouter();
     const [initialValues, setInitialValues] = useState(null);
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

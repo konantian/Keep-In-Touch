@@ -18,7 +18,7 @@ const PostByTag = () => {
     const router = useRouter();
     const { tag } = router.query;
     const currentUser = useSelector((state) => state.username);
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

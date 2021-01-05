@@ -12,7 +12,7 @@ const DynamicSearchBar= dynamic(() => import('../components/searchBar'))
 const Search = () => {
 
     const router = useRouter();
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
     
     useEffect(() => {
         if(!cookie['user']) {

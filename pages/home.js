@@ -17,7 +17,7 @@ export default function Home(){
 
     const router = useRouter();
     const username = useSelector((state) => state.username);
-    const [cookie, setCookie] = useCookies(["user"]);
+    const [cookie, setCookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

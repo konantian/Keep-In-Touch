@@ -11,7 +11,7 @@ const DynamicFooter = dynamic(() => import('../components/footer'))
 const Chat = () => {
 
     const router = useRouter();
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

@@ -12,7 +12,7 @@ const DynamicEditor = dynamic(() => import('../../components/newPost'))
 const PostCreat = () => {
 
     const router = useRouter();
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

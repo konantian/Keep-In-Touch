@@ -14,7 +14,7 @@ export default function SignUp ({ cookies }){
 
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(cookies && cookie['user']) {

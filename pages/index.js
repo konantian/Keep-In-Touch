@@ -18,7 +18,7 @@ export default function Login ({ cookies }){
     const router = useRouter();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const [cookie, setCookie] = useCookies(["user"]);
+    const [cookie, setCookie] = useCookies();
 
     useEffect(() => {
         if(cookies && cookie['user']) {

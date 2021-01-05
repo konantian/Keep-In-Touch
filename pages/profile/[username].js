@@ -19,7 +19,7 @@ const Profile = () => {
     const router = useRouter();
     const { username }  = router.query;
     const currentUser = useSelector((state) => state.username);
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
     
     useEffect(() => {
         if(!cookie['user']) {

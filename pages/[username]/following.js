@@ -16,7 +16,7 @@ const Following = () => {
 
     const router = useRouter();
     const { username }  = router.query;
-    const [cookie] = useCookies(["user"]);
+    const [cookie] = useCookies();
 
     useEffect(() => {
         if(!cookie['user']) {

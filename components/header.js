@@ -24,7 +24,7 @@ const Header = ({ selectedKey }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const username = useSelector((state) => state.username);
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const [ , , removeCookie] = useCookies();
 
     const handleLogout = async () => {
         removeCookie('user');
