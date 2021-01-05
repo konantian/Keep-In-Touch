@@ -4,32 +4,32 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { message } from 'antd';
-import { useSelector, useDispatch } from 'react-redux'; 
+import { useDispatch } from 'react-redux'; 
+import { useCookies } from "react-cookie";
 import { login, setUsername, setUserId } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
 const DynamicLoginForm= dynamic(() => import('../components/loginForm'))
 const DynamicFooter = dynamic(() => import('../components/footer'))
 
-const Login = () => {
+export default function Login ({ cookies }){
 
     const formRef = useRef(null);
     const router = useRouter();
     const dispatch = useDispatch();
-    const isLogged = useSelector(state => state.isLogged);
     const [loading, setLoading] = useState(false);
+    const [cookie, setCookie] = useCookies(["user"]);
 
     useEffect(() => {
-        if(isLogged) {
+        if(cookies && cookie['user']) {
             router.push('/home');
-        }else{
-            const username = localStorage.getItem('username');
-            if(username && formRef.current){
-                formRef.current.setFieldsValue({username : username});
-                localStorage.removeItem('username');
-            }
-        }   
-    },[])
+        }
+        const username = localStorage.getItem('username');
+        if(username && formRef.current){
+            formRef.current.setFieldsValue({username : username});
+            localStorage.removeItem('username');
+        } 
+    },[cookies])
 
     const onFinish = values => {
         axios.post(LOGIN_API,
@@ -41,7 +41,14 @@ const Login = () => {
                 dispatch(login());
                 dispatch(setUsername(values.username));
                 dispatch(setUserId(res.data.userId));
-                dispatch(setToken(res.data.authToken));
+                const user = { username : values.username, 
+                               userId : res.data.userId
+                            };
+                setCookie("user", JSON.stringify(user), {
+                    path: "/",
+                    maxAge: 3600,
+                    sameSite: true,
+                });
                 router.push('/home');
             }).catch((err) => {
                 setLoading(false);
@@ -51,7 +58,7 @@ const Login = () => {
       };
 
     return (
-        <div className="main">
+        <div>
             <Head>
                 <title>Login</title>
                 <meta
@@ -59,17 +66,24 @@ const Login = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <div className="authContainer">
-                <DynamicLoginForm 
-                    loading={loading} 
-                    setLoading={setLoading} 
-                    formRef={formRef} 
-                    onFinish={onFinish}
-                />
-            </div>
-            <DynamicFooter />
-        </div>    
+            {!cookies ? 
+                <div className="main">
+                    <div className="authContainer">
+                        <DynamicLoginForm 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            formRef={formRef} 
+                            onFinish={onFinish}
+                        />
+                    </div>
+                    <DynamicFooter />
+                </div> : null
+            }
+        </div>
     )
 }
 
-export default Login;
+Login.getInitialProps = async (ctx) => {
+    const cookie = ctx.req?.headers.cookie;
+    return { cookies: cookie }
+}

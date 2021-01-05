@@ -6,23 +6,24 @@ import dynamic from 'next/dynamic';
 import { message, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useCookies } from "react-cookie";
 import { VISIBLE_POSTS_API }from '../constants/api';
 
 const DynamicPostList= dynamic(() => import('../components/postList'))
 const DynamicHeader= dynamic(() => import('../components/header'))
 const DynamicFooter = dynamic(() => import('../components/footer'))
 
-const Home = () => {
+export default function Home(){
 
     const router = useRouter();
-    const isLogged = useSelector((state) => state.isLogged);
     const username = useSelector((state) => state.username);
+    const [cookie, setCookie] = useCookies(["user"]);
 
     useEffect(() => {
-        if (!isLogged) {
-            message.error('Please login first');
+        if(!cookie['user']) {
             router.push('/');
-        };
+            message.error("Please login first",[1]);
+        }
     }, []);
 
     const fetchVisiblePosts =  async ( url ) => {
@@ -36,7 +37,8 @@ const Home = () => {
     const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API(username), fetchVisiblePosts);
 
     return (
-        <div className="main" >
+
+        <div>
             <Head>
                 <title>Home</title>
                 <meta
@@ -44,16 +46,16 @@ const Home = () => {
                     content="initial-scale=1.0, width=device-width"
                 />
             </Head>
-            <DynamicHeader selectedKey={["1"]} />
-            <div className="pageContainer" >
-                {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
-                    : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API(username)} />}
-            </div>
-            <DynamicFooter />
+            {cookie['user'] ? 
+                <div className="main" >
+                    <DynamicHeader selectedKey={["1"]} />
+                    <div className="pageContainer" >
+                        {!visiblePosts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> 
+                            : <DynamicPostList posts={visiblePosts} api={VISIBLE_POSTS_API(username)} />}
+                    </div>
+                    <DynamicFooter />
+                </div> : null
+            }
         </div>
     )
-
 }
-
-
-export default Home;

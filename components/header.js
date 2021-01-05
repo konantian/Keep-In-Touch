@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../redux/actions';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { useCookies } from "react-cookie";
 import Link from 'next/link';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { FcOrgUnit } from 'react-icons/fc';
 import {
@@ -15,18 +17,20 @@ import {
     LogoutOutlined,
     MessageOutlined
 } from "@ant-design/icons";
+import { LOGOUT_API } from '../constants/api';
 
 const Header = ({ selectedKey }) => {
 
     const router = useRouter();
     const dispatch = useDispatch();
     const username = useSelector((state) => state.username);
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(logout());
-        message.success(
-            `Remember to always keep in touch with others!`
-        );
+        const response = await axios.post(LOGOUT_API);
+        message.success(response.data['success'],[0.5]);
+        removeCookie('user');
         router.push('/')
     }
 
