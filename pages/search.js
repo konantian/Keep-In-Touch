@@ -1,4 +1,4 @@
-import React, { useEffect  } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { useCookies } from "react-cookie";
@@ -32,13 +32,12 @@ const Search = () => {
             </Head>
             {cookie['user'] ? 
                 <div className="main">
-                
-                <DynamicHeader selectedKey={["3"]}/>
-                <div className="pageContainer">
-                    <DynamicSearchBar />
-                </div>
-                <DynamicFooter />
-            </div> : null
+                    <DynamicHeader selectedKey={["3"]}/>
+                    <div className="pageContainer">
+                        <DynamicSearchBar />
+                    </div>
+                    <DynamicFooter />
+                </div> : null
             }
         </div>
         

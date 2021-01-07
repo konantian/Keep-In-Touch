@@ -3,7 +3,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
-import { message, Spin} from 'antd';
+import { message, Spin } from 'antd';
 import { useCookies } from "react-cookie";
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
