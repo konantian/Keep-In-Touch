@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
 import { authenticated } from '../../authenticated';
-import { get_following} from '../../../../utils/followUtil';
+import { get_following } from '../../../../utils/followUtil';
 
 export default authenticated(async function getFollowing(req : NextApiRequest, res : NextApiResponse ){
 
@@ -9,8 +9,7 @@ export default authenticated(async function getFollowing(req : NextApiRequest, r
         return res.status(405).json({error : "Method not allowed, please use GET"});
     }
 
-    const following = await get_following(prisma, req.query.username);
+    const following = await get_following(prisma, req.query);
 
-    await prisma.$disconnect();
     return res.status(200).json({following : following});
 });

@@ -14,6 +14,8 @@ export const remove_follow = async (prisma, data) => {
 export const if_follow = async (prisma, data) => {
     const {user, follower} = data;
 
+    if(user === follower) return 'Self';
+
     const ifFollow = await prisma.follow.findFirst({
         where : {
             user : {username : user}, 
@@ -50,14 +52,33 @@ export const get_followers = async (prisma, username) => {
     return followers;
 }
 
-export const get_following = async (prisma, username) => {
+export const get_following = async (prisma, data) => {
 
-    const following = await prisma.follow.findMany({
+    const { username, currentUser } = data;
+
+    const result = await prisma.follow.findMany({
         where : {follower : {username : username}},
         include : {user : true}
     });
+    if(username === currentUser){
+        const following = result.map(follow => {
+            follow.status = 'Following';
+            return follow;
+        })
 
-    return following;
+        return following;
+    }else{
+        const following = await Promise.all(result.map(async (follow) => {
+            const status = await if_follow(prisma, 
+                                        {user : currentUser, 
+                                        follower: follow.user.username });
+            follow.status = status;
+            return follow;               
+        }));
+
+        return following;
+    }
+
 }
 
 export const get_following_by_user = async (prisma, username) => {
