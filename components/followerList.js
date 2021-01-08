@@ -6,23 +6,34 @@ import { mutate } from 'swr';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
-import { CloseOutlined } from "@ant-design/icons";
-import { UNFOLLOW_API } from '../constants/api';
+import { UserDeleteOutlined, UserAddOutlined,  } from "@ant-design/icons";
+import { UNFOLLOW_API, FOLLOW_API } from '../constants/api';
 
-const FollowerList = ({ follower, username, api }) => {
+const FollowerList = ({ follower, api }) => {
 
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
 
-    const unFollow = ( followerId ) => {
-        const data = {userId : userId, followerId : followerId};
+    const handleFollow = ( followerId, user, status ) => {
         const config = {withCredentials: true};
-        axios.post(UNFOLLOW_API, data, config).then((res) => {
-            message.success(res.data['success'],[0.5]);
-            mutate(api);
-        }).catch((err) => {
-            console.log(err);
-        })
+        if(status === 'Follow'){
+            const data = {user : user, follower : currentUser};
+            axios.post(FOLLOW_API, data, config).then((res) => {
+                message.success(res.data['success'],[0.5]);
+                mutate(api);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }else{
+            const data = {userId : userId, followerId : followerId};
+            axios.post(UNFOLLOW_API, data, config).then((res) => {
+                message.success(res.data['success'],[0.5]);
+                mutate(api);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+        
     }
 
     return (
@@ -36,20 +47,22 @@ const FollowerList = ({ follower, username, api }) => {
                     title={
                         <div className="postTitle" >
                             <Link href={`/profile/${item.follower.username}`} key={item.follower.id} >{item.follower.username}</Link>
-                            {currentUser === username ?
-                                 <Button 
-                                    size="large" 
-                                    key="statusButton"
-                                    shape="round"
-                                    onClick={() => unFollow(item.follower.id)}
-                                >
-                                    <CloseOutlined />Remove
-                                </Button> : null}
                         </div>
                     }
                     description={
                         <div className="followDescription" >
                             Followed At {dayjs(item.followedAt).format('YYYY-MM-DD HH:mm:ss')}
+                            {item.status !== 'Self' ? 
+                                 <Button 
+                                    size="large" 
+                                    key="statusButton"
+                                    shape="round"
+                                    onClick={() => handleFollow(item.follower.id, item.follower.username, item.status)}
+                                >
+                                    {item.status === 'Follow' ? <UserAddOutlined /> : <UserDeleteOutlined />}
+                                    {item.status}
+                                </Button> : null
+                            }
                         </div>
                     }
                 />

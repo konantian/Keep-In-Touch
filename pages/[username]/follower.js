@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useCookies } from "react-cookie";
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import { Spin, message } from  'antd';
 import { FOLLOWER_API } from '../../constants/api';
 
@@ -15,6 +16,7 @@ const DynamicFollower = dynamic(() => import('../../components/followerList'))
 const Follower = () => {
 
     const router = useRouter();
+    const currentUser = useSelector((state) => state.username)
     const { username }  = router.query;
     const [cookie] = useCookies();
 
@@ -26,7 +28,13 @@ const Follower = () => {
     }, []);
 
     const getFollower = async ( url ) => {
-        const response = await axios.get(url, {withCredentials: true});
+        const config = {
+            withCredentials: true,
+            params: {
+                currentUser : currentUser,
+            },
+        }
+        const response = await axios.get(url, config);
         return response.data.followers;
     }
 
@@ -49,7 +57,7 @@ const Follower = () => {
                         {!follower ? 
                         <div className="loader" >
                             <Spin size="large" tip="Loading user's follower ... "/>
-                        </div> : <DynamicFollower follower={follower} username={username} api={FOLLOWER_API(username)} /> }
+                        </div> : <DynamicFollower follower={follower} api={FOLLOWER_API(username)} /> }
                     </div>
                     <DynamicFooter />
                 </div> : null

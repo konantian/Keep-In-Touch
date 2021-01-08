@@ -9,8 +9,7 @@ export default authenticated(async function getFollower(req : NextApiRequest, re
         return res.status(405).json({error : "Method not allowed, please use GET"});
     }
 
-    const followers = await get_followers(prisma, req.query.username);
+    const followers = await get_followers(prisma, req.query);
 
-    await prisma.$disconnect();
     return res.status(200).json({followers : followers});
 });
