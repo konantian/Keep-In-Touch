@@ -11,6 +11,5 @@ export default authenticated(async function getCommentsByPost(req : NextApiReque
 
     const comments = await get_comments_by_post(prisma, req.query.id);
 
-    await prisma.$disconnect();
     return res.status(200).json({comments : comments});
 });

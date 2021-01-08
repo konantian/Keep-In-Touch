@@ -14,6 +14,5 @@ export default authenticated(async function getAllComments(req : NextApiRequest,
         return res.status(400).json({error : "New comment cannot be created, please try again."});
     }
 
-    await prisma.$disconnect();
     return res.status(201).json({success : "New comment has been created"});
 });

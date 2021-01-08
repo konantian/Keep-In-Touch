@@ -11,10 +11,8 @@ export default authenticated(async function unFollow(req : NextApiRequest, res :
 
     const deleteFollow = await remove_follow(prisma, req.body);
     if(!deleteFollow){
-        await prisma.$disconnect();
         return res.status(400).json({error : "User unfollow failed, please check your data"});
     };
-    await prisma.$disconnect();
     return res.status(201).json({success : "Unfollow success!"});
 
 });

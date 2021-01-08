@@ -19,9 +19,7 @@ export default authenticated(async function addFollow(req : NextApiRequest, res 
         }
     });
     if(!addFollow){
-        await prisma.$disconnect();
         return res.status(400).json({error : "User follow failed, please check your data"});
     };
-    await prisma.$disconnect();
     return res.status(201).json({success : "Follow success!"});
 });

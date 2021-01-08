@@ -14,7 +14,6 @@ export default authenticated(async function Post(req : NextApiRequest, res : Nex
       if(!updatePost){
           return res.status(400).json({error : "Cannot update this post now, please try again."})
       }
-      await prisma.$disconnect();
       return res.status(200).json({success : "Post updated"});
 
   }else if(req.method === 'DELETE'){
@@ -22,7 +21,6 @@ export default authenticated(async function Post(req : NextApiRequest, res : Nex
       if(!deletePost){
         return res.status(400).json({error : "Cannot delete this post now, please try again."})
     }
-      await prisma.$disconnect();
       return res.status(200).json({success : "Post deleted"});;
 
   }else{

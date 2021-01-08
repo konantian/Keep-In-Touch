@@ -11,6 +11,5 @@ export default authenticated(async function getAllUsers(req : NextApiRequest, re
 
     const users = await get_users(prisma);
 
-    await prisma.$disconnect();
     return res.status(200).json({users : users});
 });

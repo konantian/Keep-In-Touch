@@ -11,6 +11,5 @@ export default authenticated(async function ifFollow(req : NextApiRequest, res :
     
     const follow = await if_follow(prisma, req.query);
 
-    await prisma.$disconnect();
     return res.status(200).json({status : follow});
 });

@@ -14,6 +14,5 @@ export default authenticated(async function Posts(req : NextApiRequest, res : Ne
         return res.status(400).json({error : "New post cannot be created, please try again."});
     }
 
-    await prisma.$disconnect();
     return res.status(201).json({success : "New post has been created"});
 });
