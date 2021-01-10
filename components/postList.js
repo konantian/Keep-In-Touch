@@ -9,7 +9,8 @@ import { FcLike } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ReactMarkDown from "react-markdown";
-import { List, Avatar, Popconfirm, Tag, BackTop, Tooltip, Dropdown, Menu, Button, message } from 'antd';
+import { List, Avatar, Popconfirm, Tag, BackTop, 
+       Tooltip, Dropdown, Menu, Button, message } from 'antd';
 import { CommentOutlined,
          HeartOutlined, 
          EllipsisOutlined, 
@@ -25,6 +26,7 @@ const PostList = ({ posts, api }) => {
 
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
+    const [author, setAuthor] = useState(null);
     const username = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
 
@@ -65,6 +67,7 @@ const PostList = ({ posts, api }) => {
                     onClick={() => {
                         setPostId(postId);
                         setVisible(true);
+                        setAuthor(author);
                     }}
                 >
                     Comment
@@ -113,6 +116,7 @@ const PostList = ({ posts, api }) => {
                             onClick={() => {
                                 setPostId(item.id);
                                 setVisible(true);
+                                setAuthor(item.author.username);
                             }} 
                         >
                             <CommentOutlined className="feedbackButton" />
@@ -162,7 +166,7 @@ const PostList = ({ posts, api }) => {
                 </List.Item>
                 )}
             />
-            <DynamicCommentList postId={postId} visible={visible} onClose={() => setVisible(false)} updatePost={() => mutate(api)} />
+            <DynamicCommentList postId={postId} author={author} visible={visible} onClose={() => setVisible(false)} updatePost={() => mutate(api)} />
         </div>
     )
 }

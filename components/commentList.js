@@ -5,14 +5,15 @@ import useSWR, { mutate } from 'swr';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { List, Avatar, Button, message, Popconfirm, Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
+import { List, Avatar, Button, message, Popconfirm, Tag, 
+         Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
 import { DeleteOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api';
 
 const { TextArea } = Input;
 dayjs.extend(relativeTime)
 
-const CommentList = ({ postId, visible, onClose, updatePost }) => {
+const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
 
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
@@ -82,9 +83,17 @@ const CommentList = ({ postId, visible, onClose, updatePost }) => {
                                 </a>}
                         avatar={<Avatar size={40} src="/boy.png" />}
                         content={item.content}
-                        datetime={<Tooltip title={dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
-                                    <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
-                                </Tooltip>}
+                        datetime={
+                                <div>
+                                    <Tooltip title={dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+                                        <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
+                                    </Tooltip>
+                                    {author === item.author.username ?
+                                         <Tag style={{marginLeft : "10px"}} color='orange' >Author</Tag> : 
+                                         null
+                                    }
+                                </div>
+                                }
                         actions={[
                             item.author.username === username ? 
                             
