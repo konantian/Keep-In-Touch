@@ -39,7 +39,12 @@ const PostList = ({ posts, api }) => {
         })
     }
 
-    const updateLike = postId => {
+    const updateLike = (postId, index) => {
+        if(posts[index].liked.includes(userId)){
+            posts[index].liked = posts[index].liked.filter(item => item != userId);
+        }else{
+            posts[index].liked.push(userId);
+        }
         const data = {userId : userId, postId : postId};
         const config = {withCredentials: true};
         axios.patch(LIKE_API, data, config).then(() => {
@@ -101,11 +106,11 @@ const PostList = ({ posts, api }) => {
                 itemLayout="vertical"
                 dataSource={posts}
                 size="large"
-                renderItem={item => (
+                renderItem={(item, index) => (
                 <List.Item
                     key={item.id}
                     actions={[
-                        <a  key="like" onClick={() => updateLike(item.id)} className="feedbackButton" >
+                        <a  key="like" onClick={() => updateLike(item.id, index)} className="feedbackButton" >
                             {item.liked.includes(userId) ?
                                 <FcLike className="feedbackButton"/> :
                                 <HeartOutlined className="feedbackButton"/>
