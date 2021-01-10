@@ -10,7 +10,6 @@ export default authenticated(async function getAllTags(req : NextApiRequest, res
     }
 
     const tags = await get_tags(prisma);
-    const uniqueTags = tags.filter((tag, idx) => tags.indexOf(tag) === idx);
 
-    return res.status(200).json({tags : uniqueTags});
+    return res.status(200).json({tags : tags});
 })

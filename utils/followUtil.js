@@ -1,3 +1,19 @@
+import { currentTime } from './currentTime';
+
+export const add_follow = async (prisma, data) => {
+    const { user, follower } = data;
+
+    const addFollow = await prisma.follow.create({
+        data : {
+            user : {connect : {username : user}},
+            follower : {connect : {username : follower}},
+            followedAt : currentTime
+        }
+    });
+
+    return addFollow;
+}
+
 export const remove_follow = async (prisma, data) => {
     const {userId, followerId} = data;
 

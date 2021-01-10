@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { message, Spin } from 'antd';
 import { POST_BY_ID, TAGS_API } from '../../constants/api';
+import { currentTime } from '../../utils/currentTime';
 
 const DynamicHeader = dynamic(() => import('../../components/header'))
 const DynamicFooter = dynamic(() => import('../../components/footer'))
@@ -50,7 +51,8 @@ const EditPost = () => {
            title : values.title,
            contentType : values.contentType,
            content : values.content,
-           visibility : values.visibility
+           visibility : values.visibility,
+           updatedAt : currentTime
         };
 
         const config =  {withCredentials: true};

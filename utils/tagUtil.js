@@ -2,9 +2,12 @@ import { get_visible_posts_by_user } from  './postUtil';
 
 export const get_tags = async (prisma) => {
 
-    const tags = await prisma.tag.findMany();
+    const result = await prisma.tag.findMany();
 
-    return tags.map(item => item.name);
+    const tags = result.map(item => item.name);
+    const uniqueTags = tags.filter((tag, idx) => tags.indexOf(tag) === idx);
+
+    return uniqueTags;
 }
 
 export const get_posts_by_tag = async (prisma, data) => {
