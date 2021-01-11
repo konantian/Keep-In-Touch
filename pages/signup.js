@@ -3,12 +3,12 @@ import axios from 'axios';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { message } from 'antd';
+import Image from 'next/image'
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { SIGNUP_API } from '../constants/api';
 
 const DynamicSignUpForm= dynamic(() => import('../components/signupForm'))
-const DynamicFooter = dynamic(() => import('../components/footer'))
 
 export default function SignUp ({ cookies }){
 
@@ -49,11 +49,19 @@ export default function SignUp ({ cookies }){
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             {!cookies ? 
-                <div className="main" >
+                <div className="loginPage" >
+                    <Image
+                        src="/background.png"
+                        alt="Picture of the author"
+                        width={1100}
+                        height={500}
+                    />
                     <div className="authContainer">
-                        <DynamicSignUpForm loading={loading} setLoading={setLoading} onFinish={onFinish} />
+                        <DynamicSignUpForm 
+                            loading={loading} 
+                            onFinish={onFinish} 
+                        />
                     </div>
-                    <DynamicFooter />
                 </div> : null
             }
         </div> 

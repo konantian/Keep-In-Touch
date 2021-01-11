@@ -8,38 +8,40 @@ const LoginForm = ({ onFinish, formRef, loading }) => {
 
 
     return (
-        <Form onFinish={onFinish} ref={formRef} >
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{required: true,message: 'Please input your username!',}]}
-            >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} />
-            </Form.Item>
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{required: true,message: 'Please input your password!',}]}
-            >
-                <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} />
-            </Form.Item>
-            <div className="loginButtons">
-                <Form.Item >
-                    <Button className="authButton" loading={loading} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
+        <div>
+            <span className="loginPrompt" >Welcome Back!</span>
+            <Form style={{marginTop : "60px"}} onFinish={onFinish} ref={formRef} >
+                <Form.Item
+                    name="username"
+                    style={{width : "500px"}}
+                    rules={[{required: true,message: 'Please input your username!',}]}
+                >
+                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Username" prefix={<UserOutlined className="site-form-item-icon" />} />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{required: true,message: 'Please input your password!',}]}
+                >
+                    <Input.Password style={{borderRadius: "15px"}} size="large" placeholder="Password" prefix={<LockOutlined className="site-form-item-icon" />} />
                 </Form.Item>
                 <Form.Item >
-                    <Link href="/signup">
-                        <Button className="authButton" type="primary" shape="round" size="large" >Sign Up</Button>
-                    </Link>
+                    <Button className="authButton" style={{height : "50px", fontSize : "20px"}} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
                 </Form.Item>
+            </Form>
+            <div className="signupNav" >
+                <span>Don't have an account?</span>
+                <Link href="/signup">
+                    <Button style={{color : '#1890ff', height : "50px", width : "120px", fontSize : "20px"}} size="large" shape="round">Sign Up</Button>
+                </Link>
             </div>
-        </Form>
+            
+        </div>
+        
     )
 }
 
 LoginForm.propTypes = {
     onFinish: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired,
     formRef : PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };

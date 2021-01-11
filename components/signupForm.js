@@ -6,70 +6,67 @@ import { Form, Input, Button } from 'antd';
 const SignUpForm = ({ onFinish, loading }) => {
 
     return (
-        <Form className="form" onFinish={onFinish}>
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{required: true,message: 'Please input your username!',}]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Email"
-                name="email"
-                rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Name"
-                name="name"
-                rules={[{required: true,message: 'Please input your name!',}]}
-            >
-                <Input />
-            </Form.Item>
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{required: true,message: 'Please input your password!',}]}
-            >
-                <Input.Password />
-            </Form.Item>
-            <Form.Item
-                name="confirm"
-                label="Confirm"
-                dependencies={['password']}
-                hasFeedback
-                rules={[{required: true,message: 'Please confirm your password!',},
-                ({ getFieldValue }) => ({
-                    validator(rule, value) {
-                        if (!value || getFieldValue('password') === value) {
-                            return Promise.resolve();
-                        }
-                        return Promise.reject('Two passwords not match!');
-                    },
-                }),]}
-            >
-                <Input.Password  />
-            </Form.Item>
-            <div className="loginButtons">
-                <Form.Item >
-                    <Link href="/">
-                        <Button className="authButton" type="primary" shape="round" size="large" >Log in</Button>
-                    </Link>
+        <div>
+            <span className="loginPrompt" >Let's get started!</span>
+            <Form style={{marginTop : "60px"}} onFinish={onFinish}>
+                <Form.Item
+                    name="username"
+                    rules={[{required: true,message: 'Please input your username!',}]}
+                >
+                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Username"/>
+                </Form.Item>
+                <Form.Item
+                    name="email"
+                    rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
+                >
+                    <Input  style={{borderRadius: "15px"}} size="large" placeholder="Email"/>
+                </Form.Item>
+                <Form.Item
+                    name="name"
+                    rules={[{required: true,message: 'Please input your name!',}]}
+                >
+                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Name" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{required: true,message: 'Please input your password!',}]}
+                >
+                    <Input.Password  style={{borderRadius: "15px"}} size="large" placeholder="Password"/>
+                </Form.Item>
+                <Form.Item
+                    name="confirm"
+                    hasFeedback
+                    dependencies={['password']}
+                    rules={[{required: true,message: 'Please confirm your password!',},
+                        ({ getFieldValue }) => ({
+                            validator(rule, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject('Two passwords not match!');
+                            },
+                        }),]}
+                >
+                    <Input.Password style={{borderRadius: "15px"}} size="large" placeholder="Re-enter Password"/>
                 </Form.Item>
                 <Form.Item >
-                    <Button className="authButton" loading={loading} type="primary" shape="round" size="large" htmlType="submit">Sign Up</Button>
+                    <Button className="authButton" style={{height : "50px", fontSize : "20px"}} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Sign Up</Button>
                 </Form.Item>
+            </Form>
+            <div className="signupNav" >
+                <span>Already have an account?</span>
+                <Link href="/">
+                    <Button style={{color : '#1890ff', height : "50px", width : "120px", fontSize : "20px"}} size="large" shape="round">Log In</Button>
+                </Link>
             </div>
-        </Form>
+        </div>
+        
     )
 }
 
 
 SignUpForm.propTypes = {
     onFinish: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired
 };
 

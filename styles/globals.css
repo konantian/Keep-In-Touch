@@ -15,15 +15,22 @@ a {
   box-sizing: border-box;
 }
 
+.loginPage{
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
 .authContainer{
   display: flex;
   justify-content: center;
   flex: 1 0 auto;
-  margin-top: 15%;
+  margin-top: 10%;
 }
 
 .authButton{
-  width: 120px;
+  margin-top: 40px;
+  width: 500px;
 }
 
 .loginButtons{
@@ -104,4 +111,21 @@ a {
   display : flex;
   justify-content: space-between;
   margin-top: -15px;
+}
+
+.loginPrompt{
+  font-size: 25px;
+}
+
+.loginForm{
+  margin-top : 100px;
+}
+
+.signupNav{
+  display : flex;
+  flex-direction : row;
+  justify-content : space-between;
+  margin-top : 40px;
+  font-size: 18px;
+  align-items: baseline;
 }

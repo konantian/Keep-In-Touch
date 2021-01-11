@@ -6,11 +6,11 @@ import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux'; 
 import { useCookies } from "react-cookie";
+import Image from 'next/image'
 import { setUsername, setUserId } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
 const DynamicLoginForm= dynamic(() => import('../components/loginForm'))
-const DynamicFooter = dynamic(() => import('../components/footer'))
 
 export default function Login ({ cookies }){
 
@@ -67,7 +67,13 @@ export default function Login ({ cookies }){
                 />
             </Head>
             {!cookies ? 
-                <div className="main">
+                <div className="loginPage">
+                    <Image
+                        src="/background.png"
+                        alt="Picture of the author"
+                        width={1100}
+                        height={500}
+                    />
                     <div className="authContainer">
                         <DynamicLoginForm 
                             loading={loading} 
@@ -75,7 +81,6 @@ export default function Login ({ cookies }){
                             onFinish={onFinish}
                         />
                     </div>
-                    <DynamicFooter />
                 </div> : null
             }
         </div>
