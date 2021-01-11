@@ -32,6 +32,7 @@ export default function Login ({ cookies }){
     },[cookies])
 
     const onFinish = values => {
+        setLoading(true);
         axios.post(LOGIN_API,
             {
                 "username" : values.username,
@@ -70,7 +71,6 @@ export default function Login ({ cookies }){
                     <div className="authContainer">
                         <DynamicLoginForm 
                             loading={loading} 
-                            setLoading={setLoading} 
                             formRef={formRef} 
                             onFinish={onFinish}
                         />

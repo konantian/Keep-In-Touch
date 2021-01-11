@@ -23,6 +23,7 @@ export default function SignUp ({ cookies }){
     },[])
 
     const onFinish = values => {
+        setLoading(true);
         axios.post(SIGNUP_API,
             {
                 "username" : values.username,

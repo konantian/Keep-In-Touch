@@ -3,7 +3,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 
-const SignUpForm = ({ onFinish, loading, setLoading }) => {
+const SignUpForm = ({ onFinish, loading }) => {
 
     return (
         <Form className="form" onFinish={onFinish}>
@@ -59,7 +59,7 @@ const SignUpForm = ({ onFinish, loading, setLoading }) => {
                     </Link>
                 </Form.Item>
                 <Form.Item >
-                    <Button className="authButton" loading={loading} type="primary" onClick={() => setLoading(true)} shape="round" size="large" htmlType="submit">Sign Up</Button>
+                    <Button className="authButton" loading={loading} type="primary" shape="round" size="large" htmlType="submit">Sign Up</Button>
                 </Form.Item>
             </div>
         </Form>

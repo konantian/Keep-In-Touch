@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-const LoginForm = ({ onFinish, formRef, loading, setLoading}) => {
+const LoginForm = ({ onFinish, formRef, loading }) => {
 
 
     return (
@@ -25,7 +25,7 @@ const LoginForm = ({ onFinish, formRef, loading, setLoading}) => {
             </Form.Item>
             <div className="loginButtons">
                 <Form.Item >
-                    <Button className="authButton" loading={loading} onClick={() => setLoading(true)} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
+                    <Button className="authButton" loading={loading} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
                 </Form.Item>
                 <Form.Item >
                     <Link href="/signup">
