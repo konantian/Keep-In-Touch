@@ -8,7 +8,7 @@ const LoginForm = ({ onFinish, formRef, loading }) => {
 
 
     return (
-        <div>
+        <div className="loginForm" >
             <span className="loginPrompt" >Welcome Back!</span>
             <Form style={{marginTop : "60px"}} onFinish={onFinish} ref={formRef} >
                 <Form.Item
@@ -34,9 +34,7 @@ const LoginForm = ({ onFinish, formRef, loading }) => {
                     <Button style={{color : '#1890ff', height : "50px", width : "120px", fontSize : "20px"}} size="large" shape="round">Sign Up</Button>
                 </Link>
             </div>
-            
         </div>
-        
     )
 }
 

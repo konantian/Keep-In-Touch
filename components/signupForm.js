@@ -6,7 +6,7 @@ import { Form, Input, Button } from 'antd';
 const SignUpForm = ({ onFinish, loading }) => {
 
     return (
-        <div>
+        <div className="loginForm" >
             <span className="loginPrompt" >Let's get started!</span>
             <Form style={{marginTop : "60px"}} onFinish={onFinish}>
                 <Form.Item

@@ -30,10 +30,10 @@ export default function SignUp ({ cookies }){
                 "email" : values.email,
                 "password" : values.password
             }).then((res) => {
-                setLoading(false);
                 message.success(res.data['success'],[1]);
                 localStorage.setItem('username', values.username);
                 router.push('/');
+                setLoading(false);
             }).catch((err) => {
                 setLoading(false);
                 let msg = JSON.parse(err.response.request.response);

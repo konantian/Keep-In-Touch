@@ -34,7 +34,7 @@ export default function Home(){
         return response.data.posts;
     }
 
-    const {data : visiblePosts, error} = useSWR(VISIBLE_POSTS_API(username), fetchVisiblePosts);
+    const {data : visiblePosts, error} = useSWR(username !== null ? VISIBLE_POSTS_API(username) : null, fetchVisiblePosts);
 
     return (
 

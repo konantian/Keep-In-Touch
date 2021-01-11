@@ -8,7 +8,6 @@ import { useCookies } from "react-cookie";
 import Link from 'next/link';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { FcOrgUnit } from 'react-icons/fc';
 import {
     HomeOutlined,
     UserOutlined,
@@ -36,9 +35,7 @@ const Header = ({ selectedKey }) => {
 
     return (
         <Menu className="headerMenu" theme="dark" mode="horizontal" selectedKeys={selectedKey}>
-            <Menu.Item>
-                <FcOrgUnit />
-            </Menu.Item>    
+            <img src="/conan.png" className="logo" />
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>
@@ -57,7 +54,7 @@ const Header = ({ selectedKey }) => {
             <Menu.Item key="6" icon={<LogoutOutlined />} >
                 <a onClick={() => handleLogout()}>Logout</a>
             </Menu.Item>
-      </Menu>
+        </Menu>
     )
 }
 

@@ -47,8 +47,8 @@ export default function Login ({ cookies }){
                     maxAge: 3600,
                     sameSite: true,
                 });
-                setLoading(false);
                 router.push('/home');
+                setLoading(false);
             }).catch((err) => {
                 setLoading(false);
                 let msg = JSON.parse(err.response.request.response);
