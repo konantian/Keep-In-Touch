@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux'; 
 import { useCookies } from "react-cookie";
-import Image from 'next/image'
 import { setUsername, setUserId } from '../redux/actions';
 import { LOGIN_API } from '../constants/api';
 
@@ -68,11 +67,10 @@ export default function Login ({ cookies }){
             </Head>
             {!cookies ? 
                 <div className="loginPage">
-                    <Image
+                    <img
                         src="/background.png"
-                        alt="Picture of the author"
-                        width={1100}
-                        height={500}
+                        alt="Background Picture"
+                        className="backgroundImg"
                     />
                     <div className="authContainer">
                         <DynamicLoginForm 

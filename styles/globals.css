@@ -115,6 +115,7 @@ a {
 
 .loginPrompt{
   font-size: 25px;
+  
 }
 
 .loginForm{
@@ -128,4 +129,10 @@ a {
   margin-top : 40px;
   font-size: 18px;
   align-items: baseline;
+  
+}
+
+.backgroundImg{
+  width : 60%;
+  height : 100vh;
 }

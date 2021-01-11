@@ -3,7 +3,6 @@ import axios from 'axios';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { message } from 'antd';
-import Image from 'next/image'
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { SIGNUP_API } from '../constants/api';
@@ -50,11 +49,10 @@ export default function SignUp ({ cookies }){
             </Head>
             {!cookies ? 
                 <div className="loginPage" >
-                    <Image
+                    <img
                         src="/background.png"
-                        alt="Picture of the author"
-                        width={1100}
-                        height={500}
+                        alt="Background Picture"
+                        className="backgroundImg"
                     />
                     <div className="authContainer">
                         <DynamicSignUpForm 
