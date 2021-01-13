@@ -1,0 +1,1 @@
+export const DEFAULT_AVATAR = "https://avatars3.githubusercontent.com/u/8186664?s=400&u=a583e7221b1be534d587185223cab48fe47cb74d&v=4";

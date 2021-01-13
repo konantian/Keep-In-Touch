@@ -105,7 +105,7 @@ const ProfileHeader = ({ profile, username }) => {
                 )
                 
             ]}
-            avatar={{ src: profile.avatar }}
+            avatar={{ src: profile.avatar, size : 70 }}
         >
             <Descriptions size="middle" column={2} className="descriptions">
                 <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>

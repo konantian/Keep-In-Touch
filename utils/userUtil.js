@@ -58,3 +58,11 @@ export const update_bio = async( prisma, username, bio) => {
     });
     return result;
 }
+
+export const update_avatar = async(prisma, username, avatar) => {
+    const result = await prisma.user.update({
+        where : {username: username},
+        data : {avatar : avatar}
+    });
+    return result;
+}

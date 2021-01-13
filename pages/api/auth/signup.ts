@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 import { NextApiRequest, NextApiResponse } from 'next';
 import { check_username, check_email } from '../../../utils/authUtil';
 import prisma from '../../../lib/prisma';
+import { DEFAULT_AVATAR } from './avatar';
 
 export default async function signup(req : NextApiRequest, res : NextApiResponse ){
 
@@ -9,7 +10,7 @@ export default async function signup(req : NextApiRequest, res : NextApiResponse
         return res.status(405).json({error : "Method not allowed, please use POST"});
     }
 
-    const {username, email, name,  password} = req.body;
+    const {username, email, name,  password, avatar} = req.body;
 
     const validUsername = await check_username(prisma, username)
     if(!validUsername){
@@ -29,7 +30,8 @@ export default async function signup(req : NextApiRequest, res : NextApiResponse
             username : username,
             password : hash,
             name : name,
-            email : email
+            email : email,
+            avatar : avatar || DEFAULT_AVATAR
         }
     });
 

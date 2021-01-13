@@ -17,4 +17,5 @@ export const USER_BY_USERNAME = (username : string) => `/api/user/${username}`;
 export const VISIBLE_POSTS_API = (username : string) =>`/api/user/${username}/visiblePosts`;
 export const FOLLOWER_API = (username : string) =>`/api/user/${username}/follower`;
 export const FOLLOWING_API = (username : string) =>`/api/user/${username}/following`;
+export const AVATAR_API = (username : string) =>`/api/user/${username}/avatar`;
 
