@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Link from 'next/link';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import useSWR, { mutate } from 'swr';
@@ -76,12 +77,12 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                 dataSource={comments}
                 renderItem={item => (
                     <Comment
-                        author={<a href={`/profile/${item.author.username}`} 
+                        author={<Link href={`/profile/${item.author.username}`} 
                                     key={item.author.username} 
                                 >
-                                    <span className="commentAuthor" >{item.author.username}</span>
-                                </a>}
-                        avatar={<Avatar size={40} src="/boy.png" />}
+                                    <a className="commentAuthor" >{item.author.username}</a>
+                                </Link>}
+                        avatar={<Avatar size={40} src={item.author.avatar} />}
                         content={item.content}
                         datetime={
                                 <div>

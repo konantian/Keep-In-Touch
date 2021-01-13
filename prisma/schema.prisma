@@ -18,6 +18,7 @@ model User {
   username   String     @unique
   password   String
   lastLogin  String?
+  avatar     String?
   isAdmin    Boolean    @default(false)
   followers  Follow[]   @relation("user")
   following  Follow[]   @relation("follower")

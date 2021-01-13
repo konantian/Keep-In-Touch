@@ -34,7 +34,11 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                         <Radio.Button value="text">Text</Radio.Button>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item label="Title" name="title" >
+                <Form.Item 
+                    label="Title" 
+                    name="title" 
+                    rules={[{required: true,message: 'Please enter your title !',}]}
+                >
                     <Input placeholder="Please type your title" />
                 </Form.Item>
                 <Form.Item
@@ -60,7 +64,10 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                         <Select.Option value="PRIVATE">PRIVATE</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name="content">
+                <Form.Item 
+                    name="content"
+                    rules={[{required: true,message: 'Please enter your content!',}]}
+                >
                     <TextArea 
                         showCount
                         placeholder="Add your content here"

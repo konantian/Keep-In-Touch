@@ -124,15 +124,19 @@ const PostList = ({ posts, api }) => {
                         </a>,
                         <div>
                             {item.author.username === username ? 
-                            <a href={`/post/${item.id}`} key="edit" className="feedbackButton">
-                                <EditOutlined className="feedbackButton" />
-                                Edit
-                            </a> : null}
+                            <Link href={`/post/${item.id}`} key="edit" className="feedbackButton">
+                                <a><EditOutlined className="feedbackButton" />Edit</a>
+                            </Link> : null}
                         </div>
                     ]}
                 >
                     <List.Item.Meta
-                        avatar={<Avatar size={50} src="/boy.png" />}
+                        avatar={
+                        <Link href={`/profile/${item.author.username}`} >
+                            <a><Avatar size={50} src={item.author.avatar} /></a>
+                        </Link>
+                        
+                    }
                         title={
                             <div className="postTitle" >
                                 <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 

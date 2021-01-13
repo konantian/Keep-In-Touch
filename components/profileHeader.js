@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef }  from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -104,7 +105,7 @@ const ProfileHeader = ({ profile, username }) => {
                 )
                 
             ]}
-            avatar={{ src: '/boy.png' }}
+            avatar={{ src: profile.avatar }}
         >
             <Descriptions size="middle" column={2} className="descriptions">
                 <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>
