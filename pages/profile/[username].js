@@ -62,7 +62,7 @@ const Profile = () => {
                             <Spin size="large" tip="Loading user's profile ... "/>
                         </div> : 
                         <div>
-                            <DynamicProfileHeader username={username} profile={profile} />
+                            <DynamicProfileHeader username={username} profile={profile} api={USER_BY_USERNAME(username)} />
                             <Divider />
                             <DynamicPostList posts={profile.posts} api={USER_BY_USERNAME(username)} />
                         </div>
