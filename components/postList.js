@@ -105,7 +105,6 @@ const PostList = ({ posts, api }) => {
                 <List.Item
                     key={item.id}
                     actions={[
-                        
                         <a  key="like" onClick={() => updateLike(item.id)} className="feedbackButton" >
                             {item.liked.includes(userId) ?
                                 <FcLike className="feedbackButton"/> :
@@ -129,7 +128,6 @@ const PostList = ({ posts, api }) => {
                                 <a><EditOutlined className="feedbackButton" />Edit</a>
                             </Link> : null}
                         </div>
-
                     ]}
                 >
                     <List.Item.Meta
@@ -156,7 +154,7 @@ const PostList = ({ posts, api }) => {
                                 </Tooltip>
                                 {item.updatedAt !== item.createdAt ? '  Edited' : ''}
                                 <br  style={{marginBottom : "10px"}} />
-                                <div style={{marginLeft : "-70px" }} >
+                                <div style={{marginLeft : "-70px", marginTop : "10px" }} >
                                     {item.tags.map((tag, idx) => (
                                         <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>
                                     ))}
@@ -165,7 +163,7 @@ const PostList = ({ posts, api }) => {
                             </div>
                         }
                     />
-                    <div style={{ overflow: "auto", marginTop : "-10px",marginBottom : "-20px"}}>
+                    <div style={{ overflow: "auto", marginTop : "-10px",marginBottom : "-10px"}}>
                         <h2>{item.title}</h2>
                         {item.contentType === "text" ? (
                             item.content) : 
