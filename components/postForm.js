@@ -75,13 +75,13 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                         autoSize={{ minRows: 12, maxRows: 20}}
                     />
                 </Form.Item>
-                <div className="loginButtons">
+                <div className="postButtons">
                     <Form.Item >
-                        <Button className="authButton" type="primary" htmlType="submit" shape="round" size="large" >{text}</Button>
+                        <Button className="postButton" type="primary" htmlType="submit" shape="round" size="large" >{text}</Button>
                     </Form.Item>
                     {type === 'markdown' ?
                     <Form.Item >
-                        <Button className="authButton" type="primary" onClick={() => setVisible(true)} shape="round" size="large" >Preview</Button>
+                        <Button className="postButton" type="primary" onClick={() => setVisible(true)} shape="round" size="large" >Preview</Button>
                     </Form.Item> : null}
 
                 </div>

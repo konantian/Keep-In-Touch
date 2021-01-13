@@ -153,7 +153,7 @@ const PostList = ({ posts, api }) => {
                                     <span>{dayjs(item.updatedAt).fromNow()}</span>
                                 </Tooltip>
                                 {item.updatedAt !== item.createdAt ? '  Edited' : ''}
-                                <br />
+                                <br  style={{marginBottom : "10px"}} />
                                 {item.tags.map((tag, idx) => (
                                     <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>
                                 ))}
