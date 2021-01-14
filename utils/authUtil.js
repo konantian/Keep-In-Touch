@@ -14,9 +14,9 @@ export const check_email = async (prisma, email) => {
     return result === null;
 }
 
-export const get_user = async (prisma, username) => {
+export const get_user_by_email = async (prisma, email) => {
     const result = await prisma.user.findFirst({
-        where : {username : username},
+        where : {email : email},
     });
 
     return result;

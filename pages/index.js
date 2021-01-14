@@ -23,10 +23,10 @@ export default function Login ({ cookies }){
         if(cookies && cookie['user']) {
             router.push('/home');
         }
-        const username = localStorage.getItem('username');
-        if(username && formRef.current){
-            formRef.current.setFieldsValue({username : username});
-            localStorage.removeItem('username');
+        const email = localStorage.getItem('email');
+        if(email && formRef.current){
+            formRef.current.setFieldsValue({email : email});
+            localStorage.removeItem('email');
         } 
     },[cookies])
 
@@ -34,12 +34,13 @@ export default function Login ({ cookies }){
         setLoading(true);
         axios.post(LOGIN_API,
             {
-                "username" : values.username,
+                "email" : values.email,
                 "password" : values.password
             }).then((res) => {
-                dispatch(setUsername(values.username));
+                console.log(res.data);
+                dispatch(setUsername(res.data.username));
                 dispatch(setUserId(res.data.userId));
-                const user = { username : values.username, 
+                const user = { email : values.email, 
                                userId : res.data.userId
                             };
                 setCookie("user", JSON.stringify(user), {

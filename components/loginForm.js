@@ -12,11 +12,11 @@ const LoginForm = ({ onFinish, formRef, loading }) => {
             <span className="loginPrompt" >Welcome Back!</span>
             <Form style={{marginTop : "60px"}} onFinish={onFinish} ref={formRef} >
                 <Form.Item
-                    name="username"
+                    name="email"
                     style={{width : "500px"}}
-                    rules={[{required: true,message: 'Please input your username!',}]}
+                    rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
                 >
-                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Username" prefix={<UserOutlined className="site-form-item-icon" />} />
+                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Email" prefix={<UserOutlined className="site-form-item-icon" />} />
                 </Form.Item>
                 <Form.Item
                     name="password"

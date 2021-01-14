@@ -5,7 +5,7 @@ import { sign } from 'jsonwebtoken';
 import { SECRET } from '../secret';
 import cookie from 'cookie';
 import { currentTime } from '../../../utils/currentTime';
-import { check_username, get_user } from '../../../utils/authUtil';
+import { check_email, get_user_by_email } from '../../../utils/authUtil';
 
 export default async function login(req : NextApiRequest, res : NextApiResponse){
 
@@ -13,23 +13,23 @@ export default async function login(req : NextApiRequest, res : NextApiResponse)
         return res.status(405).json({error : "Method not allowed, please use POST"});
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const newUsername = await check_username(prisma, username)
-    if(newUsername){
-        return res.status(400).json({error : "The username entered does not exist, please input again"});   
+    const newEmail = await check_email(prisma, email)
+    if(newEmail){
+        return res.status(400).json({error : "This email has not registered yet, please sign up first"});   
     }
 
-    const user = await get_user(prisma, username);
+    const user = await get_user_by_email(prisma, email);
 
     if(bcrypt.compareSync(password, user.password)){
 
         const updateLogin = await prisma.user.update({
-            where : {username : username},
+            where : {email : email},
             data : {lastLogin : currentTime},
             select : {id : true}
         });
-        const claims = {sub : user.id, username : user.username };
+        const claims = {sub : user.id, email : user.email };
         const jwt = sign(claims, SECRET, {expiresIn : '1h'});
         res.setHeader('Set-Cookie', cookie.serialize('auth', jwt, {
             httpOnly : true,
@@ -39,7 +39,7 @@ export default async function login(req : NextApiRequest, res : NextApiResponse)
             path : '/'
         }))
 
-        return res.status(200).json({success : "Welcome back!", userId : updateLogin.id, authToken : jwt});
+        return res.status(200).json({success : "Welcome back!", userId : updateLogin.id, username : user.username});
     }else{
         return res.status(400).json({error : "The username and password entered is not matched"});
     }

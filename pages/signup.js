@@ -31,7 +31,7 @@ export default function SignUp ({ cookies }){
                 "password" : values.password
             }).then((res) => {
                 message.success(res.data['success'],[1]);
-                localStorage.setItem('username', values.username);
+                localStorage.setItem('email', values.email);
                 router.push('/');
                 setLoading(false);
             }).catch((err) => {
