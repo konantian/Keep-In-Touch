@@ -82,6 +82,7 @@ const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => 
                     listType="picture-card"
                     showUploadList={false}
                     beforeUpload={beforeUpload}
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     onChange={(info) => handleChange(info)}
                 >
                     {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : 
