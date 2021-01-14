@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { List, Avatar, Button, message, Popconfirm, Tag, 
          Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
-import { DeleteOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { DeleteOutlined, CloseCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api';
 
 const { TextArea } = Input;
@@ -18,6 +18,8 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
 
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
+    const [loading, setLoading] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     const getComments = async( url ) => {
         const response = await axios.get(url, {withCredentials: true});
@@ -30,11 +32,13 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
     const { data : comments, error} = useSWR(visible === true ? COMMENTS_BY_POST(postId) : null, getComments);
 
     const deleteComment = (commentId) => {
+        setDeleting(true);
         const config = {withCredentials: true};
         axios.delete(COMMENT_BY_ID(commentId), config).then(res =>{
-            message.success(res.data['success'],[0.5]);
             mutate(COMMENTS_BY_POST(postId));
             updatePost();
+            setDeleting(false);
+            message.success(res.data['success'],[0.5]);
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);
@@ -42,6 +46,7 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
     }
 
     const onFinish = values => {
+        setLoading(true);
         const data = {
             content : values.content,
             username : username,
@@ -49,10 +54,11 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
         };
         const config = {withCredentials: true};
         axios.post(COMMENTS_API, data, config).then((res) => {
-            message.success(res.data['success'],[0.5]);
             formRef.current.resetFields();
             mutate(COMMENTS_BY_POST(postId));
             updatePost();
+            setLoading(false);
+            message.success(res.data['success'],[0.5]);
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
             message.error(msg['error']);
@@ -106,7 +112,8 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                                 cancelText="No"
                             >
                                 <a  key="delete" className="feedbackButton" >
-                                    <DeleteOutlined className="feedbackButton" />{"Delete"}
+                                    {!deleting ? <DeleteOutlined className="feedbackButton" /> : <LoadingOutlined className="feedbackButton" />}
+                                    Delete
                                 </a > 
                             </Popconfirm> : null,
                         ]}
@@ -131,6 +138,7 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                             shape="round" 
                             size="large" 
                             type="primary"
+                            loading={loading}
                             htmlType="submit"
                         >Comment
                         </Button>
