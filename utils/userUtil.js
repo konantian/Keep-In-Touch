@@ -62,7 +62,7 @@ export const update_bio = async( prisma, username, bio) => {
 export const update_avatar = async(prisma, username, avatar) => {
     const result = await prisma.user.update({
         where : {username: username},
-        data : {avatar : "data:image/jpeg;base64," + avatar}
+        data : {avatar : avatar}
     });
     return result;
 }

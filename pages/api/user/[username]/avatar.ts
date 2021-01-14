@@ -11,7 +11,7 @@ export default authenticated(async function updateAvatar(req : NextApiRequest, r
     }
 
     const avatar = req.body.avatar;
-    const base64 = await imageToBase64(avatar);
+    const base64 = avatar.includes('base64') ? avatar : "data:image/jpeg;base64," +  await imageToBase64(avatar);
     const updateAvatar = await update_avatar(prisma, req.query.username, base64);
     if(updateAvatar){
       return res.status(200).json({success : "Avatar has been updated!"});
