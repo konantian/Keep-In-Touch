@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
 import { authenticated } from '../../authenticated';
 import { update_avatar } from '../../../../utils/userUtil';
+const imageToBase64 = require('image-to-base64');
 
 export default authenticated(async function updateAvatar(req : NextApiRequest, res : NextApiResponse ){
 
@@ -9,7 +10,9 @@ export default authenticated(async function updateAvatar(req : NextApiRequest, r
         return res.status(405).json({error : "Method not allowed, please use PATCH"});
     }
 
-    const updateAvatar = await update_avatar(prisma, req.query.username, req.body.avatar);
+    const avatar = req.body.avatar;
+    const base64 = await imageToBase64(avatar);
+    const updateAvatar = await update_avatar(prisma, req.query.username, base64);
     if(updateAvatar){
       return res.status(200).json({success : "Avatar has been updated!"});
     }

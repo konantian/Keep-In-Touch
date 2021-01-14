@@ -35,7 +35,6 @@ const Header = ({ selectedKey }) => {
 
     return (
         <Menu className="headerMenu" theme="dark" mode="horizontal" selectedKeys={selectedKey}>
-            <img src="/conan.png" className="logo" />
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>

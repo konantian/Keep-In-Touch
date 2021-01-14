@@ -37,7 +37,6 @@ export default function Login ({ cookies }){
                 "email" : values.email,
                 "password" : values.password
             }).then((res) => {
-                console.log(res.data);
                 dispatch(setUsername(res.data.username));
                 dispatch(setUserId(res.data.userId));
                 const user = { email : values.email, 
