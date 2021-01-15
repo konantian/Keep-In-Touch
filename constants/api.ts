@@ -9,6 +9,7 @@ export const POSTS_API = '/api/posts';
 export const COMMENTS_API = '/api/comments';
 export const TAGS_API = '/api/tags';
 export const LIKE_API = '/api/like';
+export const UPLOAD_API = '/api/avatar/upload';
 export const COMMENT_BY_ID = (id : number) =>`/api/comment/${id}`;
 export const POST_BY_ID = (id : number) =>`/api/post/${id}`;
 export const POSTS_BY_TAG = (tag : string) =>`/api/tag/${tag}/posts`;
