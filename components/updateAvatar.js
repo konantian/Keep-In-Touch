@@ -1,21 +1,40 @@
 import React, { useState, useEffect, useRef }  from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { mutate } from 'swr';
 import { Input, Form, Modal, Avatar, Upload, message, Divider } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { UPLOAD_API } from '../constants/api';
+import { UPLOAD_API, AVATAR_API } from '../constants/api';
 
-const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => {
+const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar }) => {
 
     useEffect(() => {
         setImageUrl(null);
         setSrc(null);
         setLoading(false);
+        setTemp(null);
     },[visible])
 
     const inputRef = useRef(0);
     const [src, setSrc] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [isLoading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [tempSrc, setTemp] = useState(false);
+
+    const updateAvatar = ( value ) => {
+        setSaving(true);
+        const data = { avatar : value};
+        const config = {withCredentials: true};
+        axios.patch(AVATAR_API(username), data, config).then(res =>{
+            mutate(api);
+            setSaving(false);
+            setVisible(false);
+            setAvatar(value);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
 
     const getBase64 = (img, callback)=>{
         const reader = new FileReader();
@@ -59,7 +78,7 @@ const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => 
         <Modal
             title="Update Avatar"
             visible={visible}
-            confirmLoading={loading}
+            confirmLoading={saving}
             onCancel={() => setVisible(false)}
             onOk={() => updateAvatar(src || imageUrl)}
             okText={"Save Avatar"}
@@ -73,10 +92,10 @@ const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => 
             <Divider>Use a remote avatar</Divider>
             <Form>
                 <Form.Item style={{marginTop : "20px"}} label="Avatar URL"  name="src">
-                    <Input.TextArea ref={inputRef} onChange={(e) => handleSrcChange(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }}  />
+                    <Input.TextArea defaultValue={tempSrc} ref={inputRef} onChange={(e) => handleSrcChange(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }}  />
                 </Form.Item>
             </Form>
-            <div className="upload" >
+            <div >
                 <Divider>Upload a local avatar</Divider>
                 <Upload
                     name="avatar"
@@ -86,11 +105,13 @@ const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => 
                     action={UPLOAD_API}
                     onChange={(info) => handleChange(info)}
                 >
-                    {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : 
-                    <div>
-                        {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                    </div>}
+                    {
+                        imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : 
+                        <div>
+                            {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
+                            <div style={{ marginTop: 8 }}>Upload</div>
+                        </div>
+                    }
                 </Upload>
             </div>
             
@@ -101,9 +122,7 @@ const UpdateAvatar = ({ visible, setVisible,loading, avatar, updateAvatar }) => 
 UpdateAvatar.propTypes = {
     visible : PropTypes.bool.isRequired,
     setVisible : PropTypes.func.isRequired,
-    loading : PropTypes.bool.isRequired,
     avatar : PropTypes.string.isRequired,
-    updateAvatar : PropTypes.func.isRequired
 };
 
 export default UpdateAvatar;

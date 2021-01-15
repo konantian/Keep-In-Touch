@@ -27,7 +27,6 @@ const ProfileHeader = ({ profile, username, api }) => {
     const [avatar, setAvatar] = useState(profile.avatar);
     const [isEdit, setIsEdit] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setFollowers(profile.followers);
@@ -95,20 +94,6 @@ const ProfileHeader = ({ profile, username, api }) => {
         })
     }
 
-    const updateAvatar = ( value ) => {
-        const data = { avatar : value};
-        const config = {withCredentials: true};
-        axios.patch(AVATAR_API(username), data, config).then(res =>{
-            message.success(res.data['success'],[0.5]);
-            mutate(api);
-            setVisible(false);
-            setLoading(false);
-            setAvatar(value);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
-
 
     return (
         <div>
@@ -147,7 +132,7 @@ const ProfileHeader = ({ profile, username, api }) => {
                     </Descriptions.Item>
                 </Descriptions>
             </PageHeader>
-            <DynamicAvatar  visible={visible} setVisible={setVisible} loading={loading} avatar={avatar} updateAvatar={updateAvatar} />
+            <DynamicAvatar  visible={visible} setVisible={setVisible} avatar={avatar} api={api} username={username} setAvatar={setAvatar} />
         </div>
         
     )
