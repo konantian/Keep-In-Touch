@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useRef }  from 'react';
+import React, { useState, useRef }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { mutate } from 'swr';
 import { Input, Form, Modal, Avatar, Upload, message, Divider } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { UPLOAD_API, AVATAR_API } from '../constants/api';
+
+const { Dragger } = Upload;
 
 const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar }) => {
 
-    useEffect(() => {
-        setImageUrl(null);
-        setSrc(null);
-        setLoading(false);
-        setTemp(null);
-    },[visible])
-
-    const inputRef = useRef(0);
+    const formRef = useRef(0);
     const [src, setSrc] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
     const [isLoading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
-    const [tempSrc, setTemp] = useState(false);
 
     const updateAvatar = ( value ) => {
         setSaving(true);
@@ -31,6 +24,8 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
             setSaving(false);
             setVisible(false);
             setAvatar(value);
+            setSrc(null);
+            formRef.current.resetFields();
         }).catch((err) => {
             console.log(err);
         })
@@ -54,13 +49,13 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
         return isJpgOrPng && isLt2M;
     }
 
-    const handleSrcChange = src => {
-        setImageUrl(null);
-        setSrc(src);
+    const handleCancel = () => {
+        setVisible(false);
+        setSrc(null);
+        formRef.current.resetFields();
     }
 
     const handleChange = info => {
-        setSrc(null);
         if (info.file.status === 'uploading') {
             setLoading(true);
           return;
@@ -68,7 +63,7 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
         if (info.file.status === 'done') {
           // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl =>{
-                setImageUrl(imageUrl);
+                setSrc(imageUrl);
                 setLoading(false);
             });
         }
@@ -79,8 +74,8 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
             title="Update Avatar"
             visible={visible}
             confirmLoading={saving}
-            onCancel={() => setVisible(false)}
-            onOk={() => updateAvatar(src || imageUrl)}
+            onCancel={() => handleCancel()}
+            onOk={() => updateAvatar(src)}
             okText={"Save Avatar"}
         >
             <div className="avatars" >
@@ -90,30 +85,24 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
                 <Avatar size={80} src={src}/>
             </div>
             <Divider>Use a remote avatar</Divider>
-            <Form>
+            <Form ref={formRef} >
                 <Form.Item style={{marginTop : "20px"}} label="Avatar URL"  name="src">
-                    <Input.TextArea defaultValue={tempSrc} ref={inputRef} onChange={(e) => handleSrcChange(e.target.value)} autoSize={{ minRows: 1, maxRows: 5 }}  />
+                    <Input.TextArea onChange={(e) => setSrc(e.target.value)} autoSize={{ minRows: 2, maxRows: 5 }}  />
                 </Form.Item>
             </Form>
-            <div >
-                <Divider>Upload a local avatar</Divider>
-                <Upload
-                    name="avatar"
-                    listType="picture-card"
-                    showUploadList={false}
-                    beforeUpload={beforeUpload}
-                    action={UPLOAD_API}
-                    onChange={(info) => handleChange(info)}
-                >
-                    {
-                        imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : 
-                        <div>
-                            {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
-                            <div style={{ marginTop: 8 }}>Upload</div>
-                        </div>
-                    }
-                </Upload>
-            </div>
+            <Divider>Upload a local avatar</Divider>
+            <Dragger
+                name="avatar"
+                listType="picture-card"
+                showUploadList={false}
+                beforeUpload={beforeUpload}
+                action={UPLOAD_API}
+                onChange={(info) => handleChange(info)}
+            >
+                {isLoading ? <LoadingOutlined /> : <UploadOutlined style={{fontSize : "30px"}} />}
+                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            </Dragger>
+            
             
         </Modal>
     )
