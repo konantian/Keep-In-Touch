@@ -141,26 +141,21 @@ a {
   height : 100vh;
 }
 
-.imgContainer{
-  display : flex;
-  align-items: flex-end;
-  flex-direction: column;
-}
-
-.logo{
-  width : 40px;
-  height: 50px;
-}
-
 .avatars{
   display : flex;
   justify-content : space-between;
   align-items: center;
 }
 
-.upload{
-  display : flex;
-  justify-content : center;
-  align-items: center;
-  flex-direction : column;
+.deleteIcon{
+  color: #ff4d4f;
+  margin-right: 5px;
+  font-size: 15px;
 }
+
+.deleteIcon:hover{
+  color: #ff4d4f;
+  margin-right: 5px;
+  font-size: 15px;
+}
+

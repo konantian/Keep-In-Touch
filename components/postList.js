@@ -126,9 +126,25 @@ const PostList = ({ posts, api }) => {
                         </a>,
                         <div>
                             {item.author.username === username ? 
-                            <Link href={`/post/${item.id}`} key="edit" className="feedbackButton">
-                                <a><EditOutlined className="feedbackButton" />Edit</a>
-                            </Link> : null}
+                                <Link href={`/post/${item.id}`} key="edit" className="feedbackButton">
+                                    <a><EditOutlined className="feedbackButton" />Edit</a>
+                                </Link> : null
+                            }
+                        </div>,
+                        <div>
+                            {item.author.username === username ? 
+                                <Popconfirm
+                                    placement="bottom"
+                                    title="Are you sure to delete this post?"
+                                    onConfirm={() => deletePost(item.id)}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                <a  key="delete" className="deleteIcon" >
+                                    <DeleteOutlined  />Delete
+                                </a > 
+                            </Popconfirm>  : null
+                            }
                         </div>
                     ]}
                 >
