@@ -8,6 +8,7 @@ import { mutate } from 'swr';
 import { FcLike } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Popconfirm, Tag, BackTop, 
        Tooltip, Dropdown, Menu, Button, message } from 'antd';
@@ -21,6 +22,7 @@ import { POST_BY_ID, LIKE_API } from '../constants/api';
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
 dayjs.extend(relativeTime)
+dayjs.extend(utc)
 
 const PostList = ({ posts, api }) => {
 
@@ -150,7 +152,7 @@ const PostList = ({ posts, api }) => {
                         description={
                             <div className="postDescription" >
                                 <Tooltip title={dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}>
-                                    <span>{dayjs(item.updatedAt).fromNow()}</span>
+                                    <span>{dayjs(item.updatedAt).from(dayjs().utc())}</span>
                                 </Tooltip>
                                 {item.updatedAt !== item.createdAt ? '  Edited' : ''}
                                 <br  style={{marginBottom : "10px"}} />
