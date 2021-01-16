@@ -53,6 +53,18 @@ const PostEditor = () => {
 
     const handleChange = ({ fileList }) => setFileList(fileList);
 
+    const beforeUpload = (file) => {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+        }
+        const isLt5M = file.size / 1024 / 1024 < 5;
+        if (!isLt5M) {
+            message.error('Image must smaller than 5MB!');
+        }
+        return isJpgOrPng && isLt5M;
+    }
+
     const onFinish =  async values => {
         const postData = {
            username : username,
@@ -97,6 +109,7 @@ const PostEditor = () => {
                     action={UPLOAD_API}
                     listType="picture-card"
                     fileList={fileList}
+                    beforeUpload={beforeUpload}
                     onPreview={handlePreview}
                     onChange={handleChange}
                 >

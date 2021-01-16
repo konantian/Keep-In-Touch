@@ -34,46 +34,46 @@ export const update_post = async (prisma, id, data) => {
 
 export const delete_image = async (prisma, images) => {
 
-    images.forEach( async image => {
+    await Promise.all(images.map( async image => {
         await prisma.image.delete({
             where : {id : image.id}
         })
-    });
+    }));
     
 }
 
 export const delete_comment = async (prisma, comments) => {
 
-    comments.forEach( async comment => {
+    await Promise.all(comments.map( async comment => {
         await prisma.comment.delete({
             where : {id : comment.id}
         })
-    });
+    }));
     
 }
 
 export const delete_tag = async (prisma, tags) => {
 
-    tags.forEach( async tag => {
+    await Promise.all(tags.map( async tag => {
         await prisma.tag.delete({
             where : { name_postId : {
                     name : tag.name,
                     postId : tag.postId
             }}
         })
-    });
+    }));
 }
 
 export const delete_like = async (prisma, likes) =>{
 
-    likes.forEach( async like => {
+    await Promise.all(likes.map( async like => {
         await prisma.like.delete({
             where : {postId_authorId : {
                 postId : like.postId,
                 authorId : like.authorId,
             }}
         })
-    });
+    }));
 }
 
 export const delete_post = async (prisma, id) => {
