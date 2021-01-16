@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
-import { message, Spin } from 'antd';
+import { message, Spin, Image } from 'antd';
 import { POST_BY_ID, TAGS_API } from '../../constants/api';
 import { currentTime } from '../../utils/currentTime';
 
@@ -17,6 +17,7 @@ const EditPost = () => {
 
     const router = useRouter();
     const [initialValues, setInitialValues] = useState(null);
+    const [post, setPost] = useState(null);
     const [cookie] = useCookies();
 
     useEffect(() => {
@@ -35,6 +36,7 @@ const EditPost = () => {
     const getPost = async ( postId ) => {
         const response = await axios.get(POST_BY_ID(postId), {withCredentials: true});
         const post = response.data;
+        setPost(post);
         setInitialValues(post);
     }
 
@@ -84,12 +86,27 @@ const EditPost = () => {
                             <div className="loader" >
                                 <Spin size="large" tip="Loading user's profile ... "/>
                             </div> : 
-                            <DynamicPostForm 
-                                onFinish={onFinish} 
-                                text="Save" 
-                                tags={tags} 
-                                initialValues={initialValues}
-                            />
+                            <div>
+                                {post.images ? 
+                                    <Image.PreviewGroup>
+                                        <div className="postImages" >
+                                            {post.images.map((image, index) =>
+                                            <Image
+                                                width={200}
+                                                height={200}
+                                                src={image}
+                                                key={index}
+                                            />)}
+                                        </div>
+                                    </Image.PreviewGroup> : null}
+                                <DynamicPostForm 
+                                    onFinish={onFinish} 
+                                    text="Save" 
+                                    tags={tags} 
+                                    initialValues={initialValues}
+                                />
+                            </div>
+                            
                         }
                     </div>
                     <DynamicFooter />

@@ -163,3 +163,12 @@ a {
   color: #08c;
 }
 
+.postImages{
+  display : flex;
+  justify-content:space-between;
+}
+
+.uploadImages{
+  display : flex;
+  justify-content:center;
+}

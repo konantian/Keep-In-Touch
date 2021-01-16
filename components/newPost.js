@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { message} from 'antd';
+import { message, Upload, Image, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { TAGS_API, POSTS_API } from '../constants/api';
 
 const DynamicPost= dynamic(() => import('../components/postForm'))
@@ -13,6 +14,10 @@ const PostEditor = () => {
 
     const router = useRouter();
     const username = useSelector((state) => state.username);
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
+    const [fileList, setFileList] = useState([]);
 
     const getTags = async ( url ) => {
         const response = await axios.get(url, {withCredentials: true});
@@ -24,7 +29,35 @@ const PostEditor = () => {
 
     const { data : tags, error} = useSWR(TAGS_API, getTags);
 
-    const onFinish = values => {
+    const uploadImage = () => {
+        return new Promise((resolve) => {
+            return resolve();
+        })
+    }
+
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+
+    const handleCancel = () => setPreviewVisible(false);
+
+    const handlePreview = async file => {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      setPreviewImage(file.url || file.preview);
+      setPreviewVisible(true);
+      setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    };
+
+    const handleChange = ({ fileList }) => setFileList(fileList);
+
+    const onFinish =  async values => {
         const postData = {
            username : username,
            title : values.title,
@@ -38,6 +71,17 @@ const PostEditor = () => {
             });
             postData.tags = tags;
         }
+        if(fileList){
+            const images = await Promise.all(fileList.map(async file => {
+                if(!file.preview){
+                    const imageUrl = await getBase64(file.originFileObj);
+                    return {src : imageUrl};
+                }else{
+                    return {src: file.preview};
+                }
+            }));
+            postData.images = images;
+        }
         const config = {withCredentials: true};
 
        axios.post(POSTS_API, postData, config).then((res) =>{
@@ -50,6 +94,32 @@ const PostEditor = () => {
 
     return (
         <div>
+            
+            <div className="uploadImages" >
+                <span>Upload Images</span>  
+                <Upload
+                    action={uploadImage}
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    onChange={handleChange}
+                >
+                    {fileList.length >= 4 ? null :
+                    <div>
+                        <PlusOutlined />
+                        <div style={{ marginTop: 8 }}>Upload</div>
+                    </div>}
+                </Upload>
+
+            </div>
+            <Modal
+                visible={previewVisible}
+                title={previewTitle}
+                footer={null}
+                onCancel={handleCancel}
+            >
+                <Image alt="preview" style={{ width: '100%' }} src={previewImage} />
+            </Modal>
             <DynamicPost onFinish={onFinish} text="Post" tags={tags} initialValues={{visibility : "PUBLIC"}}/>
         </div>
         

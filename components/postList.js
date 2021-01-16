@@ -12,7 +12,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Popconfirm, Tag, BackTop, 
-       Tooltip, Dropdown, Menu, Button, message } from 'antd';
+       Tooltip, Dropdown, Menu, Button, message, Image } from 'antd';
 import { CommentOutlined,
          HeartOutlined, 
          EllipsisOutlined, 
@@ -190,6 +190,20 @@ const PostList = ({ posts, api }) => {
                             (<ReactMarkDown source={item.content} />)
                         }
                     </div>
+                    {item.images.length > 0 ? 
+                        <Image.PreviewGroup>
+                            <div className="postImages" >
+                                {item.images.map((image, index) =>
+                                <Image
+                                    width={200}
+                                    height={200}
+                                    src={image}
+                                    key={index}
+                                />)}
+                            </div>
+                        </Image.PreviewGroup> 
+                        : null
+                    }
                 </List.Item>
                 )}
             />

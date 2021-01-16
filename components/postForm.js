@@ -4,9 +4,6 @@ import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
 import { randomColor } from '../utils/randomColor';
 
-const { Option } = Select;
-const { TextArea } = Input;
-
 const PostForm = ({ onFinish, text, tags, initialValues }) => {
 
     const formRef = useRef(null);
@@ -24,7 +21,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
             <Form 
                 layout="horizontal" 
                 onFinish={onFinish} 
-                style={{"marginTop" : "15%"}}
+                style={{"marginTop" : "5%"}}
                 ref={formRef}
                 initialValues={initialValues}
             >
@@ -47,9 +44,9 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                 >
                     <Select mode="tags" placeholder="Please select or enter your tags">
                         {!tags ? null  : tags.map((tag,idx) => 
-                            <Option key={idx} value={tag}>
+                            <Select.Option key={idx} value={tag}>
                                 <Tag color={randomColor()}>{tag}</Tag>
-                            </Option>
+                            </Select.Option>
                         )}
                     </Select>
                 </Form.Item>
@@ -68,7 +65,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                     name="content"
                     rules={[{required: true,message: 'Please enter your content!',}]}
                 >
-                    <TextArea 
+                    <Input.TextArea 
                         showCount
                         placeholder="Add your content here"
                         allowClear={true}
@@ -83,7 +80,6 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                     <Form.Item >
                         <Button className="postButton" type="primary" onClick={() => setVisible(true)} shape="round" size="large" >Preview</Button>
                     </Form.Item> : null}
-
                 </div>
             </Form>
             <Modal
