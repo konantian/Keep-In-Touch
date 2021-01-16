@@ -24,7 +24,7 @@ const Profile = () => {
     useEffect(() => {
         if(!cookie['user']) {
             router.push('/');
-            message.error("Please login first",[1]);
+            message.error("Your Session has expired please login first",[1]);
         }
     }, []);
 

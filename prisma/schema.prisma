@@ -53,7 +53,15 @@ model Post {
   tags        Tag[]
   comments    Comment[]
   likes       Like[]
+  images      Image[]
   author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Image {
+  id        Int @id @default(autoincrement())
+  postId    Int 
+  src       String
+  post      Post   @relation(fields: [postId], references: [id])
 }
 
 model Tag {

@@ -9,7 +9,7 @@ export const get_user_by_username = async (prisma, data) => {
         where : {username : username},
         include : {posts : {
                 where : {visibility : {not : 'PRIVATE'}},
-                include : {comments : true, author : true, tags : true, likes : true}
+                include : {comments : true, author : true, tags : true, likes : true, images : true}
             }, 
             followers : true, following : true}
     });
@@ -20,6 +20,7 @@ export const get_user_by_username = async (prisma, data) => {
         post.tags = post.tags.map(tag => tag.name);
         post.liked = post.likes.map(like  => like.authorId);
         post.likes = post.likes.length;
+        post.images = post.images.map(image => image.src);
         return post;
     })
 
