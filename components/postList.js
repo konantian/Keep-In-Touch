@@ -9,6 +9,7 @@ import { FcLike } from 'react-icons/fc';
 import { useSelector } from 'react-redux';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import ReactMarkDown from "react-markdown";
 import { List, Avatar, Popconfirm, Tag, BackTop, 
        Tooltip, Dropdown, Menu, Button, message } from 'antd';
@@ -23,6 +24,7 @@ import { POST_BY_ID, LIKE_API } from '../constants/api';
 const DynamicCommentList= dynamic(() => import('./commentList'))
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const PostList = ({ posts, api }) => {
 
@@ -124,10 +126,10 @@ const PostList = ({ posts, api }) => {
                             <CommentOutlined className="feedbackButton" />
                             {item.comments} comment(s)
                         </a>,
-                        <a>
+                        <a key="edit" className="feedbackButton" >
                             {item.author.username === username ? 
-                                <Link href={`/post/${item.id}`} key="edit" className="feedbackButton">
-                                    <a><EditOutlined className="feedbackButton" />Edit</a>
+                                <Link href={`/post/${item.id}`} >
+                                    <span><EditOutlined className="feedbackButton" />Edit</span>
                                 </Link> : null
                             }
                         </a>,
@@ -168,7 +170,7 @@ const PostList = ({ posts, api }) => {
                         description={
                             <div className="postDescription" >
                                 <Tooltip title={dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}>
-                                    <span>{dayjs(item.updatedAt).from(dayjs().utc())}</span>
+                                    <span>{dayjs(item.updatedAt).from(dayjs().utc().format())}</span>
                                 </Tooltip>
                                 {item.updatedAt !== item.createdAt ? '  Edited' : ''}
                                 <br  style={{marginBottom : "10px"}} />
