@@ -119,13 +119,17 @@ const ProfileHeader = ({ profile, username, api }) => {
                 avatar={{ src: avatar, size : 70 }}
             >
                 <Descriptions size="middle" column={2} className="descriptions">
-                    <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>{profile.email}</Descriptions.Item>
-                    <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >{dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}</Descriptions.Item>
+                    <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>
+                        <a className="clickUrl" href={"mailto:" + profile.email}>{profile.email}</a>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >
+                        {dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}
+                    </Descriptions.Item>
                     <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>
-                        {<a href={`/${username}/follower`}>{followers}</a>}
+                        {<a href={`/${username}/follower`} className="clickUrl" >{followers}</a>}
                     </Descriptions.Item>
                     <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
-                        {<a href={`/${username}/following`}>{profile.following}</a>}
+                        {<a href={`/${username}/following`} className="clickUrl"  >{profile.following}</a>}
                     </Descriptions.Item>
                     <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
                         {isEdit ? <Input.TextArea ref={inputRef} onPressEnter={(e) => updateBio(e.target.value)} autoSize={{ minRows: 3, maxRows: 5 }} defaultValue={bio}/> : bio }

@@ -124,13 +124,13 @@ const PostList = ({ posts, api }) => {
                             <CommentOutlined className="feedbackButton" />
                             {item.comments} comment(s)
                         </a>,
-                        <div>
+                        <a>
                             {item.author.username === username ? 
                                 <Link href={`/post/${item.id}`} key="edit" className="feedbackButton">
                                     <a><EditOutlined className="feedbackButton" />Edit</a>
                                 </Link> : null
                             }
-                        </div>,
+                        </a>,
                         <div>
                             {item.author.username === username ? 
                                 <Popconfirm
