@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { message, Upload, Image, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { TAGS_API, POSTS_API } from '../constants/api';
+import { TAGS_API, POSTS_API, UPLOAD_API } from '../constants/api';
 
 const DynamicPost= dynamic(() => import('../components/postForm'))
 
@@ -14,25 +13,22 @@ const PostEditor = () => {
 
     const router = useRouter();
     const username = useSelector((state) => state.username);
+    const [tags, setTags] = useState(null);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([]);
+
+    useEffect(() => {
+        getTags(TAGS_API);
+    },[])
 
     const getTags = async ( url ) => {
         const response = await axios.get(url, {withCredentials: true});
         response.data.tags.sort((a, b) => {
             return a.length - b.length;
         })
-        return response.data.tags;
-    }
-
-    const { data : tags, error} = useSWR(TAGS_API, getTags);
-
-    const uploadImage = () => {
-        return new Promise((resolve) => {
-            return resolve();
-        })
+        setTags(response.data.tags);;
     }
 
     const getBase64 = (file) => {
@@ -42,7 +38,7 @@ const PostEditor = () => {
           reader.onload = () => resolve(reader.result);
           reader.onerror = error => reject(error);
         });
-      }
+    }
 
     const handleCancel = () => setPreviewVisible(false);
 
@@ -98,7 +94,7 @@ const PostEditor = () => {
             <div className="uploadImages" >
                 <span>Upload Images</span>  
                 <Upload
-                    action={uploadImage}
+                    action={UPLOAD_API}
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={handlePreview}
