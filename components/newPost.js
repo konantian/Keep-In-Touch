@@ -132,7 +132,7 @@ const PostEditor = () => {
             >
                 <Image alt="preview" style={{ width: '100%' }} src={previewImage} />
             </Modal>
-            <DynamicPost onFinish={onFinish} text="Post" tags={tags} loading={loading} initialValues={{visibility : "PUBLIC"}}/>
+            <DynamicPost onFinish={onFinish} text="Post" tags={tags} loading={loading} initialValues={{visibility : "PUBLIC", contentType : 'markdown'}}/>
         </div>
         
     )
