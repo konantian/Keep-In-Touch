@@ -14,6 +14,7 @@ const PostEditor = () => {
     const router = useRouter();
     const username = useSelector((state) => state.username);
     const [tags, setTags] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
@@ -66,6 +67,7 @@ const PostEditor = () => {
     }
 
     const onFinish =  async values => {
+        setLoading(true);
         const postData = {
            username : username,
            title : values.title,
@@ -95,6 +97,7 @@ const PostEditor = () => {
        axios.post(POSTS_API, postData, config).then((res) =>{
            message.success(res.data['success'],[0.5]);
            router.push("/home");
+           setLoading(false);
        }).catch((err) => {
            console.log(err);
        })
@@ -129,7 +132,7 @@ const PostEditor = () => {
             >
                 <Image alt="preview" style={{ width: '100%' }} src={previewImage} />
             </Modal>
-            <DynamicPost onFinish={onFinish} text="Post" tags={tags} initialValues={{visibility : "PUBLIC"}}/>
+            <DynamicPost onFinish={onFinish} text="Post" tags={tags} loading={loading} initialValues={{visibility : "PUBLIC"}}/>
         </div>
         
     )

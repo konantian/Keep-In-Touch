@@ -38,6 +38,7 @@ a {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: row;
+  margin-top: 5%;
 }
 
 .main {
@@ -165,7 +166,12 @@ a {
 
 .postImages{
   display : flex;
-  justify-content:space-between;
+  flex-wrap: wrap;
+  max-width: 400px;
+}
+
+.image{
+  padding : 10px;
 }
 
 .uploadImages{

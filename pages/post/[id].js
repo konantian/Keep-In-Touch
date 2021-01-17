@@ -5,19 +5,21 @@ import useSWR from 'swr';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
-import { message, Spin, Image } from 'antd';
+import { message, Spin } from 'antd';
 import { POST_BY_ID, TAGS_API } from '../../constants/api';
 import { currentTime } from '../../utils/currentTime';
 
 const DynamicHeader = dynamic(() => import('../../components/header'))
 const DynamicFooter = dynamic(() => import('../../components/footer'))
 const DynamicPostForm = dynamic(() => import('../../components/postForm'))
+const DynamicImageWall = dynamic(() => import('../../components/imageWall'))
 
 const EditPost = () => {
 
     const router = useRouter();
     const [initialValues, setInitialValues] = useState(null);
     const [post, setPost] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [cookie] = useCookies();
 
     useEffect(() => {
@@ -49,6 +51,7 @@ const EditPost = () => {
     }
 
     const onFinish = values => {
+        setLoading(true);
         const postData = {
            title : values.title,
            contentType : values.contentType,
@@ -62,6 +65,7 @@ const EditPost = () => {
        axios.patch(POST_BY_ID(router.query.id), postData, config).then((res) =>{
            message.success(res.data['success'],[0.5]);
            router.push("/home");
+           setLoading(false);
        }).catch((err) => {
            console.log(err);
        })
@@ -87,22 +91,12 @@ const EditPost = () => {
                                 <Spin size="large" tip="Loading user's profile ... "/>
                             </div> : 
                             <div>
-                                {post.images ? 
-                                    <Image.PreviewGroup>
-                                        <div className="postImages" >
-                                            {post.images.map((image, index) =>
-                                            <Image
-                                                width={200}
-                                                height={200}
-                                                src={image}
-                                                key={index}
-                                            />)}
-                                        </div>
-                                    </Image.PreviewGroup> : null}
+                                {post.images ? <DynamicImageWall  images={post.images} /> : null}
                                 <DynamicPostForm 
                                     onFinish={onFinish} 
                                     text="Save" 
                                     tags={tags} 
+                                    loading={loading}
                                     initialValues={initialValues}
                                 />
                             </div>

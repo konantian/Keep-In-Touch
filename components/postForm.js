@@ -4,7 +4,7 @@ import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
 import { randomColor } from '../utils/randomColor';
 
-const PostForm = ({ onFinish, text, tags, initialValues }) => {
+const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
 
     const formRef = useRef(null);
     const [visible, setVisible] = useState(false);
@@ -74,7 +74,7 @@ const PostForm = ({ onFinish, text, tags, initialValues }) => {
                 </Form.Item>
                 <div className="postButtons">
                     <Form.Item >
-                        <Button className="postButton" type="primary" htmlType="submit" shape="round" size="large" >{text}</Button>
+                        <Button className="postButton" type="primary" loading={loading} htmlType="submit" shape="round" size="large" >{text}</Button>
                     </Form.Item>
                     {type === 'markdown' ?
                     <Form.Item >
