@@ -16,3 +16,11 @@ export default authenticated(async function Posts(req : NextApiRequest, res : Ne
 
     return res.status(201).json({success : "New post has been created"});
 });
+
+export const config = {
+    api : {
+        bodyParser : {
+            sizeLimit : '10mb'
+        }
+    }
+}
