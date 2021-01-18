@@ -16,7 +16,8 @@ import { CommentOutlined,
          HeartOutlined, 
          EllipsisOutlined, 
          DeleteOutlined, 
-         EditOutlined } from "@ant-design/icons";
+         EditOutlined,
+         LoadingOutlined } from "@ant-design/icons";
 import { randomColor } from '../utils/randomColor';
 import { POST_BY_ID, LIKE_API } from '../constants/api';
 
@@ -30,13 +31,16 @@ const PostList = ({ posts, api }) => {
     const [visible, setVisible] = useState(false);
     const [postId, setPostId] = useState(null);
     const [author, setAuthor] = useState(null);
+    const [deleting, setDeleting] = useState(null);
     const username = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
 
     const deletePost = postId => {
+        setDeleting(postId);
         axios.delete(POST_BY_ID(postId),{withCredentials: true}).then(res => {
-            message.success(res.data['success'],[0.5]);
             mutate(api);
+            setDeleting(null);
+            message.success(res.data['success'],[0.5]);
         }).catch(err => {
             console.log(err);
         })
@@ -138,11 +142,12 @@ const PostList = ({ posts, api }) => {
                                     placement="bottom"
                                     title="Are you sure to delete this post?"
                                     onConfirm={() => deletePost(item.id)}
+                                    disabled={deleting === item.id}
                                     okText="Yes"
                                     cancelText="No"
                                 >
                                 <a  key="delete" className="deleteIcon" >
-                                    <DeleteOutlined  />Delete
+                                    {deleting !== item.id ? <DeleteOutlined  /> : <LoadingOutlined />} Delete
                                 </a > 
                             </Popconfirm>  : null
                             }

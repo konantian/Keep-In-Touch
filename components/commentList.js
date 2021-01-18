@@ -19,7 +19,7 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
     const formRef = useRef(null);
     const username = useSelector((state) => state.username);
     const [loading, setLoading] = useState(false);
-    const [deleting, setDeleting] = useState(false);
+    const [deleting, setDeleting] = useState(null);
 
     const getComments = async( url ) => {
         const response = await axios.get(url, {withCredentials: true});
@@ -32,12 +32,12 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
     const { data : comments, error} = useSWR(visible === true ? COMMENTS_BY_POST(postId) : null, getComments);
 
     const deleteComment = (commentId) => {
-        setDeleting(true);
+        setDeleting(commentId);
         const config = {withCredentials: true};
         axios.delete(COMMENT_BY_ID(commentId), config).then(res =>{
             mutate(COMMENTS_BY_POST(postId));
             updatePost();
-            setDeleting(false);
+            setDeleting(null);
             message.success(res.data['success'],[0.5]);
         }).catch(err => {
             let msg = JSON.parse(err.response.request.response);
@@ -108,11 +108,12 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                                 placement="left"
                                 title="Are you sure to delete this comment?"
                                 onConfirm={() => deleteComment(item.id)}
+                                disabled={deleting === item.id}
                                 okText="Yes"
                                 cancelText="No"
                             >
                                 <a  key="delete" className="feedbackButton" >
-                                    {!deleting ? <DeleteOutlined className="feedbackButton" /> : <LoadingOutlined className="feedbackButton" />}
+                                    {deleting !== item.id ? <DeleteOutlined className="feedbackButton" /> : <LoadingOutlined className="feedbackButton" />}
                                     Delete
                                 </a > 
                             </Popconfirm> : null,
