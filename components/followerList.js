@@ -45,7 +45,7 @@ const FollowerList = ({ follower, api }) => {
                 <List.Item.Meta
                     avatar={
                     <Link href={`/profile/${item.follower.username}`}>
-                        <a><Avatar size={40} src={item.follower.avatar} /></a>
+                        <a><Avatar size={60} src={item.follower.avatar} /></a>
                     </Link>
                     }
                     title={
@@ -61,6 +61,7 @@ const FollowerList = ({ follower, api }) => {
                                     size="large" 
                                     key="statusButton"
                                     shape="round"
+                                    style={{marginTop : "-20px"}}
                                     onClick={() => handleFollow(item.follower.id, item.follower.username, item.status)}
                                 >
                                     {item.status === 'Follow' ? <UserAddOutlined /> : <UserDeleteOutlined />}

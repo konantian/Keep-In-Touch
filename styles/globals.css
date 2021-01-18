@@ -115,7 +115,7 @@ a {
 .followDescription{
   display : flex;
   justify-content: space-between;
-  margin-top: -15px;
+  margin-top: -10px;
 }
 
 .loginPrompt{

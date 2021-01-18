@@ -42,7 +42,7 @@ const FollowingList = ({ following, api}) => {
             renderItem={item => (
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar size={40} src={item.user.avatar} />}
+                    avatar={<Avatar size={60} src={item.user.avatar} />}
                     title={
                         <div className="postTitle" >
                             <Link href={`/profile/${item.user.username}`} key={item.user.id} >{item.user.username}</Link>
@@ -56,6 +56,7 @@ const FollowingList = ({ following, api}) => {
                                     size="large" 
                                     key="statusButton"
                                     shape="round"
+                                    style={{marginTop : "-20px"}}
                                     onClick={() => handleFollow(item.user.id, item.user.username, item.status)}
                                 >
                                     {item.status === 'Follow' ? <UserAddOutlined /> : <UserDeleteOutlined />}
