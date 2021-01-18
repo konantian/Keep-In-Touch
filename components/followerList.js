@@ -45,7 +45,7 @@ const FollowerList = ({ follower, api }) => {
                 <List.Item.Meta
                     avatar={
                     <Link href={`/profile/${item.follower.username}`}>
-                        <a><Avatar size={40} src="/boy.png" /></a>
+                        <a><Avatar size={40} src={item.follower.avatar} /></a>
                     </Link>
                     }
                     title={

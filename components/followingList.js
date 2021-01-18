@@ -42,7 +42,7 @@ const FollowingList = ({ following, api}) => {
             renderItem={item => (
             <List.Item>
                 <List.Item.Meta
-                    avatar={<Avatar size={40} src="/boy.png" />}
+                    avatar={<Avatar size={40} src={item.user.avatar} />}
                     title={
                         <div className="postTitle" >
                             <Link href={`/profile/${item.user.username}`} key={item.user.id} >{item.user.username}</Link>
