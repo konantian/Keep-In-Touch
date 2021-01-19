@@ -12,7 +12,7 @@ import { MenuOutlined,
         SaveOutlined } from '@ant-design/icons';
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input} from 'antd';
 import dynamic from 'next/dynamic';
-import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME, AVATAR_API } from '../constants/api';
+import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
 
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 

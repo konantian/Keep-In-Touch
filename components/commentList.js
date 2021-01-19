@@ -154,7 +154,8 @@ CommentList.propTypes = {
     postId : PropTypes.number,
     visible : PropTypes.bool.isRequired,
     onClose : PropTypes.func.isRequired,
-    updatePost : PropTypes.func.isRequired
+    updatePost : PropTypes.func.isRequired,
+    author : PropTypes.string
 };
 
 export default CommentList;

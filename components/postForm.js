@@ -101,6 +101,7 @@ const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
 PostForm.propTypes = {
     onFinish : PropTypes.func.isRequired,
     text : PropTypes.string.isRequired,
+    loading : PropTypes.bool.isRequired,
     tags : PropTypes.array,
     initialValues : PropTypes.object,
 };

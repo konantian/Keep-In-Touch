@@ -84,7 +84,6 @@ const FollowerList = ({ follower, api }) => {
 
 FollowerList.propTypes = {
     follower : PropTypes.array.isRequired,
-    username : PropTypes.string.isRequired,
     api : PropTypes.string.isRequired,
 };
 

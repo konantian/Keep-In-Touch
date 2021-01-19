@@ -112,6 +112,9 @@ UpdateAvatar.propTypes = {
     visible : PropTypes.bool.isRequired,
     setVisible : PropTypes.func.isRequired,
     avatar : PropTypes.string.isRequired,
+    api : PropTypes.string.isRequired,
+    username : PropTypes.string.isRequired,
+    setAvatar : PropTypes.func.isRequired
 };
 
 export default UpdateAvatar;

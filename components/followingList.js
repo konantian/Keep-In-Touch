@@ -78,7 +78,6 @@ const FollowingList = ({ following, api}) => {
 
 FollowingList.propTypes = {
     following : PropTypes.array.isRequired,
-    username : PropTypes.string.isRequired,
     api : PropTypes.string.isRequired,
 };
 
