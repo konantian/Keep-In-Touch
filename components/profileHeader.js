@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import useSWR, { mutate } from 'swr';
 import { useSelector } from 'react-redux';
 import { MenuOutlined, 
@@ -126,10 +127,14 @@ const ProfileHeader = ({ profile, username, api }) => {
                         {dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>
-                        {<a href={`/${username}/follower`} className="clickUrl" >{followers}</a>}
+                        <Link href={`/${username}/follower`} className="clickUrl" >
+                            <a>{followers}</a>
+                        </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
-                        {<a href={`/${username}/following`} className="clickUrl"  >{profile.following}</a>}
+                        <Link href={`/${username}/following`} className="clickUrl"  >
+                            <a>{profile.following}</a>
+                        </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
                         {isEdit ? <Input.TextArea ref={inputRef} onPressEnter={(e) => updateBio(e.target.value)} autoSize={{ minRows: 3, maxRows: 5 }} defaultValue={bio}/> : bio }
