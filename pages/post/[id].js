@@ -90,7 +90,7 @@ const EditPost = () => {
                             <div className="loader" >
                                 <Spin size="large" tip="Loading user's profile ... "/>
                             </div> : 
-                            <div>
+                            <div style={{marginTop : "20px"}} >
                                 {post.images ? <DynamicImageWall  images={post.images} /> : null}
                                 <DynamicPostForm 
                                     onFinish={onFinish} 

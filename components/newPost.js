@@ -104,8 +104,7 @@ const PostEditor = () => {
     }
 
     return (
-        <div>
-            
+        <div style={{marginTop : "40px"}} >
             <div className="uploadImages" >
                 <span>Upload Images</span>  
                 <Upload
