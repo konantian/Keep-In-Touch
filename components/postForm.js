@@ -42,7 +42,13 @@ const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
                     name="tags"
                     label="Tags"
                 >
-                    <Select disabled={text === 'Save'} mode="tags" placeholder="Please select or enter your tags">
+                    <Select 
+                        disabled={text === 'Save'} 
+                        mode="tags" 
+                        placeholder={text !== 'Save' ? 
+                            "Please select or enter your tags" : 
+                            "This post has no tags to show"}
+                    >
                         {!tags ? null  : tags.map((tag,idx) => 
                             <Select.Option key={idx} value={tag}>
                                 <Tag color={randomColor()}>{tag}</Tag>
