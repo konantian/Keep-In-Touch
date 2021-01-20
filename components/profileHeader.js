@@ -127,13 +127,13 @@ const ProfileHeader = ({ profile, username, api }) => {
                         {dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>
-                        <Link href={`/${username}/follower`} className="clickUrl" >
-                            <a>{followers}</a>
+                        <Link href={`/${username}/follower`} >
+                            <a className="clickUrl" >{followers}</a>
                         </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
-                        <Link href={`/${username}/following`} className="clickUrl"  >
-                            <a>{profile.following}</a>
+                        <Link href={`/${username}/following`} >
+                            <a className="clickUrl" >{profile.following}</a>
                         </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
