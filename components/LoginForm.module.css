@@ -1,0 +1,34 @@
+.container{
+    margin-top: 10%;
+}
+
+.promptText{
+    font-size: 25px;
+}
+
+.inputField{
+    border-radius: 15px;
+}
+
+.loginButton{
+    margin-top: 40px;
+    width: 500px;
+}
+
+.loginForm{
+    margin-top: 60px;
+}
+
+.signupNav{
+    display : flex;
+    flex-direction : row;
+    justify-content : space-between;
+    margin-top : 40px;
+    font-size: 18px;
+    align-items: baseline;
+}
+
+.signupButton{
+    color : #1890ff;
+    width : 120px;
+}

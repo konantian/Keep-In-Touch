@@ -2,36 +2,37 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
+import styles from './LoginForm.module.css';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const LoginForm = ({ onFinish, formRef, loading }) => {
 
+    const buttonStyle = {height : "50px", fontSize : "20px"};
 
     return (
-        <div className="loginForm" >
-            <span className="loginPrompt" >Welcome Back!</span>
-            <Form style={{marginTop : "60px"}} onFinish={onFinish} ref={formRef} >
+        <div className={styles.container} >
+            <span className={styles.promptText} >Welcome Back!</span>
+            <Form className={styles.loginForm} onFinish={onFinish} ref={formRef} >
                 <Form.Item
                     name="email"
-                    style={{width : "500px"}}
                     rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
                 >
-                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Email" prefix={<UserOutlined className="site-form-item-icon" />} />
+                    <Input className={styles.inputField} size="large" placeholder="Email" prefix={<UserOutlined />} />
                 </Form.Item>
                 <Form.Item
                     name="password"
                     rules={[{required: true,message: 'Please input your password!',}]}
                 >
-                    <Input.Password style={{borderRadius: "15px"}} size="large" placeholder="Password" prefix={<LockOutlined className="site-form-item-icon" />} />
+                    <Input.Password className={styles.inputField} size="large" placeholder="Password" prefix={<LockOutlined />} />
                 </Form.Item>
                 <Form.Item >
-                    <Button className="authButton" style={{height : "50px", fontSize : "20px"}} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
+                    <Button className={styles.loginButton} style={buttonStyle} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Log In</Button>
                 </Form.Item>
             </Form>
-            <div className="signupNav" >
+            <div className={styles.signupNav} >
                 <span>Don't have an account?</span>
                 <Link href="/signup">
-                    <Button style={{color : '#1890ff', height : "50px", width : "120px", fontSize : "20px"}} size="large" shape="round">Sign Up</Button>
+                    <Button className={styles.signupButton} style={buttonStyle} size="large" shape="round">Sign Up</Button>
                 </Link>
             </div>
         </div>

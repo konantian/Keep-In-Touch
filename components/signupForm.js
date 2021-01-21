@@ -1,37 +1,40 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import styles from './SignupForm.module.css';
 import { Form, Input, Button } from 'antd';
 
 const SignUpForm = ({ onFinish, loading }) => {
 
+    const buttonStyle = {height : "50px", fontSize : "20px"};
+
     return (
-        <div className="loginForm" >
-            <span className="loginPrompt" >Let's get started!</span>
-            <Form style={{marginTop : "60px"}} onFinish={onFinish}>
+        <div className={styles.container} >
+            <span className={styles.promptText} >Let's get started!</span>
+            <Form className={styles.signupForm} onFinish={onFinish}>
                 <Form.Item
                     name="username"
                     rules={[{required: true,message: 'Please input your username!',}]}
                 >
-                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Username"/>
+                    <Input className={styles.inputField} size="large" placeholder="Username"/>
                 </Form.Item>
                 <Form.Item
                     name="email"
                     rules={[{required: true, type : 'email', message: 'Please input valid email!',}]}
                 >
-                    <Input  style={{borderRadius: "15px"}} size="large" placeholder="Email"/>
+                    <Input className={styles.inputField} size="large" placeholder="Email"/>
                 </Form.Item>
                 <Form.Item
                     name="name"
                     rules={[{required: true,message: 'Please input your name!',}]}
                 >
-                    <Input style={{borderRadius: "15px"}} size="large" placeholder="Name" />
+                    <Input className={styles.inputField} size="large" placeholder="Name" />
                 </Form.Item>
                 <Form.Item
                     name="password"
                     rules={[{required: true,message: 'Please input your password!',}]}
                 >
-                    <Input.Password  style={{borderRadius: "15px"}} size="large" placeholder="Password"/>
+                    <Input.Password className={styles.inputField} size="large" placeholder="Password"/>
                 </Form.Item>
                 <Form.Item
                     name="confirm"
@@ -47,16 +50,16 @@ const SignUpForm = ({ onFinish, loading }) => {
                             },
                         }),]}
                 >
-                    <Input.Password style={{borderRadius: "15px"}} size="large" placeholder="Re-enter Password"/>
+                    <Input.Password className={styles.inputField} size="large" placeholder="Re-enter Password"/>
                 </Form.Item>
                 <Form.Item >
-                    <Button className="authButton" style={{height : "50px", fontSize : "20px"}} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Sign Up</Button>
+                    <Button className={styles.signupButton} style={buttonStyle} loading={loading} type="primary" shape="round" size="large" htmlType="submit">Sign Up</Button>
                 </Form.Item>
             </Form>
-            <div className="signupNav" >
+            <div className={styles.loginNav}>
                 <span>Already have an account?</span>
                 <Link href="/">
-                    <Button style={{color : '#1890ff', height : "50px", width : "120px", fontSize : "20px"}} size="large" shape="round">Log In</Button>
+                    <Button className={styles.loginButton} style={buttonStyle} size="large" shape="round">Log In</Button>
                 </Link>
             </div>
         </div>

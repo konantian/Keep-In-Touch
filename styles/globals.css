@@ -28,11 +28,6 @@ a {
   background-color :#94ccef
 }
 
-.authButton{
-  margin-top: 40px;
-  width: 500px;
-}
-
 .postButtons{
   display: flex;
   align-items: center;
@@ -104,25 +99,6 @@ a {
   display : flex;
   justify-content: space-between;
   margin-top: -10px;
-}
-
-.loginPrompt{
-  font-size: 25px;
-  
-}
-
-.loginForm{
-  margin-top: 10%;
-}
-
-.signupNav{
-  display : flex;
-  flex-direction : row;
-  justify-content : space-between;
-  margin-top : 40px;
-  font-size: 18px;
-  align-items: baseline;
-  
 }
 
 .backgroundImg{
