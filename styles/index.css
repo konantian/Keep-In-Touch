@@ -1,0 +1,18 @@
+.loginPage{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+
+.backgroundImg{
+    width : 60%;
+    height : 100vh;
+}
+
+.authContainer{
+    display: flex;
+    justify-content: center;
+    flex: 1 0 auto;
+    background-color :#94ccef
+}
+

@@ -1,5 +1,7 @@
 import React from 'react';
 import '../styles/globals.css';
+import '../styles/index.css';
+import '../styles/signup.css';
 import 'antd/dist/antd.css';
 import { wrapper } from '../redux/store';
 import { useStore } from 'react-redux';

@@ -51,7 +51,6 @@ const Follower = () => {
             </Head>
             {cookie['user'] ? 
                 <div className="main" >
-                
                     <DynamicHeader selectedKey={["5"]}/>
                     <div className="pageContainer" >
                         {!follower ? 

@@ -54,7 +54,6 @@ const PostByTag = () => {
             </Head>
             {cookie['user'] ? 
                 <div className="main" >
-                
                     <DynamicHeader selectedKey={["1"]} />
                     <div className="pageContainer">
                         {!posts ? <div className="loader" ><Spin size="large" tip="Loading posts ... "/></div> :

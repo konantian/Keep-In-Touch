@@ -31,11 +31,9 @@ const Chat = () => {
             </Head>
             {cookie['user'] ? 
                 <div className="main" >
-                
                     <DynamicHeader selectedKey={["4"]} />
                     <div className="pageContainer" ></div>
                     <DynamicFooter />
-
                 </div> : null
             }
         </div>

@@ -48,7 +48,7 @@ export default function SignUp ({ cookies }){
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
             {!cookies ? 
-                <div className="loginPage" >
+                <div className="signupPage" >
                     <img
                         src="/background.png"
                         alt="Background Picture"
