@@ -1,0 +1,9 @@
+.postImages{
+    display : flex;
+    flex-wrap: wrap;
+    max-width: 400px;
+}
+  
+.image{
+    padding : 10px;
+}

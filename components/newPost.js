@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { message, Upload, Image, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import styles from './PostEditor.module.css';
 import { TAGS_API, POSTS_API, UPLOAD_API } from '../constants/api';
 
 const DynamicPost= dynamic(() => import('../components/postForm'))
@@ -104,8 +105,8 @@ const PostEditor = () => {
     }
 
     return (
-        <div style={{marginTop : "40px"}} >
-            <div className="uploadImages" >
+        <div className={styles.container} >
+            <div className={styles.uploadImages} >
                 <span>Upload Images</span>  
                 <Upload
                     action={UPLOAD_API}
@@ -118,7 +119,7 @@ const PostEditor = () => {
                     {fileList.length >= 4 ? null :
                     <div>
                         <PlusOutlined />
-                        <div style={{ marginTop: 8 }}>Upload</div>
+                        <div className={styles.uploadButton}>Upload</div>
                     </div>}
                 </Upload>
 
@@ -129,9 +130,15 @@ const PostEditor = () => {
                 footer={null}
                 onCancel={handleCancel}
             >
-                <Image alt="preview" style={{ width: '100%' }} src={previewImage} />
+                <Image alt="preview" src={previewImage} />
             </Modal>
-            <DynamicPost onFinish={onFinish} text="Post" tags={tags} loading={loading} initialValues={{visibility : "PUBLIC", contentType : 'markdown'}}/>
+            <DynamicPost 
+                onFinish={onFinish} 
+                text="Post" 
+                tags={tags} 
+                loading={loading} 
+                initialValues={{visibility : "PUBLIC", contentType : 'markdown'}}
+            />
         </div>
         
     )

@@ -16,6 +16,7 @@ import {
     LogoutOutlined,
     MessageOutlined
 } from "@ant-design/icons";
+import styles from './Header.module.css';
 import { LOGOUT_API } from '../constants/api';
 
 const Header = ({ selectedKey }) => {
@@ -34,7 +35,7 @@ const Header = ({ selectedKey }) => {
     }
 
     return (
-        <Menu className="headerMenu" theme="dark" mode="horizontal" selectedKeys={selectedKey}>
+        <Menu className={styles.headerMenu} theme="dark" mode="horizontal" selectedKeys={selectedKey}>
             <Menu.Item key="1" icon={<HomeOutlined />}>
                 <Link href="/home">Home</Link>
             </Menu.Item>

@@ -39,7 +39,8 @@ const SearchBar = () => {
                     <Input.Search
                         size="large"
                         placeholder={users ? 
-                            "Search other authors by username" : "Loading available username..."}
+                            "Search other authors by username" : 
+                            "Loading available username..."}
                         enterButton
                         loading={!users}
                     />

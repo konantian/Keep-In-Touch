@@ -47,23 +47,11 @@ a {
   min-height: 100vh;
 }
 
-.headerMenu{
-  display : flex;
-  align-items: center;
-  justify-content: space-evenly;
-  height : 50px;
-}
-
 .pageContainer{
   margin-top : 10px;
   margin-left: 25%;
   margin-right: 25%;
   flex: 1 0 auto;
-}
-
-.pageFooter{
-  text-align : center;
-  flex-shrink: 0;
 }
 
 .postDescription{
@@ -162,19 +150,4 @@ a {
 
 .clickUrl{
   color: #08c;
-}
-
-.postImages{
-  display : flex;
-  flex-wrap: wrap;
-  max-width: 400px;
-}
-
-.image{
-  padding : 10px;
-}
-
-.uploadImages{
-  display : flex;
-  justify-content:center;
 }
