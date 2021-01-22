@@ -2,8 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
-import styles from './LoginForm.module.css';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import styles from './Styles/LoginForm.module.css';
 
 const LoginForm = ({ onFinish, formRef, loading }) => {
 

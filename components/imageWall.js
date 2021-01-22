@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'antd';
 import PropTypes from 'prop-types';
-import styles from './ImageWall.module.css';
+import styles from './Styles/ImageWall.module.css';
 
 const ImageWall = ({ images }) => {
 

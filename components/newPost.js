@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { message, Upload, Image, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import styles from './PostEditor.module.css';
 import { TAGS_API, POSTS_API, UPLOAD_API } from '../constants/api';
+import styles from './Styles/PostEditor.module.css';
 
 const DynamicPost= dynamic(() => import('../components/postForm'))
 

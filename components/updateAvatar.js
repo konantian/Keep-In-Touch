@@ -5,7 +5,7 @@ import { mutate } from 'swr';
 import { Input, Form, Modal, Avatar, Upload, message, Divider } from 'antd';
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { UPLOAD_API, AVATAR_API } from '../constants/api';
-import styles from './UpdateAvatar.module.css';
+import styles from './Styles/UpdateAvatar.module.css';
 
 const { Dragger } = Upload;
 

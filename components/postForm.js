@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
-import styles from './PostForm.module.css';
 import { randomColor } from '../utils/randomColor';
+import styles from './Styles/PostForm.module.css';
 
 const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
 

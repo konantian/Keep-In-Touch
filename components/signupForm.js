@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import styles from './SignupForm.module.css';
 import { Form, Input, Button } from 'antd';
+import styles from './Styles/SignupForm.module.css';
 
 const SignUpForm = ({ onFinish, loading }) => {
 

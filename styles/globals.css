@@ -49,22 +49,6 @@ a {
   text-align: center;
 }
 
-.commentButton{
-  display : flex;
-  justify-content : center;
-}
-
-.commentAuthor{
-  color :#1890ff;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.commentDate{
-  color : #8c8c8c;
-  font-weight: bold;
-}
-
 .postTitle{
   display : flex;
   justify-content: space-between;

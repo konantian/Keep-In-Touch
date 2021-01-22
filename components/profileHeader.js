@@ -14,7 +14,7 @@ import { MenuOutlined,
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input} from 'antd';
 import dynamic from 'next/dynamic';
 import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
-import styles from './ProfileHeader.module.css';
+import styles from './Styles/ProfileHeader.module.css';
 
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 

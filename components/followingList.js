@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
 import { UserDeleteOutlined, UserAddOutlined, LoadingOutlined  } from "@ant-design/icons";
 import { UNFOLLOW_API, FOLLOW_API } from '../constants/api';
-import styles from './Follow.module.css';
+import styles from './Styles/Follow.module.css';
 
 const FollowingList = ({ following, api}) => {
 

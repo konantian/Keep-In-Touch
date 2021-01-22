@@ -16,8 +16,8 @@ import {
     LogoutOutlined,
     MessageOutlined
 } from "@ant-design/icons";
-import styles from './Header.module.css';
 import { LOGOUT_API } from '../constants/api';
+import styles from './Styles/Header.module.css';
 
 const Header = ({ selectedKey }) => {
 

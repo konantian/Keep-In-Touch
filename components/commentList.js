@@ -10,6 +10,7 @@ import { List, Avatar, Button, message, Popconfirm, Tag,
          Spin, Input, Drawer, Divider, Form, Comment, Tooltip } from 'antd';
 import { DeleteOutlined, CloseCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import { COMMENTS_BY_POST, COMMENTS_API, COMMENT_BY_ID } from '../constants/api';
+import styles from './Styles/CommentList.module.css';
 
 const { TextArea } = Input;
 dayjs.extend(relativeTime)
@@ -86,14 +87,14 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                         author={<Link href={`/profile/${item.author.username}`} 
                                     key={item.author.username} 
                                 >
-                                    <a className="commentAuthor" >{item.author.username}</a>
+                                    <a className={styles.commentAuthor} >{item.author.username}</a>
                                 </Link>}
                         avatar={<Avatar size={40} src={item.author.avatar} />}
                         content={item.content}
                         datetime={
                                 <div>
                                     <Tooltip title={dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
-                                        <span className="commentDate" >{dayjs(item.createdAt).fromNow()}</span>
+                                        <span className={styles.commentDate} >{dayjs(item.createdAt).fromNow()}</span>
                                     </Tooltip>
                                     {author === item.author.username ?
                                          <Tag style={{marginLeft : "10px"}} color='orange' >Author</Tag> : 
@@ -113,7 +114,11 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                                 cancelText="No"
                             >
                                 <a  key="delete" className="feedbackButton" >
-                                    {deleting !== item.id ? <DeleteOutlined className="feedbackButton" /> : <LoadingOutlined className="feedbackButton" />}
+                                    {
+                                        deleting !== item.id ? 
+                                        <DeleteOutlined className="feedbackButton" /> : 
+                                        <LoadingOutlined className="feedbackButton" />
+                                    }
                                     Delete
                                 </a > 
                             </Popconfirm> : null,
@@ -133,7 +138,7 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                         autoSize={{ minRows: 4, maxRows: 7 }}
                     />
                 </Form.Item>
-                <div className="commentButton" >
+                <div className={styles.commentButton} >
                     <Form.Item>
                         <Button 
                             shape="round" 
