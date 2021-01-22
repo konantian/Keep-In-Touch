@@ -116,8 +116,8 @@ const CommentList = ({ postId, visible, onClose, updatePost, author }) => {
                                 <a  key="delete" className={styles.deleteIcon} >
                                     {
                                         deleting !== item.id ? 
-                                        <DeleteOutlined className="feedbackButton" /> : 
-                                        <LoadingOutlined className="feedbackButton" />
+                                        <DeleteOutlined /> : 
+                                        <LoadingOutlined />
                                     }
                                     Delete
                                 </a > 
