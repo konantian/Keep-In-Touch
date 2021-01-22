@@ -29,7 +29,7 @@ export default async function login(req : NextApiRequest, res : NextApiResponse)
             data : {lastLogin : currentTime},
             select : {id : true}
         });
-        const claims = {sub : user.id, email : user.email };
+        const claims = {sub : user.id, email : user.email, username : user.username };
         const jwt = sign(claims, SECRET, {expiresIn : '1h'});
         res.setHeader('Set-Cookie', cookie.serialize('auth', jwt, {
             httpOnly : true,
