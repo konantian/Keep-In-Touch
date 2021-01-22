@@ -14,6 +14,7 @@ import { MenuOutlined,
 import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input} from 'antd';
 import dynamic from 'next/dynamic';
 import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
+import styles from './ProfileHeader.module.css';
 
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 
@@ -119,21 +120,21 @@ const ProfileHeader = ({ profile, username, api }) => {
                 }
                 avatar={{ src: avatar, size : 70 }}
             >
-                <Descriptions size="middle" column={2} className="descriptions">
+                <Descriptions size="middle" column={2} >
                     <Descriptions.Item label="Email" labelStyle={{"fontWeight" : "bold"}}>
-                        <a className="clickUrl" href={"mailto:" + profile.email}>{profile.email}</a>
+                        <a className={styles.clickUrl} href={"mailto:" + profile.email}>{profile.email}</a>
                     </Descriptions.Item>
                     <Descriptions.Item label="Last Login" labelStyle={{"fontWeight" : "bold"}} >
                         {dayjs(profile.lastLogin).format('YYYY-MM-DD HH:mm:ss')}
                     </Descriptions.Item>
                     <Descriptions.Item label="Followers" labelStyle={{"fontWeight" : "bold"}}>
                         <Link href={`/${username}/follower`} >
-                            <a className="clickUrl" >{followers}</a>
+                            <a className={styles.clickUrl}  >{followers}</a>
                         </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Following" labelStyle={{"fontWeight" : "bold"}}>
                         <Link href={`/${username}/following`} >
-                            <a className="clickUrl" >{profile.following}</a>
+                            <a className={styles.clickUrl}  >{profile.following}</a>
                         </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>

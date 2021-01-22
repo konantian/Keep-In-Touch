@@ -1,0 +1,10 @@
+.followTitle{
+    display : flex;
+    justify-content: space-between;
+}
+
+.followDescription{
+    display : flex;
+    justify-content: space-between;
+    margin-top: -10px;
+}

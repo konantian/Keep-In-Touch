@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from  'antd';
 import { UserDeleteOutlined, UserAddOutlined, LoadingOutlined  } from "@ant-design/icons";
 import { UNFOLLOW_API, FOLLOW_API } from '../constants/api';
+import styles from './Follow.module.css';
 
 const FollowingList = ({ following, api}) => {
 
@@ -48,12 +49,12 @@ const FollowingList = ({ following, api}) => {
                 <List.Item.Meta
                     avatar={<Avatar size={60} src={item.user.avatar} />}
                     title={
-                        <div className="postTitle" >
+                        <div className={styles.followTitle} >
                             <Link href={`/profile/${item.user.username}`} key={item.user.id} >{item.user.username}</Link>
                         </div>
                     }
                     description={
-                        <div className="followDescription">
+                        <div className={styles.followDescription} >
                             Followed At {dayjs(item.followedAt).format('YYYY-MM-DD HH:mm:ss')}
                             {item.status !== 'Self' ? 
                                  <Button 

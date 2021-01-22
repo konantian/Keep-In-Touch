@@ -34,14 +34,6 @@ a {
   justify-content: center;
 }
 
-.postButtons{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-direction: row;
-  margin-top: 5%;
-}
-
 .postDescription{
   margin-top: -15px;;
 }
@@ -78,22 +70,6 @@ a {
   justify-content: space-between;
 }
 
-.postButton{
-  width: 200px;
-}
-
-.followDescription{
-  display : flex;
-  justify-content: space-between;
-  margin-top: -10px;
-}
-
-.avatars{
-  display : flex;
-  justify-content : space-between;
-  align-items: center;
-}
-
 .deleteIcon{
   color: #ff4d4f;
   margin-right: 5px;
@@ -104,8 +80,4 @@ a {
   color: #ff4d4f;
   margin-right: 5px;
   font-size: 15px;
-}
-
-.clickUrl{
-  color: #08c;
 }

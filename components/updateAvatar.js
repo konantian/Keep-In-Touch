@@ -5,6 +5,7 @@ import { mutate } from 'swr';
 import { Input, Form, Modal, Avatar, Upload, message, Divider } from 'antd';
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { UPLOAD_API, AVATAR_API } from '../constants/api';
+import styles from './UpdateAvatar.module.css';
 
 const { Dragger } = Upload;
 
@@ -78,7 +79,7 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
             onOk={() => updateAvatar(src)}
             okText={"Save Avatar"}
         >
-            <div className="avatars" >
+            <div className={styles.avatars} >
                 <p>Current Avatar</p>
                 <Avatar size={80} src={avatar} />
                 <p>New Avatar</p>
@@ -100,7 +101,7 @@ const UpdateAvatar = ({ visible, setVisible, avatar, api, username, setAvatar })
                 onChange={(info) => handleChange(info)}
             >
                 {isLoading ? <LoadingOutlined /> : <UploadOutlined style={{fontSize : "30px"}} />}
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                <p>Click or drag file to this area to upload</p>
             </Dragger>
             
             

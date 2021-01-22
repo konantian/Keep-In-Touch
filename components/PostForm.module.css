@@ -1,0 +1,11 @@
+.postButton{
+    width: 200px;
+}
+
+.postButtons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    margin-top: 5%;
+}

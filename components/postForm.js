@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkDown from "react-markdown";
 import { Form, Input, Button, Radio, Select, Tag, Modal } from 'antd';
+import styles from './PostForm.module.css';
 import { randomColor } from '../utils/randomColor';
 
 const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
@@ -78,13 +79,13 @@ const PostForm = ({ onFinish, text, loading,  tags, initialValues }) => {
                         autoSize={{ minRows: 12, maxRows: 20}}
                     />
                 </Form.Item>
-                <div className="postButtons">
+                <div className={styles.postButtons}>
                     <Form.Item >
-                        <Button className="postButton" type="primary" loading={loading} htmlType="submit" shape="round" size="large" >{text}</Button>
+                        <Button className={styles.postButton} type="primary" loading={loading} htmlType="submit" shape="round" size="large" >{text}</Button>
                     </Form.Item>
                     {type === 'markdown' ?
                     <Form.Item >
-                        <Button className="postButton" type="primary" onClick={() => setVisible(true)} shape="round" size="large" >Preview</Button>
+                        <Button className={styles.postButton} type="primary" onClick={() => setVisible(true)} shape="round" size="large" >Preview</Button>
                     </Form.Item> : null}
                 </div>
             </Form>
