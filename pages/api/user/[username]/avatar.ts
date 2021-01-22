@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '../../../../lib/prisma';
 import { authenticated } from '../../authenticated';
-import { update_avatar } from '../../../../utils/userUtil';
+import { update_profile } from '../../../../utils/userUtil';
 const imageToBase64 = require('image-to-base64');
 
 export default authenticated(async function updateAvatar(req : NextApiRequest, res : NextApiResponse, decoded ){
@@ -17,7 +17,7 @@ export default authenticated(async function updateAvatar(req : NextApiRequest, r
     const avatar = req.body.avatar;
     const base64 = avatar.includes('base64') ? avatar : "data:image/jpeg;base64," +  await imageToBase64(avatar);
     
-    const updateAvatar = await update_avatar(prisma, req.query.username, base64);
+    const updateAvatar = await update_profile(prisma, req.query.username, { avatar :  base64});
     if(updateAvatar){
         return res.status(200).json({success : "Avatar has been updated!"});
     }

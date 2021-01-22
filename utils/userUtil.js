@@ -1,7 +1,6 @@
-import { get_followers_by_user,
-    get_friends_by_user } from './followUtil';
+import { get_visible_posts_by_user } from './postUtil';
 
-export const get_user_by_username = async (prisma, data) => {
+export const get_profile_by_username = async (prisma, data) => {
 
     const { username, currentUser } = data;
 
@@ -15,28 +14,15 @@ export const get_user_by_username = async (prisma, data) => {
     });
 
     delete user.password;
-    user.posts  = user.posts.map(post => {
-        post.comments = post.comments.length;
-        post.tags = post.tags.map(tag => tag.name);
-        post.liked = post.likes.map(like  => like.authorId);
-        post.likes = post.likes.length;
-        post.images = post.images.map(image => image.src);
-        return post;
-    })
-
-    const followers = await get_followers_by_user(prisma, username);
-    const friends = await get_friends_by_user(prisma, username);
 
     user.followers = user.followers.length;
     user.following = user.following.length;
 
-    const publicPosts = user.posts.filter(post => post.visibility === 'PUBLIC');
-    const followerPosts = user.posts.filter(post => (post.visibility === 'FOLLOWERS' && followers.includes(currentUser)));
-    const friendPosts = user.posts.filter(post => (post.visibility === 'FRIENDS' && friends.includes(currentUser)));
+    const visiblePosts = await get_visible_posts_by_user(prisma, currentUser);
 
-    const allPosts =[...publicPosts,...followerPosts,...friendPosts];
+    const posts = visiblePosts.filter(post => post.author.username === username);
 
-    user.posts = allPosts;
+    user.posts = posts;
 
     return user;
 }
@@ -52,18 +38,10 @@ export const get_users = async (prisma) => {
     return users;
 }
 
-export const update_bio = async( prisma, username, bio) => {
+export const update_profile = async (prisma, username, data) => {
     const result = await prisma.user.update({
         where : {username: username},
-        data : {bio : bio}
-    });
-    return result;
-}
-
-export const update_avatar = async(prisma, username, avatar) => {
-    const result = await prisma.user.update({
-        where : {username: username},
-        data : {avatar : avatar}
+        data : data
     });
     return result;
 }

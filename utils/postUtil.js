@@ -184,5 +184,13 @@ export const get_visible_posts_by_user = async (prisma, username) => {
         return post;
     })
 
-    return posts;
+    const uniqueIds = new Set();
+    const uniquePosts = posts.filter(post => {
+        if(!uniqueIds.has(post.id)){
+            uniqueIds.add(post.id);
+            return post;
+        }
+    });
+
+    return uniquePosts;
 }
