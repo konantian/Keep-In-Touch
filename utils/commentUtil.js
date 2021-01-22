@@ -23,6 +23,15 @@ export const delete_comment = async (prisma, id) => {
     return result;
 }
 
+export const get_comment_by_id = async(prisma, id) => {
+    const result = await prisma.comment.findFirst({
+        where : {id : parseInt(id)},
+        include : {author : true}
+    });
+
+    return result;
+}
+
 export const get_comments_by_post = async (prisma, id) => {
 
     const comments = await prisma.comment.findMany({

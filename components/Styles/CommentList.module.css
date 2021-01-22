@@ -13,3 +13,15 @@
     display : flex;
     justify-content : center;
 }
+
+.deleteIcon{
+    color: #ff4d4f;
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+.deleteIcon:hover{
+    color: #ff4d4f;
+    margin-right: 5px;
+    font-size: 15px;
+}

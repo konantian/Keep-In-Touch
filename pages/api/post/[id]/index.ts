@@ -5,11 +5,16 @@ import { get_post_by_id, update_post, delete_post } from '../../../../utils/post
 
 export default authenticated(async function Post(req : NextApiRequest, res : NextApiResponse, decoded ){
 
-  if(req.method === 'GET'){
-        const post = await get_post_by_id(prisma, req.query.id);
+    const post = await get_post_by_id(prisma, req.query.id);
+
+    if(decoded.username !== post.author.username){
+        return res.status(401).json({error : "You have no permission on requested entity"});
+    }
+
+    if(req.method === 'GET'){
         return res.status(200).json(post);
 
-  }else if(req.method === 'PATCH'){
+    }else if(req.method === 'PATCH'){
 
         const updatePost = await update_post(prisma, req.query.id, req.body);
         if(!updatePost){
@@ -17,14 +22,15 @@ export default authenticated(async function Post(req : NextApiRequest, res : Nex
         }
         return res.status(200).json({success : "Post updated"});
 
-  }else if(req.method === 'DELETE'){
+    }else if(req.method === 'DELETE'){
+        
         const deletePost = await delete_post(prisma, req.query.id);
         if(!deletePost){
             return res.status(400).json({error : "Cannot delete this post now, please try again."})
             }
         return res.status(200).json({success : "Post deleted"});;
 
-  }else{
+    }else{
         return res.status(405).json({error : "Only GET and PATCH available"});
-  }
+    }
 });

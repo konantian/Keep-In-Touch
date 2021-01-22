@@ -101,7 +101,7 @@ export const get_post_by_id = async (prisma, id) => {
 
     const post = await prisma.post.findFirst({
         where : {id : parseInt(id)},
-        include : {comments : true, tags : true, likes : true, images : true}
+        include : {comments : true, tags : true, likes : true, images : true, author : true}
     });
 
     post.tags = post.tags.map(item => item.name);

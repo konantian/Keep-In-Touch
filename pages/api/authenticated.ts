@@ -12,7 +12,7 @@ export const authenticated = (fn : Function) =>
             if(!err && decoded){
                 return resolve(fn(req, res, decoded));
             }
-            return res.status(401).json({error : "You are not authorized"});
+            return res.status(401).json({error : "You are not authorized, please login first"});
         }
     )})     
 }

@@ -14,12 +14,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "@prisma/client": "^2.14.0",
-    "antd": "^4.9.4",
-    "axios": "^0.21.0",
+    "@prisma/client": "^2.15.0",
+    "antd": "^4.10.3",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
-    "dayjs": "^1.9.7",
+    "dayjs": "^1.10.4",
     "flatted": "^3.1.0",
     "image-to-base64": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
@@ -36,10 +36,10 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "swr": "^0.3.9"
+    "swr": "^0.3.11"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.14.0",
+    "@prisma/cli": "^2.15.0",
     "@types/cookie": "^0.4.0",
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
