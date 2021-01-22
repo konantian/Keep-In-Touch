@@ -34,34 +34,8 @@ a {
   justify-content: center;
 }
 
-.postDescription{
-  margin-top: -15px;;
-}
-
 .feedbackButton{
   color: #08c;
-  margin-right: 5px;
-  font-size: 15px;
-}
-
-.followButton{
-  width : 100px;
-  text-align: center;
-}
-
-.postTitle{
-  display : flex;
-  justify-content: space-between;
-}
-
-.deleteIcon{
-  color: #ff4d4f;
-  margin-right: 5px;
-  font-size: 15px;
-}
-
-.deleteIcon:hover{
-  color: #ff4d4f;
   margin-right: 5px;
   font-size: 15px;
 }

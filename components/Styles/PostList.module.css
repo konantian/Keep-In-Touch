@@ -1,0 +1,32 @@
+.deleteIcon{
+    color: #ff4d4f;
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+.deleteIcon:hover{
+    color: #ff4d4f;
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+.postTitle{
+    display : flex;
+    justify-content: space-between;
+}
+
+
+.postDescription{
+    margin-top: -15px;;
+}
+
+.postTags{
+    margin-left: -70px;
+    margin-top: 10px;
+}
+
+.postContent{
+    overflow: auto;
+    margin-top: -10px;
+    margin-bottom: -10px;
+}

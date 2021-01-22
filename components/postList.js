@@ -20,6 +20,7 @@ import { CommentOutlined,
          LoadingOutlined } from "@ant-design/icons";
 import { randomColor } from '../utils/randomColor';
 import { POST_BY_ID, LIKE_API } from '../constants/api';
+import styles from './Styles/PostList.module.css';
 
 const DynamicCommentList= dynamic(() => import('./commentList'))
 const DynamicImageWall = dynamic(() => import('./imageWall'))
@@ -146,7 +147,7 @@ const PostList = ({ posts, api }) => {
                                     okText="Yes"
                                     cancelText="No"
                                 >
-                                <a  key="delete" className="deleteIcon" >
+                                <a  key="delete" className={styles.deleteIcon} >
                                     {deleting !== item.id ? <DeleteOutlined  /> : <LoadingOutlined />} Delete
                                 </a > 
                             </Popconfirm>  : null
@@ -162,7 +163,7 @@ const PostList = ({ posts, api }) => {
                         
                     }
                         title={
-                            <div className="postTitle" >
+                            <div className={styles.postTitle} >
                                 <Link href={`/profile/${item.author.username}`} key={item.author.username} >{item.author.username}</Link> 
                                 <Dropdown key="status" overlay={menu(item.author.username, item.id, item.liked)}>
                                     <Button shape="round"><EllipsisOutlined /></Button>
@@ -172,13 +173,13 @@ const PostList = ({ posts, api }) => {
                         }
                         key={item.id}
                         description={
-                            <div className="postDescription" >
+                            <div className={styles.postDescription} >
                                 <Tooltip title={dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}>
                                     <span>{dayjs(item.updatedAt).from(dayjs().utc().format())}</span>
                                 </Tooltip>
                                 {item.updatedAt !== item.createdAt ? '  Edited' : ''}
                                 <br  style={{marginBottom : "10px"}} />
-                                <div style={{marginLeft : "-70px", marginTop : "10px" }} >
+                                <div className={styles.postTags} >
                                     {item.tags.map((tag, idx) => (
                                         <Link href={`/tag/${tag}`} key={idx} ><a><Tag key={idx} color={randomColor()}>{tag}</Tag></a></Link>
                                     ))}
@@ -187,7 +188,7 @@ const PostList = ({ posts, api }) => {
                             </div>
                         }
                     />
-                    <div style={{ overflow: "auto", marginTop : "-10px",marginBottom : "-10px"}}>
+                    <div className={styles.postContent}>
                         <h2>{item.title}</h2>
                         {item.contentType === "text" ? (
                             item.content) : 
