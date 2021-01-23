@@ -6,6 +6,10 @@ import { get_profile_by_username, update_profile } from '../../../../utils/userU
 export default authenticated(async function getUserByUsername(req : NextApiRequest, res : NextApiResponse, decoded ){
 
   if(req.method === 'GET'){
+    if(decoded.username !== req.query.currentUser){
+        return res.status(401).json({error : "You have no permission on requested entity"});
+    }
+
     const user = await get_profile_by_username(prisma, req.query);
 
     return res.status(200).json(user);
