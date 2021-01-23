@@ -19,13 +19,12 @@ import styles from './Styles/ProfileHeader.module.css';
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 
 const ProfileHeader = ({ profile, username, api }) => {
-
-    const inputRef = useRef(null);
     
     const currentUser = useSelector((state) => state.username);
     const userId = useSelector((state) => state.userId);
     const [followers, setFollowers] = useState(profile.followers);
     const [bio, setBio] = useState(profile.bio);
+    const [input, setInput] = useState(null);
     const [avatar, setAvatar] = useState(profile.avatar);
     const [isEdit, setIsEdit] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -112,7 +111,7 @@ const ProfileHeader = ({ profile, username, api }) => {
                         <Button onClick={() => follow()} key="followButton" size="large" type="primary" shape="round">{status} <UserAddOutlined /></Button>
                     )] : [
                         (
-                        isEdit ? <Button key="saveButton" onClick={() => updateBio(inputRef.current.state.value)} shape="round" size="large" >Save Bio<SaveOutlined /></Button> :
+                        isEdit ? <Button key="saveButton" onClick={() => updateBio(input)} shape="round" size="large" >Save Bio<SaveOutlined /></Button> :
                         <Button key="editButton" onClick={() => setIsEdit(true)} shape="round" size="large" >Edit Bio<EditOutlined /></Button>
                         ),
                         <Button size="large" key="avatar" onClick={() => setVisible(true)} type="primary" shape="round">Avatar <SmileOutlined /></Button>
@@ -138,7 +137,7 @@ const ProfileHeader = ({ profile, username, api }) => {
                         </Link>
                     </Descriptions.Item>
                     <Descriptions.Item label="Biography" labelStyle={{"fontWeight" : "bold"}}>
-                        {isEdit ? <Input.TextArea ref={inputRef} onPressEnter={(e) => updateBio(e.target.value)} autoSize={{ minRows: 3, maxRows: 5 }} defaultValue={bio}/> : bio }
+                        {isEdit ? <Input.TextArea onPressEnter={(e) => updateBio(e.target.value)} onChange={(e) => setInput(e.target.value)} autoSize={{ minRows: 3, maxRows: 5 }} defaultValue={bio}/> : bio }
                     </Descriptions.Item>
                 </Descriptions>
             </PageHeader>
