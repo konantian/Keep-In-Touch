@@ -9,6 +9,7 @@ import { List, Avatar, Button, message } from  'antd';
 import { UserDeleteOutlined, UserAddOutlined, LoadingOutlined} from "@ant-design/icons";
 import { UNFOLLOW_API, FOLLOW_API } from '../constants/api';
 import styles from './Styles/Follow.module.css';
+import socket from '../lib/socket-context';
 
 const FollowerList = ({ follower, api }) => {
 
@@ -24,6 +25,7 @@ const FollowerList = ({ follower, api }) => {
             axios.post(FOLLOW_API, data, config).then((res) => {
                 mutate(api);
                 message.success(res.data['success'],[0.5]);
+                socket.emit('follow', data);
                 setLoading(null);
             }).catch((err) => {
                 console.log(err);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import dayjs from 'dayjs';
@@ -15,6 +15,7 @@ import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input} from
 import dynamic from 'next/dynamic';
 import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
 import styles from './Styles/ProfileHeader.module.css';
+import socket from '../lib/socket-context';
 
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 
@@ -68,6 +69,7 @@ const ProfileHeader = ({ profile, username, api }) => {
         const config = {withCredentials: true};
         axios.post(FOLLOW_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
+            socket.emit('follow', data);
             setFollowers(followers + 1);
             mutate(IF_FOLLOW_API);
         }).catch((err) => {

@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { VISIBLE_POSTS_API }from '../constants/api';
+import socket from '../lib/socket-context';
+import { openNotificationWithIcon } from '../utils/notification';
 
 const DynamicPostList= dynamic(() => import('../components/postList'))
 const DynamicHeader= dynamic(() => import('../components/header'))
@@ -24,6 +26,15 @@ export default function Home(){
             router.push('/');
             message.error("Your Session has expired please login first",[1]);
         }
+
+        socket.on("follow", data => {
+            if(data.user === username){
+                openNotificationWithIcon('info','New follower', `${data.follower} just followed you`);
+            }
+        });
+
+        return () => socket.off('follow');
+        
     }, []);
 
     const fetchVisiblePosts =  async ( url ) => {

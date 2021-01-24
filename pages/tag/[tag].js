@@ -8,6 +8,8 @@ import { useCookies } from "react-cookie";
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { POSTS_BY_TAG } from '../../constants/api';
+import socket from '../../lib/socket-context';
+import { openNotificationWithIcon } from '../../utils/notification';
 
 const DynamicPostList= dynamic(() => import('../../components/postList'))
 const DynamicHeader= dynamic(() => import('../../components/header'))
@@ -25,6 +27,13 @@ const PostByTag = () => {
             router.push('/');
             message.error("Your Session has expired please login first",[1]);
         }
+        socket.on("follow", data => {
+            if(data.user === currentUser){
+                openNotificationWithIcon('info','New follower', `${data.follower} just followed you`);
+            }
+        });
+
+        return () => socket.off('follow');
     }, []);
 
     const fetchPosts =  async ( url ) => {
