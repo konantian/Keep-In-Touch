@@ -112,34 +112,6 @@ export const get_post_by_id = async (prisma, id) => {
     return post;
 }
 
-export const get_posts_by_user = async (prisma, username) => {
-
-    const result = await prisma.post.findMany({
-        where : {author : {username : username}},
-        include : {comments : true, tags : true, likes :true, images : true}
-    });
-
-    const posts = result.map(post => {
-        post.tags = post.tags.map(tag => tag.name);
-        post.comments = post.comments.length;
-        post.likes = post.likes.length;
-        post.images = post.images.map(image => image.src);
-        return post;
-    });
-
-    return posts;
-}
-
-export const if_liked = async(prisma, postId, username) => {
-    const result = await prisma.like.findFirst({
-        where : { postId : postId,
-                  author : {username : username}}
-    });
-
-    if(result) return true;
-    return false;
-}
-
 //get all visible posts by current user
 export const get_visible_posts_by_user = async (prisma, username) => {
 
