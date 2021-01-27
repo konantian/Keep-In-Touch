@@ -29,7 +29,7 @@ export default function Home(){
     const fetchVisiblePosts =  async ( url ) => {
         const response = await axios.get(url, {withCredentials: true});
         response.data.posts.sort((a, b) => {
-            return new Date(b.updatedAt) - new Date(a.updatedAt);
+            return new Date(b.createdAt) - new Date(a.createdAt);
         })
         return response.data.posts;
     }
