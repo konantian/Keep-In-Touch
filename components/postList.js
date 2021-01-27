@@ -63,7 +63,7 @@ const PostList = ({ posts, api }) => {
                 <Menu.Item 
                     key="1" 
                     icon={liked.includes(userId) ? 
-                        <FcLike className="feedbackButton"/> : 
+                        <FcLike className="actionButton"/> : 
                         <HeartOutlined /> }
                     onClick={() => updateLike(postId)}
                 >
@@ -93,7 +93,7 @@ const PostList = ({ posts, api }) => {
                             okText="Yes"
                             cancelText="No"
                         >
-                            <a  key="delete" className="feedbackButton" >
+                            <a  key="delete" className="actionButton" >
                                 Delete
                             </a > 
                         </Popconfirm> 
@@ -113,27 +113,27 @@ const PostList = ({ posts, api }) => {
                 <List.Item
                     key={item.id}
                     actions={[
-                        <a  key="like" onClick={() => updateLike(item.id)} className="feedbackButton" >
+                        <a  key="like" onClick={() => updateLike(item.id)} className="actionButton" >
                             {item.liked.includes(userId) ?
-                                <FcLike className="feedbackButton"/> :
-                                <HeartOutlined className="feedbackButton"/>
+                                <FcLike className="actionButton"/> :
+                                <HeartOutlined className="actionButton"/>
                             }
                             {item.likes}
                         </a >,
-                        <a  key="comment" className="feedbackButton"
+                        <a  key="comment" className="actionButton"
                             onClick={() => {
                                 setPostId(item.id);
                                 setVisible(true);
                                 setAuthor(item.author.username);
                             }} 
                         >
-                            <CommentOutlined className="feedbackButton" />
+                            <CommentOutlined className="actionButton" />
                             {item.comments} comment(s)
                         </a>,
-                        <a key="edit" className="feedbackButton" >
+                        <a key="edit" className="actionButton" >
                             {item.author.username === username ? 
                                 <Link href={`/post/${item.id}`} >
-                                    <span><EditOutlined className="feedbackButton" />Edit</span>
+                                    <span><EditOutlined className="actionButton" />Edit</span>
                                 </Link> : null
                             }
                         </a>,
