@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { VISIBLE_POSTS_API }from '../constants/api';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket('wss://myraspberrypi.work:5000');
 
 const DynamicPostList= dynamic(() => import('../components/postList'))
 const DynamicHeader= dynamic(() => import('../components/header'))
@@ -23,6 +26,13 @@ export default function Home(){
         if(!cookie['user']) {
             router.push('/');
             message.error("Your Session has expired please login first",[1]);
+        }
+        client.onopen = () => {
+            console.log('WebSocket Client Connected');
+        }
+
+        client.onmessage = ( message ) => {
+            console.log(message);
         }
     }, []);
 
