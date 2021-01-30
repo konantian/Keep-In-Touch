@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 import { VISIBLE_POSTS_API }from '../constants/api';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-const client = new W3CWebSocket('wss://myraspberrypi.work:5000');
+const client = new W3CWebSocket('ws://myraspberrypi.work:5000');
 
 const DynamicPostList= dynamic(() => import('../components/postList'))
 const DynamicHeader= dynamic(() => import('../components/header'))
