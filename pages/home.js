@@ -9,9 +9,9 @@ import { useRouter } from 'next/router';
 import { useCookies } from "react-cookie";
 import { VISIBLE_POSTS_API }from '../constants/api';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { openNotificationWithIcon } from '../utils/notification';
 
-const client = new W3CWebSocket('ws://myraspberrypi.work:5000');
-
+const client = new W3CWebSocket('wss://echo.websocket.org');
 const DynamicPostList= dynamic(() => import('../components/postList'))
 const DynamicHeader= dynamic(() => import('../components/header'))
 const DynamicFooter = dynamic(() => import('../components/footer'))
@@ -27,12 +27,19 @@ export default function Home(){
             router.push('/');
             message.error("Your Session has expired please login first",[1]);
         }
+
         client.onopen = () => {
-            console.log('WebSocket Client Connected');
-        }
+            console.log("WebSocket connected");
+        }        
 
         client.onmessage = ( message ) => {
-            console.log(message);
+            const data = JSON.parse(message.data);
+            console.log(data.user);
+            console.log(username)
+            if(data.user === username){
+                
+                openNotificationWithIcon('info','New follower', `${data.follower} just followed you`);
+            }
         }
     }, []);
 

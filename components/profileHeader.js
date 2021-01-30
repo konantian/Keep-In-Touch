@@ -15,7 +15,9 @@ import { PageHeader,  Descriptions, Button, Dropdown, Menu, message, Input} from
 import dynamic from 'next/dynamic';
 import { FOLLOW_API, UNFOLLOW_API, IF_FOLLOW_API, USER_BY_USERNAME } from '../constants/api';
 import styles from './Styles/ProfileHeader.module.css';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
+const client = new W3CWebSocket('wss://echo.websocket.org');
 const DynamicAvatar= dynamic(() => import('./updateAvatar'))
 
 const ProfileHeader = ({ profile, username, api }) => {
@@ -34,6 +36,12 @@ const ProfileHeader = ({ profile, username, api }) => {
         setBio(profile.bio);
         setAvatar(profile.avatar);
     },[profile])
+
+    useEffect(() => {
+        client.onopen = () => {
+            console.log("WebSocket connected");
+        }        
+    },[])
 
     const getFollow = async () => {
         const config = {
@@ -68,6 +76,7 @@ const ProfileHeader = ({ profile, username, api }) => {
         const config = {withCredentials: true};
         axios.post(FOLLOW_API, data, config).then((res) => {
             message.success(res.data['success'],[0.5]);
+            client.send(JSON.stringify(data));
             setFollowers(followers + 1);
             mutate(IF_FOLLOW_API);
         }).catch((err) => {
