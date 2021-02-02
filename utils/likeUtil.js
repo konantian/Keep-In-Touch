@@ -1,4 +1,4 @@
-
+//add a like to a post
 export const addLike = async (prisma, data) => {
 
     const { userId, postId } = data;
@@ -13,6 +13,7 @@ export const addLike = async (prisma, data) => {
     return result;
 }
 
+//remove a like from a post
 export const unLike = async (prisma, data) => {
 
     const { userId, postId } = data;
@@ -28,6 +29,7 @@ export const unLike = async (prisma, data) => {
 
 }
 
+//like handler function
 export const update_like = async (prisma, data) => {
 
     const { userId, postId } = data;
@@ -37,9 +39,11 @@ export const update_like = async (prisma, data) => {
     });
 
     if(liked){
+        //if the given post has been liked by the given user, remove this like
         const result = await unLike(prisma, data);
         return result;
     }else{
+        //if the given post has not been liked by the given user, add a like
         const result = await addLike(prisma, data);
         return result
     } 

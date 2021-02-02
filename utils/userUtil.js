@@ -1,5 +1,6 @@
 import { get_visible_posts_by_user } from './postUtil';
 
+//retrieve a user's profile by its username
 export const get_profile_by_username = async (prisma, data) => {
 
     const { username, currentUser } = data;
@@ -27,6 +28,7 @@ export const get_profile_by_username = async (prisma, data) => {
     return user;
 }
 
+//return a list of usernames
 export const get_users = async (prisma) => {
 
     const result = await prisma.user.findMany({
@@ -38,6 +40,7 @@ export const get_users = async (prisma) => {
     return users;
 }
 
+//update a user's profile by given data
 export const update_profile = async (prisma, username, data) => {
     const result = await prisma.user.update({
         where : {username: username},

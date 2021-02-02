@@ -1,5 +1,6 @@
 import { currentTime } from './currentTime';
 
+//add a new follow relation
 export const add_follow = async (prisma, data) => {
     const { user, follower } = data;
 
@@ -14,6 +15,7 @@ export const add_follow = async (prisma, data) => {
     return addFollow;
 }
 
+//remove a follow relation
 export const remove_follow = async (prisma, data) => {
     const {userId, followerId} = data;
 
@@ -27,6 +29,7 @@ export const remove_follow = async (prisma, data) => {
     return result;
 }
 
+//given a user and a follower's username, return their relationship
 export const if_follow = async (prisma, data) => {
     const {user, follower} = data;
 
@@ -51,6 +54,7 @@ export const if_follow = async (prisma, data) => {
     else return 'Follow';
 }
 
+//given a username, return all its followers
 export const get_followers = async (prisma, userData) => {
 
     const { username, currentUser } = userData;
@@ -70,6 +74,7 @@ export const get_followers = async (prisma, userData) => {
     return followers;
 }
 
+//given a username, return all its following
 export const get_following = async (prisma, userData) => {
 
     const { username, currentUser } = userData;
@@ -113,6 +118,7 @@ export const get_followers_by_user = async (prisma, username) => {
     return followers.map(item => item.follower.username);
 }
 
+//given a username, return all its friends
 export const get_friends_by_user = async (prisma, username) => {
 
     const followers = await get_followers_by_user(prisma, username);

@@ -2,6 +2,7 @@ import { get_following_by_user,
          get_friends_by_user } from './followUtil';
 import { currentTime } from './currentTime';
 
+//create a new post based on given data
 export const create_post = async (prisma, data) => {
 
     const { title, contentType, content, visibility, tags, images, username } = data;
@@ -23,6 +24,7 @@ export const create_post = async (prisma, data) => {
     return result;
 }
 
+//update the attributes based on given data
 export const update_post = async (prisma, id, data) => {
     const result = await prisma.post.update({
         where : {id : parseInt(id)},
@@ -32,6 +34,7 @@ export const update_post = async (prisma, id, data) => {
     return result;
 }
 
+//delete images based on a list image id
 export const delete_image = async (prisma, images) => {
 
     await Promise.all(images.map( async image => {
@@ -42,6 +45,7 @@ export const delete_image = async (prisma, images) => {
     
 }
 
+//delete comments based on a list of comment id
 export const delete_comment = async (prisma, comments) => {
 
     await Promise.all(comments.map( async comment => {
@@ -52,6 +56,7 @@ export const delete_comment = async (prisma, comments) => {
     
 }
 
+//delete tags based on a list of tag object
 export const delete_tag = async (prisma, tags) => {
 
     await Promise.all(tags.map( async tag => {
@@ -64,6 +69,7 @@ export const delete_tag = async (prisma, tags) => {
     }));
 }
 
+//delete likes based on a list of like object
 export const delete_like = async (prisma, likes) =>{
 
     await Promise.all(likes.map( async like => {
@@ -76,6 +82,7 @@ export const delete_like = async (prisma, likes) =>{
     }));
 }
 
+//delete a post by a post id
 export const delete_post = async (prisma, id) => {
 
     const postId = parseInt(id);
@@ -85,11 +92,13 @@ export const delete_post = async (prisma, id) => {
         include : {comments : true, tags : true, likes : true, images: true}
     });
 
+    //delete all entities belong to this post first
     await delete_comment(prisma, post.comments);
     await delete_tag(prisma, post.tags);
     await delete_like(prisma, post.likes);
     await delete_image(prisma, post.images);
 
+    //delete the post then
     const result = await prisma.post.delete({
         where : {id : postId}
     });
@@ -97,6 +106,7 @@ export const delete_post = async (prisma, id) => {
     return result;
 }
 
+//retrieve a post by post id
 export const get_post_by_id = async (prisma, id) => {
 
     const post = await prisma.post.findFirst({
@@ -112,7 +122,7 @@ export const get_post_by_id = async (prisma, id) => {
     return post;
 }
 
-//get all visible posts by current user
+//get all visible posts by current logined user
 export const get_visible_posts_by_user = async (prisma, username) => {
 
     //all public posts
@@ -145,6 +155,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
         include : {comments : true, tags : true, author : true, likes : true, images: true} 
     });
 
+    //combine all the posts
     const visiblePosts = [...publicPosts, ...followerPosts, ...friendPosts, ...selfPosts];
 
     const posts = visiblePosts.map((post,idx) => {
@@ -156,6 +167,7 @@ export const get_visible_posts_by_user = async (prisma, username) => {
         return post;
     })
 
+    //remove duplicate posts
     const uniqueIds = new Set();
     const uniquePosts = posts.filter(post => {
         if(!uniqueIds.has(post.id)){
